@@ -1,10 +1,10 @@
 {
   "name": "tyr-frontend",
+  "private": true,
   "version": "1.0.0",
   "description": "Frontend Code for Tyr",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
-    "dev": "nodemon server.js --exec 'npm run lint && node'",
+    "start": "webpack-dev-server --mode development --hot",
     "build": "npm run lint && webpack --mode production --display-error-details",
     "precommit": "lint-staged",
     "lint": "eslint ."
@@ -17,6 +17,9 @@
     "email": "robherley13@gmail.com",
     "url": "https://robherley.xyz"
   },
+  "contributors": [
+    "achen8@stevens.edu"
+  ],
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
@@ -49,16 +52,12 @@
     "style-loader": "^0.21.0",
     "webpack": "^4.12.1",
     "webpack-cli": "^2.1.5",
-    "webpack-dev-middleware": "^3.4.0",
-    "webpack-hot-middleware": "^2.24.3"
+    "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.51",
     "axios": "^0.18.0",
     "babel-eslint": "^8.2.5",
-    "compression": "^1.7.2",
-    "express": "^4.16.4",
-    "morgan": "^1.9.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0"

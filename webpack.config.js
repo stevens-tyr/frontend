@@ -1,9 +1,19 @@
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+
+// const SERVER_PORT = 1337;
+const DEV_PORT = 3000;
 
 module.exports = {
-  mode: 'development',
-  entry: ['./src/index.js', 'webpack-hot-middleware/client'],
+  devServer: {
+    compress: true,
+    open: false,
+    port: DEV_PORT,
+    quiet: true
+    // proxy: {
+    //   '/': `http://localhost:${SERVER_PORT}`
+    // }
+  },
   module: {
     rules: [
       {
@@ -68,10 +78,17 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html'
+    }),
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [
+          `React Dev Server is running here: http://localhost:${DEV_PORT}`
+          // `Server requests proxied from this port: ${SERVER_PORT}`
+        ]
+      }
     })
   ]
 };
