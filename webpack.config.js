@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
-// const SERVER_PORT = 1337;
+const SERVER_PORT = 5555;
 const DEV_PORT = 3000;
 
 module.exports = {
@@ -9,10 +9,10 @@ module.exports = {
     compress: true,
     open: false,
     port: DEV_PORT,
-    quiet: true
-    // proxy: {
-    //   '/': `http://localhost:${SERVER_PORT}`
-    // }
+    quiet: true,
+    proxy: {
+      '/': `http://localhost:${SERVER_PORT}`
+    }
   },
   module: {
     rules: [
@@ -85,8 +85,8 @@ module.exports = {
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [
-          `React Dev Server is running here: http://localhost:${DEV_PORT}`
-          // `Server requests proxied from this port: ${SERVER_PORT}`
+          `React Dev Server is running here: http://localhost:${DEV_PORT}`,
+          `Server requests proxied from this port: ${SERVER_PORT}`
         ]
       }
     })

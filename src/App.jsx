@@ -1,13 +1,19 @@
 import React from 'react';
+import { Route, Switch } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
+import * as Pages from './pages';
+
 const App = () => (
-  <div className="placeholder">
-    <div>
-      <h1>Tyr</h1>
-      <p>This is the frontend!</p>
-    </div>
-  </div>
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Pages.Landing} />
+      <Route path="/login" component={Pages.Auth} />
+      <Route path="/dashboard" component={Pages.Dashboard} />
+      <Route path="*" component={Pages.FourOhFour} />
+    </Switch>
+  </BrowserRouter>
 );
 
 export default hot(module)(App);
