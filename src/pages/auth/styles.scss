@@ -1,0 +1,41 @@
+@import '../../style/colors.scss';
+@import '../../style/typography.scss';
+
+.auth-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $primary;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.auth-header {
+  margin: 2rem 0;
+  span {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: $thicc;
+  }
+  .icon {
+    vertical-align: middle;
+    display: inline-block;
+    height: 4rem;
+  }
+}
+
+.auth-form {
+  h1 {
+    text-align: center;
+  }
+  color: $dark;
+  background-color: white;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 450px;
+  border-radius: 4px;
+}
