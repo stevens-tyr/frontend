@@ -1,5 +1,6 @@
 @import '../../style/colors.scss';
 @import '../../style/typography.scss';
+@import '../../style/input.scss';
 
 .auth-container {
   width: 100vw;
@@ -10,6 +11,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  .bottom-text {
+    margin-top: 1rem;
+    .link {
+      &:hover,
+      &:visited,
+      &:link {
+        outline: none !important;
+        text-decoration-color: rgba($color: $white, $alpha: 0.7);
+        text-decoration-style: dashed;
+        color: $white;
+      }
+    }
+  }
 }
 
 .auth-header {
@@ -28,14 +42,29 @@
 }
 
 .auth-form {
-  h1 {
-    text-align: center;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: $dark;
-  background-color: white;
+  background-color: $white;
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
   max-width: 450px;
   border-radius: 4px;
+  @media screen and (max-width: 450px) {
+    border-radius: 0;
+  }
+  .form-label {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .text-input {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  .button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
 }

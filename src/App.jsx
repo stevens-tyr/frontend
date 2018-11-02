@@ -9,7 +9,8 @@ const App = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Pages.Landing} />
-      <Route path="/login" component={Pages.Auth} />
+      <Route path="/login" component={() => <Pages.Auth type="login" />} />
+      <Route path="/signup" component={() => <Pages.Auth type="signup" />} />
       <Route path="/dashboard" component={Pages.Dashboard} />
       <Route path="*" component={Pages.FourOhFour} />
     </Switch>

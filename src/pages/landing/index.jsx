@@ -5,7 +5,10 @@ const Landing = () => (
   <>
     <h1>Landing Page</h1>
     <div>
-      <Link to="/login">Auth</Link>
+      <Link to="/login">Login</Link>
+    </div>
+    <div>
+      <Link to="/signup">Register</Link>
     </div>
     <div>
       <Link to="/dashboard">Dashboard</Link>
