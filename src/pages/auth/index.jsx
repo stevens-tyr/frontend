@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import axios from 'axios';
 
 import './styles.scss';
 import Tear from '../../components/common/Tear';
@@ -7,9 +9,46 @@ import Tear from '../../components/common/Tear';
 class Auth extends Component {
   state = {};
 
+  serializeFormData = form => {
+    const formData = new FormData(form);
+    return [...formData.entries()].reduce(
+      (acc, entry) => ({
+        ...acc,
+        [entry[0]]: entry[1]
+      }),
+      {}
+    );
+  };
+
+  sendLogin = async ev => {
+    ev.preventDefault();
+    const { history } = this.props;
+    const json = this.serializeFormData(ev.target);
+    try {
+      const { data } = await axios.post('/api/v1/auth/login', json);
+      history.push('/dashboard');
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  sendSignup = async ev => {
+    ev.preventDefault();
+    const { history } = this.props;
+    const json = this.serializeFormData(ev.target);
+    try {
+      const { data } = await axios.post('/api/v1/auth/register', json);
+      history.push('/login');
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   renderLogin = () => (
     <>
-      <form className="auth-form">
+      <form className="auth-form" onSubmit={this.sendLogin}>
         <span className="form-label">Log In</span>
         <input
           className="text-input"
@@ -38,18 +77,18 @@ class Auth extends Component {
 
   renderSignup = () => (
     <>
-      <form className="auth-form" autoComplete="off">
+      <form className="auth-form" onSubmit={this.sendSignup}>
         <span className="form-label">Sign Up</span>
         <input
           className="text-input"
           type="text"
-          name="firstname"
+          name="firstName"
           placeholder="First Name"
         />
         <input
           className="text-input"
           type="text"
-          name="lastname"
+          name="lastName"
           placeholder="Last Name"
         />
         <input
@@ -61,7 +100,7 @@ class Auth extends Component {
         <input
           className="text-input"
           type="text"
-          name="confirme"
+          name="emailConfirmation"
           placeholder="Confirm Email"
         />
         <input
@@ -73,7 +112,7 @@ class Auth extends Component {
         <input
           className="text-input"
           type="password"
-          name="confirmpassword"
+          name="passwordConfirmation"
           placeholder="Confirm Password"
         />
         <button className="button" type="submit">
@@ -103,4 +142,4 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+export default withRouter(Auth);
