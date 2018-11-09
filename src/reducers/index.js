@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import test from './test.reducer';
+import { reducer as notificationsReducer } from 'reapop';
 
 const rootReducer = combineReducers({
-  test
+  notifications: notificationsReducer()
 });
 
 export default rootReducer;

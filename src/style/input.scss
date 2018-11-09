@@ -1,5 +1,15 @@
 @import './colors.scss';
 
+.no-link-style {
+  &:hover,
+  &:visited,
+  &:link {
+    outline: none !important;
+    text-decoration: none;
+    color: $white;
+  }
+}
+
 .text-input {
   font-family: $default-font;
   font-size: 1rem;
@@ -24,15 +34,31 @@
   border: none;
   color: $white;
   padding: 1rem 0.5rem;
-  background-color: $green;
+  background-color: $primary;
   font-family: $default-font;
   font-size: 1rem;
   border-radius: 4px;
   text-transform: uppercase;
+  text-align: center;
   letter-spacing: 0.1rem;
   &:hover {
     cursor: pointer;
     filter: brightness(105%);
     transition: filter 200ms ease-in-out;
   }
+}
+
+.button-success {
+  @extend .button;
+  background-color: $green;
+}
+
+.button-info {
+  @extend .button;
+  background-color: $blue;
+}
+
+.button-error {
+  @extend .button;
+  background-color: $red;
 }

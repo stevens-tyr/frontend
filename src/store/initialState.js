@@ -1,5 +1,1 @@
-export default {
-  test: {
-    foo: 'bar'
-  }
-};
+export default {};

@@ -1,22 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './styles.scss';
+import Tear from '../../components/common/Tear';
+
 const Landing = () => (
-  <>
-    <h1>Landing Page</h1>
-    <div>
-      <Link to="/login">Login</Link>
-    </div>
-    <div>
-      <Link to="/signup">Register</Link>
-    </div>
-    <div>
-      <Link to="/dashboard">Dashboard</Link>
-    </div>
-    <div>
-      <Link to="/fourohfour">404 Page</Link>
-    </div>
-  </>
+  <div className="landing-container">
+    <Tear className="logo" />
+    <Link className="button-success no-link-style" to="/login">
+      Login
+    </Link>
+    <Link className="button-info no-link-style" to="/signup">
+      Register
+    </Link>
+  </div>
 );
 
 export default Landing;

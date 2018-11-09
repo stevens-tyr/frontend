@@ -7,7 +7,7 @@ import App from './App';
 import './style/index.scss';
 import createStore from './store/createStore';
 
-const store = createStore();
+export const store = createStore(); // eslint-disable-line import/prefer-default-export
 
 render(
   <Provider store={store}>

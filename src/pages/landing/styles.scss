@@ -1,0 +1,24 @@
+@import '../../style/colors.scss';
+@import '../../style/typography.scss';
+@import '../../style/input.scss';
+
+.landing-container {
+  background-color: $purp;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    width: 10rem;
+    margin-top: 1rem;
+  }
+
+  .logo {
+    vertical-align: middle;
+    display: inline-block;
+    height: 11rem;
+  }
+}

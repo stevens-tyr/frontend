@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { notify } from 'reapop';
 
 import './styles.scss';
 import Tear from '../../components/common/Tear';
 
 class Auth extends Component {
-  state = {};
-
   serializeFormData = form => {
     const formData = new FormData(form);
     return [...formData.entries()].reduce(
@@ -20,35 +20,41 @@ class Auth extends Component {
     );
   };
 
-  sendLogin = async ev => {
+  sendReq = async ev => {
     ev.preventDefault();
-    const { history } = this.props;
+    const { history, type, noti } = this.props;
     const json = this.serializeFormData(ev.target);
     try {
-      const { data } = await axios.post('/api/v1/auth/login', json);
-      history.push('/dashboard');
-      console.log(data);
+      if (type === 'login') {
+        await axios.post('/api/v1/auth/login', json);
+        history.push('/dashboard');
+      } else {
+        await axios.post('/api/v1/auth/register', json);
+        noti({
+          title: 'Account Created Successfully',
+          message: 'You can now login.',
+          position: 't',
+          status: 'success',
+          dismissible: true,
+          dismissAfter: 5000
+        });
+        history.push('/login');
+      }
     } catch (e) {
-      console.error(e);
-    }
-  };
-
-  sendSignup = async ev => {
-    ev.preventDefault();
-    const { history } = this.props;
-    const json = this.serializeFormData(ev.target);
-    try {
-      const { data } = await axios.post('/api/v1/auth/register', json);
-      history.push('/login');
-      console.log(data);
-    } catch (e) {
-      console.error(e);
+      noti({
+        title: 'An Error Occurred',
+        message: e.response.data.message,
+        position: 't',
+        status: 'error',
+        dismissible: true,
+        dismissAfter: 5000
+      });
     }
   };
 
   renderLogin = () => (
     <>
-      <form className="auth-form" onSubmit={this.sendLogin}>
+      <form className="auth-form" onSubmit={this.sendReq}>
         <span className="form-label">Log In</span>
         <input
           className="text-input"
@@ -62,7 +68,7 @@ class Auth extends Component {
           name="password"
           placeholder="Password"
         />
-        <button className="button" type="submit">
+        <button className="button-success" type="submit">
           Log in
         </button>
       </form>
@@ -77,7 +83,7 @@ class Auth extends Component {
 
   renderSignup = () => (
     <>
-      <form className="auth-form" onSubmit={this.sendSignup}>
+      <form className="auth-form" onSubmit={this.sendReq}>
         <span className="form-label">Sign Up</span>
         <input
           className="text-input"
@@ -99,12 +105,6 @@ class Auth extends Component {
         />
         <input
           className="text-input"
-          type="text"
-          name="emailConfirmation"
-          placeholder="Confirm Email"
-        />
-        <input
-          className="text-input"
           type="password"
           name="password"
           placeholder="Password"
@@ -115,7 +115,7 @@ class Auth extends Component {
           name="passwordConfirmation"
           placeholder="Confirm Password"
         />
-        <button className="button" type="submit">
+        <button className="button-info" type="submit">
           Sign Up
         </button>
       </form>
@@ -132,14 +132,19 @@ class Auth extends Component {
     const { type } = this.props;
     return (
       <div className="auth-container">
-        <div className="auth-header">
+        <Link className="auth-header" to="/">
           <Tear className="icon" />
           <span>Tyr</span>
-        </div>
+        </Link>
         {type === 'login' ? this.renderLogin() : this.renderSignup()}
       </div>
     );
   }
 }
 
-export default withRouter(Auth);
+export default withRouter(
+  connect(
+    null,
+    { noti: notify }
+  )(Auth)
+);
