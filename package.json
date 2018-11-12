@@ -69,7 +69,8 @@
     "babel-eslint": "^8.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-hot-loader": "^4.0.0"
+    "react-hot-loader": "^4.0.0",
+    "react-redux-loading-bar": "^4.1.0"
   },
   "lint-staged": {
     "*.{js,jsx}": [

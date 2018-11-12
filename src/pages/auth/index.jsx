@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
+import tyr from '../../utils/tyr';
 import { addMsg, clearMsg } from '../../actions/auth.actions';
 import './styles.scss';
 import Tear from '../../components/common/Tear';
@@ -34,11 +34,11 @@ class Auth extends Component {
     const json = this.serializeFormData(ev.target);
     try {
       if (type === 'login') {
-        await axios.post('/api/v1/auth/login', json);
+        await tyr.post('auth/login', json);
         clear();
         history.push('/dashboard');
       } else {
-        await axios.post('/api/v1/auth/register', json);
+        await tyr.post('auth/register', json);
         add('SUCC', 'Account Created Successfully', 'You may now login.');
         history.push('/login');
       }

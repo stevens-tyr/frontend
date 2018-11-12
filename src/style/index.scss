@@ -1,4 +1,5 @@
 @import './typography.scss';
+@import './colors.scss';
 
 * {
   margin: 0;
@@ -8,4 +9,11 @@
 body {
   // IBM Plex with System Font fallback
   font-family: $default-font;
+}
+
+.loading-bar {
+  z-index: 9999;
+  height: 2px;
+  background-color: $green;
+  position: absolute;
 }
