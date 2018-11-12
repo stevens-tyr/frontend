@@ -51,13 +51,13 @@
     "react-redux": "^5.1.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "reapop": "^2.0.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
+    "svg-inline-loader": "^0.8.0",
     "webpack": "^4.12.1",
     "webpack-cli": "^2.1.5",
     "webpack-dev-server": "^3.1.9"
@@ -69,8 +69,7 @@
     "babel-eslint": "^8.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-hot-loader": "^4.0.0",
-    "reapop-theme-wybo": "^1.0.2"
+    "react-hot-loader": "^4.0.0"
   },
   "lint-staged": {
     "*.{js,jsx}": [

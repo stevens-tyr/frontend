@@ -26,6 +26,34 @@
   }
 }
 
+.auth-msg {
+  color: $white;
+  padding: 1rem;
+  text-transform: capitalize;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 450px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  .head {
+    font-size: 1.3rem;
+    font-weight: $thicc;
+  }
+  .msg {
+    font-weight: $regular;
+  }
+}
+
+.auth-msg-SUCC {
+  @extend .auth-msg;
+  background-color: $green;
+}
+
+.auth-msg-ERR {
+  @extend .auth-msg;
+  background-color: $red;
+}
+
 .auth-header {
   margin: 2rem 0;
   span {

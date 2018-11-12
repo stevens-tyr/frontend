@@ -74,6 +74,10 @@ module.exports = {
             name: 'img/[name].[ext]'
           }
         }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
       }
     ]
   },

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { reducer as notificationsReducer } from 'reapop';
+import auth from './auth.reducer';
 
 const rootReducer = combineReducers({
-  notifications: notificationsReducer()
+  auth
 });
 
 export default rootReducer;

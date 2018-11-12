@@ -2,23 +2,17 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
-import NotificationsSystem from 'reapop';
-import notiTheme from 'reapop-theme-wybo';
-
 import * as Pages from './pages';
 
 const App = () => (
   <BrowserRouter>
-    <>
-      <NotificationsSystem theme={notiTheme} />
-      <Switch>
-        <Route exact path="/" component={Pages.Landing} />
-        <Route path="/login" component={() => <Pages.Auth type="login" />} />
-        <Route path="/signup" component={() => <Pages.Auth type="signup" />} />
-        <Route path="/dashboard" component={Pages.Dashboard} />
-        <Route path="*" component={Pages.FourOhFour} />
-      </Switch>
-    </>
+    <Switch>
+      <Route exact path="/" component={Pages.Landing} />
+      <Route path="/login" component={() => <Pages.Auth type="login" />} />
+      <Route path="/signup" component={() => <Pages.Auth type="signup" />} />
+      <Route path="/dashboard" component={Pages.Dashboard} />
+      <Route path="*" component={Pages.FourOhFour} />
+    </Switch>
   </BrowserRouter>
 );
 

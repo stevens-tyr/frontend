@@ -3,12 +3,20 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { notify } from 'reapop';
 
+import { addMsg, clearMsg } from '../../actions/auth.actions';
 import './styles.scss';
 import Tear from '../../components/common/Tear';
 
 class Auth extends Component {
+  componentWillUnmount = () => {
+    const { auth, clearMsg: clear } = this.props;
+    // If we have an error message, clear it when unmounting
+    if (auth.msgType === 'ERR') {
+      clear();
+    }
+  };
+
   serializeFormData = form => {
     const formData = new FormData(form);
     return [...formData.entries()].reduce(
@@ -22,34 +30,36 @@ class Auth extends Component {
 
   sendReq = async ev => {
     ev.preventDefault();
-    const { history, type, noti } = this.props;
+    const { history, type, addMsg: add, clearMsg: clear } = this.props;
     const json = this.serializeFormData(ev.target);
     try {
       if (type === 'login') {
         await axios.post('/api/v1/auth/login', json);
+        clear();
         history.push('/dashboard');
       } else {
         await axios.post('/api/v1/auth/register', json);
-        noti({
-          title: 'Account Created Successfully',
-          message: 'You can now login.',
-          position: 't',
-          status: 'success',
-          dismissible: true,
-          dismissAfter: 5000
-        });
+        add('SUCC', 'Account Created Successfully', 'You may now login.');
         history.push('/login');
       }
     } catch (e) {
-      noti({
-        title: 'An Error Occurred',
-        message: e.response.data.message,
-        position: 't',
-        status: 'error',
-        dismissible: true,
-        dismissAfter: 5000
-      });
+      if (e.response && e.response.data && e.response.data.message) {
+        add('ERR', `Unable to ${type}`, e.response.data.message);
+      } else {
+        add('ERR', 'An Unknown Error Occurred', 'Unable to Process Request');
+      }
     }
+  };
+
+  renderMsg = () => {
+    const { auth } = this.props;
+    if (!auth.msg) return null;
+    return (
+      <div className={`auth-msg-${auth.msgType}`}>
+        <div className="head">{auth.msgHead}</div>
+        <div className="msg">{auth.msg.toLowerCase()}</div>
+      </div>
+    );
   };
 
   renderLogin = () => (
@@ -136,6 +146,7 @@ class Auth extends Component {
           <Tear className="icon" />
           <span>Tyr</span>
         </Link>
+        {this.renderMsg()}
         {type === 'login' ? this.renderLogin() : this.renderSignup()}
       </div>
     );
@@ -144,7 +155,9 @@ class Auth extends Component {
 
 export default withRouter(
   connect(
-    null,
-    { noti: notify }
+    ({ auth }) => ({
+      auth
+    }),
+    { addMsg, clearMsg }
   )(Auth)
 );
