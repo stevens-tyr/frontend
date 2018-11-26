@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import tyr from '../../utils/tyr';
 
 import './styles.scss';
 
@@ -10,7 +10,9 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     try {
-      await axios.get('/api/v1/auth/test', { withCredentials: true });
+      await tyr.get('auth/logged_in');
+      const { data } = await tyr.get('plague_doctor/dashboard');
+      console.log(data);
       this.setState({ isAuth: true });
     } catch (e) {
       this.setState({ isAuth: false });

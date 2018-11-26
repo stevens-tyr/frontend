@@ -10,7 +10,10 @@ export default {
   get: async (url, config = {}) => {
     store.dispatch(showLoading());
     try {
-      const res = await tyr.get(url, config);
+      const res = await tyr.get(url, {
+        ...config,
+        withCredentials: true
+      });
       return res;
     } catch (e) {
       throw e;
@@ -21,9 +24,13 @@ export default {
   post: async (url, data, config = {}) => {
     store.dispatch(showLoading());
     try {
-      const res = await tyr.post(url, data, config);
+      const res = await tyr.post(url, data, {
+        ...config,
+        withCredentials: true
+      });
       return res;
     } catch (e) {
+      console.log(e);
       throw e;
     } finally {
       store.dispatch(hideLoading());
