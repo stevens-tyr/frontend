@@ -1,6 +1,14 @@
 .listrow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+  .listelement {
+    flex: 2;
+  }
+  span {
+    text-align: right;
+    flex: 1;
+  }
 }

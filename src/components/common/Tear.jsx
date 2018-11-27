@@ -3,7 +3,7 @@ import React from 'react';
 import './styles.scss';
 
 export default props => {
-  const { fill, sizeClass } = props;
+  const { fill, className, sizeClass } = props;
   return (
     <svg
       version="1.1"
@@ -12,8 +12,7 @@ export default props => {
       x={0}
       y={0}
       viewBox="0, 0, 500, 500"
-      className={`tyr-drop ${sizeClass}`}
-      {...props}
+      className={`tyr-drop ${className} ${sizeClass}`}
     >
       <g>
         <path

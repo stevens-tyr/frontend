@@ -1,9 +1,8 @@
 @import '../../style/colors.scss';
 
 .dashboard {
-  // we need this t
-  margin-left: 85px;
-  width: calc(100vw - 85px);
+  box-sizing: border-box;
+  margin-left: 75px;
   height: 100vh;
   display: flex;
 
@@ -12,8 +11,14 @@
   }
 
   .content-dashboard {
+    box-sizing: border-box;
     padding: 30px;
     width: 100%;
-    height: 100%;
+    max-width: 1180px;
+
+    h2 {
+      border-bottom: 1px solid #c7cdd1;
+      padding-bottom: 0.5rem;
+    }
   }
 }

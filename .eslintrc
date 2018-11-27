@@ -25,6 +25,7 @@
         "optionalDependencies": true,
         "peerDependencies": true
       }
-    ]
+    ],
+    "import/no-cycle": 0
   }
 }
