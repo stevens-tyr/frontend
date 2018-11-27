@@ -29,7 +29,6 @@ class Dashboard extends Component {
         <div className="content-dashboard">
           <h1 className="header">Dashboard</h1>
           <h2>Courses</h2>
-          <hr />
           {courses.map(({ department, number, section, name, color }) => (
             <ListItem
               key={`${department}-${number}-${section}`}
@@ -40,7 +39,6 @@ class Dashboard extends Component {
           ))}
 
           <h2>Recent Assignments</h2>
-          <hr />
           {assignments.map(({ course, name, dueDate }) => (
             <ListRow
               key={`${course}-${name}`}

@@ -1,26 +1,30 @@
-@import "../../style/colors.scss";
+@import '../../style/colors.scss';
 
 .listelement {
-    margin: 20px;
-    display: flex;
+  margin: 20px;
+  display: flex;
 
-    .thumbnail {
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
-        margin-right: 20px;
-    }
-    .red {
-        background-color: $red;
-    }
-    .green {
-        background-color: $green;
-    }
-    .blue {
-        background-color: $blue;
-    }
+  .headers {
+    cursor: pointer;
+  }
 
-    .subheader {
-        color: #737373
-    }
+  .thumbnail {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    margin-right: 20px;
+  }
+  .red {
+    background-color: $red;
+  }
+  .green {
+    background-color: $green;
+  }
+  .blue {
+    background-color: $blue;
+  }
+
+  .subheader {
+    color: #737373;
+  }
 }
