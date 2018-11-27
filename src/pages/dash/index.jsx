@@ -15,6 +15,7 @@ class Dashboard extends Component {
     try {
       await tyr.get('auth/logged_in');
       const { data } = await tyr.get('plague_doctor/dashboard');
+      /* eslint-disable-next-line */
       console.log(data);
     } catch (e) {
       history.push('/not-authorized');
@@ -27,25 +28,24 @@ class Dashboard extends Component {
         <Sidebar />
         <div className="content-dashboard">
           <h1 className="header">Dashboard</h1>
-
           <h2>Courses</h2>
           <hr />
-          {courses.map(course => (
+          {courses.map(({ department, number, section, name, color }) => (
             <ListItem
-              header={`${course.department}${course.number} ${
-                course.section
-              } - ${course.name}`}
+              key={`${department}-${number}-${section}`}
+              header={`${department}${number} ${section} - ${name}`}
               subheader="Last updated on 2018-06-01"
-              thumbnailColor={course.color}
+              thumbnailColor={color}
             />
           ))}
 
-          <h2>Assignments</h2>
+          <h2>Recent Assignments</h2>
           <hr />
-          {assignments.map(a => (
+          {assignments.map(({ course, name, dueDate }) => (
             <ListRow
-              header={`${a.course} | ${a.name}`}
-              subheader={`Due on ${a.dueDate}`}
+              key={`${course}-${name}`}
+              header={`${course} | ${name}`}
+              subheader={`Due on ${dueDate}`}
               thumbnailColor="red"
               cols={['Submitted on 2018-12-01', '85']}
             />

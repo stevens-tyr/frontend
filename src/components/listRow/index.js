@@ -12,7 +12,7 @@ export default props => {
         subheader={subheader}
         thumbnailColor={thumbnailColor}
       />
-      {cols.map(c => <p>{c}</p>)}
+      {cols.map(c => <p key={c}>{c}</p>)}
     </div>
   );
 };
