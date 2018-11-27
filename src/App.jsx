@@ -14,6 +14,7 @@ const App = () => (
         <Route path="/login" component={() => <Pages.Auth type="login" />} />
         <Route path="/signup" component={() => <Pages.Auth type="signup" />} />
         <Route path="/dashboard" component={Pages.Dashboard} />
+        <Route path="/not-authorized" component={Pages.NotAuthorized} />
         <Route path="*" component={Pages.FourOhFour} />
       </Switch>
     </>

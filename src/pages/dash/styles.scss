@@ -1,21 +1,19 @@
 @import '../../style/colors.scss';
 
-.temp {
-  width: 100vw;
+.dashboard {
+  // we need this t
+  margin-left: 85px;
+  width: calc(100vw - 85px);
   height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  color: $white;
-}
 
-.good {
-  @extend .temp;
-  background-color: $green;
-}
+  .header {
+    margin-bottom: 30px;
+  }
 
-.bad {
-  @extend .temp;
-  background-color: $red;
+  .content-dashboard {
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+  }
 }
