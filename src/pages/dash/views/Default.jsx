@@ -1,16 +1,21 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import tyr from '../../../utils/tyr';
-import { courses, assignments } from '../data';
 
 import ListItem from '../../../components/listItem';
 import ListRow from '../../../components/listRow';
 
 class Default extends Component {
+  state = {
+    courses: []
+  };
+
   async componentDidMount() {
     try {
       const { data } = await tyr.get('plague_doctor/dashboard');
       /* eslint-disable-next-line */
+      this.setState(data);
       console.log(data);
     } catch (e) {
       /* eslint-disable-next-line */
@@ -18,35 +23,40 @@ class Default extends Component {
     }
   }
 
+  color = ['red', 'green', 'blue'];
+
   render() {
     const { match } = this.props;
+    const { courses } = this.state;
     return (
       <>
         <h1 className="header">Dashboard</h1>
         <h2>Courses</h2>
-        {courses.map(({ department, number, section, name, color }) => (
-          <Link to={`${match.url}/course/:cid/assignment/:aid`}>
+        {courses.map(({ department, number, section, name, id }, i) => (
+          <Link to={`${match.url}/course/${id}/`} key={id}>
             <ListItem
-              key={`${department}-${number}-${section}`}
-              header={`${department}${number} ${section} - ${name}`}
+              header={`${department}-${number} ${section} ${name}`}
               subheader="Last updated on 2018-06-01"
-              thumbnailColor={color}
+              thumbnailColor={this.color[i]}
             />
           </Link>
         ))}
 
-        <h2>Recent Assignments</h2>
-        {assignments.map(({ course, name, dueDate }) => (
-          <Link to={`${match.url}/course/:cid/assignment/:aid`}>
+        <h2>Recent Activity</h2>
+        <p style={{ paddingTop: '1rem' }}>Nothing to Show!</p>
+        {/* {assignments.map(({ course, name, dueDate }) => (
+          <Link
+            to={`${match.url}/course/:cid/assignment/:aid`}
+            key={`${course}-${name}`}
+          >
             <ListRow
-              key={`${course}-${name}`}
               header={`${course} | ${name}`}
               subheader={`Due on ${dueDate}`}
               thumbnailColor="red"
               cols={['Submitted on 2018-12-01', '85']}
             />
           </Link>
-        ))}
+        ))} */}
       </>
     );
   }

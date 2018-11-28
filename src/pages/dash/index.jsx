@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router';
 import { addMsg } from '../../actions/auth.actions';
 import tyr from '../../utils/tyr';
-import Sidebar from '../../components/sidebar';
+import SideNav from '../../components/sidenav';
 import * as Views from './views';
 import './styles.scss';
 
@@ -14,9 +14,9 @@ class Dashboard extends Component {
     const { history } = this.props;
     try {
       await tyr.get('auth/logged_in');
-      const { data } = await tyr.get('plague_doctor/dashboard');
+      // const { data } = await tyr.get('plague_doctor/dashboard');
       /* eslint-disable-next-line */
-      console.log(data);
+      // this.setState({ data });
     } catch (e) {
       addMsg('ERR', 'Not Authorized', 'Please Login');
       history.push('/login');
@@ -27,7 +27,7 @@ class Dashboard extends Component {
     const { match } = this.props;
     return (
       <div className="dashboard">
-        <Sidebar />
+        <SideNav />
         <div className="content-dashboard">
           <Switch>
             <Route exact path={`${match.url}/`} component={Views.Default} />
