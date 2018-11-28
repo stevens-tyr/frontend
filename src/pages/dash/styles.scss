@@ -16,6 +16,16 @@
     width: 100%;
     max-width: 1180px;
 
+    a {
+      &:hover,
+      &:visited,
+      &:link {
+        outline: none !important;
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
     h2 {
       border-bottom: 1px solid #c7cdd1;
       padding-bottom: 0.5rem;

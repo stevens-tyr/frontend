@@ -33,11 +33,11 @@ class Dashboard extends Component {
             <Route exact path={`${match.url}/`} component={Views.Default} />
             <Route
               exact
-              path={`${match.url}/course/:courseid`}
+              path={`${match.url}/course/:cid`}
               component={() => <div>course page</div>}
             />
             <Route
-              path={`${match.url}/course/assignment/:assid`}
+              path={`${match.url}/course/:cid/assignment/:aid`}
               component={() => <div>course assignment page</div>}
             />
             <Route
