@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router';
+import { addMsg } from '../../actions/auth.actions';
 import tyr from '../../utils/tyr';
 import Sidebar from '../../components/sidebar';
-import ListItem from '../../components/listItem';
-import ListRow from '../../components/listRow';
-
+import * as Views from './views';
 import './styles.scss';
-import { courses, assignments } from './data';
 
 class Dashboard extends Component {
   state = {};
@@ -18,40 +18,39 @@ class Dashboard extends Component {
       /* eslint-disable-next-line */
       console.log(data);
     } catch (e) {
-      history.push('/not-authorized');
+      addMsg('ERR', 'Not Authorized', 'Please Login');
+      history.push('/login');
     }
   }
 
   render() {
+    const { match } = this.props;
     return (
       <div className="dashboard">
         <Sidebar />
         <div className="content-dashboard">
-          <h1 className="header">Dashboard</h1>
-          <h2>Courses</h2>
-          {courses.map(({ department, number, section, name, color }) => (
-            <ListItem
-              key={`${department}-${number}-${section}`}
-              header={`${department}${number} ${section} - ${name}`}
-              subheader="Last updated on 2018-06-01"
-              thumbnailColor={color}
+          <Switch>
+            <Route exact path={`${match.url}/`} component={Views.Default} />
+            <Route
+              exact
+              path={`${match.url}/course/:courseid`}
+              component={() => <div>course page</div>}
             />
-          ))}
-
-          <h2>Recent Assignments</h2>
-          {assignments.map(({ course, name, dueDate }) => (
-            <ListRow
-              key={`${course}-${name}`}
-              header={`${course} | ${name}`}
-              subheader={`Due on ${dueDate}`}
-              thumbnailColor="red"
-              cols={['Submitted on 2018-12-01', '85']}
+            <Route
+              path={`${match.url}/course/assignment/:assid`}
+              component={() => <div>course assignment page</div>}
             />
-          ))}
+            <Route
+              path="*"
+              component={() => <Redirect to={`${match.url}/`} />}
+            />
+          </Switch>
         </div>
       </div>
     );
   }
 }
-
-export default Dashboard;
+export default connect(
+  null,
+  { addMsg }
+)(Dashboard);
