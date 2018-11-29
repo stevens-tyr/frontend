@@ -5,13 +5,19 @@ const SERVER_PORT = 5000;
 const DEV_PORT = 3000;
 
 module.exports = {
+  output: {
+    publicPath: '/'
+  },
   devServer: {
     compress: true,
     open: false,
     port: DEV_PORT,
     quiet: true,
     proxy: {
-      '/': `http://localhost:${SERVER_PORT}`
+      '/api': `http://localhost:${SERVER_PORT}`
+    },
+    historyApiFallback: {
+      index: `http://localhost:${DEV_PORT}/index.html`
     }
   },
   module: {

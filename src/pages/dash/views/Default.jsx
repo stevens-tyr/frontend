@@ -29,7 +29,7 @@ class Default extends Component {
     const { match } = this.props;
     const { courses } = this.state;
     return (
-      <>
+      <div className="content-dashboard">
         <h1 className="header">Dashboard</h1>
         <h2>Courses</h2>
         {courses.map(({ department, number, section, name, id }, i) => (
@@ -57,7 +57,7 @@ class Default extends Component {
             />
           </Link>
         ))} */}
-      </>
+      </div>
     );
   }
 }

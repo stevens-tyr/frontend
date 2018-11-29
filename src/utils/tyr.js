@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { store } from '../index';
+// import { showLoading, hideLoading } from 'react-redux-loading-bar';
+// import { store } from '../index';
 
 const tyr = axios.create({
   baseURL: '/api/v1/'
@@ -8,7 +8,7 @@ const tyr = axios.create({
 
 export default {
   get: async (url, config = {}) => {
-    store.dispatch(showLoading());
+    // store.dispatch(showLoading());
     try {
       const res = await tyr.get(url, {
         ...config,
@@ -18,11 +18,11 @@ export default {
     } catch (e) {
       throw e;
     } finally {
-      store.dispatch(hideLoading());
+      // store.dispatch(hideLoading());
     }
   },
   post: async (url, data, config = {}) => {
-    store.dispatch(showLoading());
+    // store.dispatch(showLoading());
     try {
       const res = await tyr.post(url, data, {
         ...config,
@@ -34,7 +34,7 @@ export default {
       console.log(e);
       throw e;
     } finally {
-      store.dispatch(hideLoading());
+      // store.dispatch(hideLoading());
     }
   }
 };
