@@ -56,31 +56,48 @@ class Assignment extends Component {
   jobStatus = async () => {
     const { currentKey } = this.state;
     try {
-      const data = await axios.get(
+      const {
+        data: { logs }
+      } = await axios.get(
         `http://localhost:4000/api/v1/grader/${currentKey}/status`
       );
-      console.log(data);
+      this.setState({ jobLog: logs });
     } catch (e) {
-      this.setState({ jobLog: `No Job Found for Submission` });
+      if (e.response.data) {
+        if (e.response.data.err) {
+          if (e.response.data.err.ErrStatus) {
+            const { message, reason } = e.response.data.err.ErrStatus;
+            this.setState({ jobLog: `[${reason}]: ${message}` });
+            return;
+          }
+        }
+      }
+      this.setState({ jobLog: `Error Getting Job Info From Kubernetes` });
     }
   };
 
   setKey = async id => {
     const { currentKey } = this.state;
-    this.setState({ currentKey: currentKey === id ? null : id }, async () => {
-      if (this.state.currentKey) {
-        console.log('here');
-        await this.jobStatus();
+    this.setState(
+      { currentKey: currentKey === id ? null : id, jobLog: null },
+      async () => {
+        if (this.state.currentKey) {
+          await this.jobStatus();
+        }
       }
-    });
+    );
   };
 
   showCode = () => {
     const { jobLog } = this.state;
     return (
       <div>
-        <button className="button-error tiny-but">Trigger Job</button>
-        <button className="button-info tiny-but ">Refresh</button>
+        <button onClick={this.startJob} className="button-error tiny-but">
+          Trigger Job
+        </button>
+        <button onClick={this.jobStatus} className="button-info tiny-but ">
+          Refresh
+        </button>
         <pre className="code">{jobLog ? jobLog : 'Loading...'}</pre>
       </div>
     );

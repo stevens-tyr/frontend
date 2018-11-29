@@ -43,7 +43,8 @@
 
   .assignments {
     padding: 30px;
-    width: 100%;
+    width: calc(100% - 250px);
+    box-sizing: border-box;
   }
 
   .code {
@@ -52,6 +53,7 @@
     padding: 10px;
     color: white;
     margin-top: 10px;
+    word-wrap: break-word;
   }
 
   .tiny-but {
