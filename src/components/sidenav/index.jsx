@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import * as eva from 'eva-icons';
 import Tear from '../common/Tear';
 
@@ -21,7 +22,9 @@ class Sidebar extends Component {
   render() {
     return (
       <div className="sidebar-main">
-        <Tear sizeClass="icon" />
+        <Link to="/dashboard">
+          <Tear sizeClass="icon" />
+        </Link>
         <i data-eva="compass-outline" />
         <i data-eva="book-outline" />
         <i data-eva="file-text-outline" />

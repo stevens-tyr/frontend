@@ -17,9 +17,7 @@ class Course extends Component {
       const {
         data: { course }
       } = await tyr.get(`plague_doctor/course/${cid}`);
-      /* eslint-disable-next-line */
-      this.setState(course, () => console.log(this.state));
-      console.log('course data:', course);
+      this.setState(course);
     } catch (e) {
       /* eslint-disable-next-line */
       console.error(e);
@@ -27,12 +25,25 @@ class Course extends Component {
   }
 
   render() {
-    const { id } = this.state;
+    const { id, name, department, section, number } = this.state;
     return (
       id && (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', width: '100%' }}>
           <CourseNav {...this.state} />
-          <div>TEST</div>
+          <div className="course-info">
+            <h1>
+              {department}
+              {number}
+              {section}
+            </h1>
+            <h2>{name}</h2>
+            <div style={{ maxWidth: '600px' }}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate
+              vero quibusdam necessitatibus. Quasi omnis, nisi quibusdam amet
+              perspiciatis excepturi ratione fugit? Provident veritatis nemo
+              sapiente deleniti aut tempore magnam soluta!
+            </div>
+          </div>
         </div>
       )
     );

@@ -1,10 +1,26 @@
 @import '../../style/colors.scss';
+@import '../../style/typography.scss';
+@import '../../style/input.scss';
 
 .dashboard {
   box-sizing: border-box;
   margin-left: 75px;
   height: 100vh;
   display: flex;
+  a {
+    &:hover,
+    &:visited,
+    &:link {
+      outline: none !important;
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  h2 {
+    border-bottom: 1px solid #c7cdd1;
+    padding-bottom: 0.5rem;
+  }
 
   .header {
     margin-bottom: 30px;
@@ -15,20 +31,31 @@
     padding: 30px;
     width: 100%;
     max-width: 1180px;
+  }
 
-    a {
-      &:hover,
-      &:visited,
-      &:link {
-        outline: none !important;
-        text-decoration: none;
-        color: inherit;
-      }
-    }
+  .course-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 
-    h2 {
-      border-bottom: 1px solid #c7cdd1;
-      padding-bottom: 0.5rem;
-    }
+  .assignments {
+    padding: 30px;
+    width: 100%;
+  }
+
+  .code {
+    background-color: black;
+    border-radius: 4px;
+    padding: 10px;
+    color: white;
+    margin-top: 10px;
+  }
+
+  .tiny-but {
+    padding: 8px;
+    margin-right: 10px;
   }
 }

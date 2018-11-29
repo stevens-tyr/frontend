@@ -26,14 +26,13 @@ class Default extends Component {
   color = ['red', 'green', 'blue'];
 
   render() {
-    const { match } = this.props;
     const { courses } = this.state;
     return (
       <div className="content-dashboard">
         <h1 className="header">Dashboard</h1>
         <h2>Courses</h2>
         {courses.map(({ department, number, section, name, id }, i) => (
-          <Link to={`${match.url}/course/${id}/`} key={id}>
+          <Link to={`/dashboard/course/${id}/`} key={id}>
             <ListItem
               header={`${department}-${number} ${section} ${name}`}
               subheader="Last updated on 2018-06-01"

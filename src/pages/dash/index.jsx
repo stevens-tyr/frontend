@@ -8,6 +8,7 @@ import SideNav from '../../components/sidenav';
 
 import Default from './views/Default';
 import Course from './views/Course';
+import Assignments from './views/Assignments';
 import Assignment from './views/Assignment';
 
 import './styles.scss';
@@ -24,18 +25,21 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { match } = this.props;
     return (
       <div className="dashboard">
         <SideNav />
         <Switch>
-          <Route exact path={`${match.url}/`} component={Default} />
-          <Route exact path={`${match.url}/course/:cid`} component={Course} />
+          <Route exact path="/dashboard/" component={Default} />
+          <Route exact path="/dashboard/course/:cid" component={Course} />
           <Route
-            path={`${match.url}/course/:cid/assignment/:aid`}
+            path="/dashboard/course/:cid/assignments/"
+            component={Assignments}
+          />
+          <Route
+            path="/dashboard/course/:cid/assignments/:aid"
             component={Assignment}
           />
-          <Route path="*" component={() => <Redirect to={`${match.url}/`} />} />
+          <Route path="*" component={() => <Redirect to="/dashboard/" />} />
         </Switch>
       </div>
     );
