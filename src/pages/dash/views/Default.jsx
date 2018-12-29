@@ -14,8 +14,9 @@ class Default extends Component {
   async componentDidMount() {
     try {
       const { data } = await tyr.get('plague_doctor/dashboard');
+      console.log(data)
       /* eslint-disable-next-line */
-      this.setState(data);
+      this.setState({...data, courses: data.courses || []});
       console.log(data);
     } catch (e) {
       /* eslint-disable-next-line */
