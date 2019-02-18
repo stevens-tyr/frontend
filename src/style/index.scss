@@ -10,6 +10,7 @@ body {
   // IBM Plex with System Font fallback
   font-family: $default-font;
   background-color: #fff;
+  background-color: $bg;
 }
 
 .loading-bar {

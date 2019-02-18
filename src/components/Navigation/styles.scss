@@ -1,0 +1,44 @@
+@import '../../style/colors.scss';
+@import '../../style/typography.scss';
+@import '../../style/input.scss';
+@import '../../style/shadows.scss';
+
+.nav {
+  height: 56px;
+  background-color: $white;
+  border-bottom: 1px solid $primary;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  box-shadow: $nav;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+  .tyr-drop {
+    margin-right: 0.5rem;
+    fill: $primary !important;
+  }
+  .icons {
+    margin: 0 0.5rem;
+    cursor: pointer;
+    fill: $light-purp;
+    &:hover {
+      transition: all 300ms;
+      fill: $purp;
+    }
+  }
+  .left {
+    display: flex;
+    align-items: center;
+  }
+  .right {
+    display: flex;
+    align-items: center;
+    .name {
+      line-height: 60px;
+    }
+  }
+}

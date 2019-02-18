@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router';
+import { Route, Switch } from 'react-router';
 
 import { addMsg } from '../../actions/auth.actions';
 import tyr from '../../utils/tyr';
-import SideNav from '../../components/sidenav';
 
 import Default from './views/Default';
-import Course from './views/Course';
-import Assignments from './views/Assignments';
-import Assignment from './views/Assignment';
+
+import Navigation from '../../components/Navigation';
 
 import './styles.scss';
 
@@ -27,19 +25,22 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <SideNav />
+        <Navigation name={['Rob', 'Herley']} />
         <Switch>
           <Route exact path="/dashboard/" component={Default} />
-          <Route exact path="/dashboard/course/:cid" component={Course} />
+          <Route
+            exact
+            path="/dashboard/course/:cid"
+            component={<p>course page</p>}
+          />
           <Route
             path="/dashboard/course/:cid/assignments/"
-            component={Assignments}
+            component={<p>course page</p>}
           />
           <Route
             path="/dashboard/course/:cid/assignments/:aid"
-            component={Assignment}
+            component={<p>assignment list</p>}
           />
-          <Route path="*" component={() => <Redirect to="/dashboard/" />} />
         </Switch>
       </div>
     );

@@ -14,7 +14,7 @@ class Landing extends Component {
     const { history } = this.props;
     try {
       await tyr.get('auth/logged_in');
-      history.push('/dashboard');
+      history.push('/home');
     } catch (e) {
       // we aren't authed
       this.setState({ loaded: true });
