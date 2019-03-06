@@ -1,6 +1,6 @@
-@import '../../style/colors.scss';
-@import '../../style/typography.scss';
-@import '../../style/input.scss';
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/input.scss';
 
 .landing-container {
   background-color: $purp;
@@ -20,5 +20,6 @@
     vertical-align: middle;
     display: inline-block;
     height: 11rem;
+    fill: $white;
   }
 }

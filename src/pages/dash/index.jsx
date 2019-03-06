@@ -6,7 +6,6 @@ import { addMsg } from '../../actions/auth.actions';
 import tyr from '../../utils/tyr';
 
 import Default from './views/Default';
-
 import Navigation from '../../components/Navigation';
 
 import './styles.scss';
@@ -31,15 +30,15 @@ class Dashboard extends Component {
           <Route
             exact
             path="/dashboard/course/:cid"
-            component={<p>course page</p>}
+            component={() => <p>course page</p>}
           />
           <Route
             path="/dashboard/course/:cid/assignments/"
-            component={<p>course page</p>}
+            component={() => <p>course page</p>}
           />
           <Route
             path="/dashboard/course/:cid/assignments/:aid"
-            component={<p>assignment list</p>}
+            component={() => <p>assignment list</p>}
           />
         </Switch>
       </div>

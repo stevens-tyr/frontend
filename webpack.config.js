@@ -1,13 +1,15 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const SERVER_PORT = 5000;
 const DEV_PORT = 3000;
 
-module.exports = {
+module.exports = (env, options) => ({
   output: {
     publicPath: '/'
   },
+  devtool: options.mode === 'production' ? false : 'source-map',
   devServer: {
     compress: true,
     open: false,
@@ -87,6 +89,12 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      Style: path.resolve(__dirname, './src/style/'),
+      Components: path.resolve(__dirname, './src/components/')
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -101,4 +109,4 @@ module.exports = {
       }
     })
   ]
-};
+});

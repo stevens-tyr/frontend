@@ -1,12 +1,23 @@
-@import '../../style/colors.scss';
-@import '../../style/typography.scss';
-@import '../../style/input.scss';
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/input.scss';
+
+// Remove default link styling
+a {
+  &:visited,
+  &:link {
+    outline: none !important;
+    text-decoration: none;
+    color: inherit;
+  }
+}
 
 .dashboard {
-  margin-top: 56px;
   padding: 2rem;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 56px auto;
+  margin-bottom: 0;
+  color: $dark;
 }
 
 .home {
@@ -15,18 +26,98 @@
   flex-flow: row wrap;
   align-items: stretch;
   .profile {
-    flex-grow: 2;
+    flex-grow: 1;
     height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+      font-size: 3rem;
+      font-weight: $thin;
+    }
+    h2 {
+      font-weight: $thicc;
+      font-size: 2rem;
+    }
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 100%;
+    }
+    .intro {
+      flex-grow: 2;
+      padding-left: 2rem;
+      .email {
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+        fill: $primary;
+        font-weight: $thicc;
+        color: $purp;
+        svg {
+          padding-right: 0.5rem;
+        }
+      }
+    }
   }
   .split {
-    .card {
-      height: 100%;
-    }
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    .card {
+      height: 100%;
+    }
+    .total {
+      display: flex;
+      .mid {
+        font-size: 3rem;
+        text-transform: uppercase;
+        font-weight: $thin;
+      }
+      div {
+        h1 {
+          font-size: 3rem;
+        }
+        .tiny {
+          font-size: 1rem;
+          width: 100%;
+          font-weight: $thin;
+        }
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .assignments {
+        h1 {
+          color: $blue;
+        }
+      }
+      .courses {
+        h1 {
+          color: $green;
+        }
+      }
+    }
+    .unfinished {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h1 {
+        font-size: 3.5rem;
+        padding-right: 1rem;
+        color: $pink;
+      }
+      h2 {
+        font-weight: $regular;
+      }
+      h3 {
+        font-weight: $thin;
+      }
+    }
   }
 }
 
@@ -34,4 +125,46 @@
   margin: 0 1rem;
   margin-top: 1rem;
   font-size: 1.5rem;
+}
+
+.recent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  padding: 1rem;
+  padding-right: 10rem;
+  div {
+    height: 5rem;
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h1 {
+      font-weight: $regular;
+    }
+  }
+  .name h1 {
+    color: $blue;
+  }
+  .passed h1 {
+    color: $green;
+  }
+  .failed h1 {
+    color: $pink;
+  }
+  .more {
+    position: absolute;
+    right: 0.5rem;
+    top: 1rem;
+    cursor: pointer;
+  }
+  .tiny {
+    font-weight: $thin;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 0.8rem;
+  }
 }
