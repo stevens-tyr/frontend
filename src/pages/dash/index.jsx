@@ -5,8 +5,8 @@ import { Route, Switch } from 'react-router';
 import { addMsg } from '../../actions/auth.actions';
 import tyr from '../../utils/tyr';
 
-import Default from './views/Default';
 import Navigation from '../../components/Navigation';
+import Default from './Default';
 
 import './styles.scss';
 
@@ -24,7 +24,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <Navigation name={['Rob', 'Herley']} />
+        <Navigation />
         <Switch>
           <Route exact path="/dashboard/" component={Default} />
           <Route

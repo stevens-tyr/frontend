@@ -1,0 +1,29 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+.intro {
+  display: flex;
+  .profile {
+    flex: 2;
+    height: 125px;
+  }
+  .courses {
+    flex: 1;
+    overflow: scroll;
+  }
+}
+
+.courses {
+  display: flex;
+  flex-wrap: wrap;
+  a {
+    width: 50%;
+  }
+  .card {
+    .number {
+      font-size: 1.5rem;
+      font-weight: $thicc;
+    }
+  }
+}
