@@ -70,10 +70,32 @@
 
 .split {
   display: flex;
+  .name {
+    font-size: 1.5rem;
+    font-weight: $thicc;
+  }
   .upcoming {
     width: 50%;
+    .assignment {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .date {
+      font-weight: $thicc;
+    }
   }
   .recent {
     width: 50%;
+    .sub {
+      position: relative;
+      .pie {
+        top: 2rem;
+        right: 2rem;
+        position: absolute;
+        height: 100px;
+        width: 100px;
+      }
+    }
   }
 }

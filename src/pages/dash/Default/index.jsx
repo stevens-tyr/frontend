@@ -1,11 +1,18 @@
 /* eslint-disable */
+// TODO: Cleanup this into multiple components
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import tyr from '../../../utils/tyr';
-import Card from 'Components/Card';
 import { Empty } from 'antd';
 import * as eva from 'eva-icons';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import PieChart from 'react-minimal-pie-chart';
+
+import Card from 'Components/Card';
+import tyr from '../../../utils/tyr';
 import './styles.scss';
+
+dayjs.extend(relativeTime);
 
 // Src: https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
 const stringToColour = str => {
@@ -37,12 +44,12 @@ class Default extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this._mounted = false;
-  }
-
   componentDidUpdate() {
     eva.replace();
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   renderCourses() {
@@ -68,40 +75,81 @@ class Default extends Component {
   renderTodo() {
     const { assignments, courses } = this.state;
     const filtered = assignments.filter(e => new Date(e.dueDate) > new Date());
-    console.log(courses);
     if (filtered.length) {
       return filtered.map(a => {
-        const c = courses.find(e => e._id === a.couseID);
+        const c = courses.find(e => e._id === a.couseID); // im vv lazy
         return (
-          <Card key={a.id}>
-            <div>{a.name}</div>
-            <div>{c.longName}</div>
-            <div>{new Date(a.dueDate).toLocaleDateString()}</div>
-          </Card>
+          <Link key={a.id} to={`/dashboard/course/${c.id}/${a.id}`}>
+            <Card className="assignment">
+              <div>
+                <div className="name">{a.name}</div>
+                <div>{c.longName}</div>
+              </div>
+              <div>
+                <div className="date">
+                  {dayjs(a.dueDate).format('MMM D [at] h:mm A')}
+                </div>
+                <div>({dayjs(a.dueDate).fromNow()})</div>
+              </div>
+            </Card>
+          </Link>
         );
       });
-    } else {
-      return (
-        <Card>
-          <Empty description="Nothing to do!" />
-        </Card>
-      );
     }
+    return (
+      <Card>
+        <Empty description="Nothing to do!" />
+      </Card>
+    );
   }
 
   renderRecent() {
     const { mostRecentSubmissions } = this.state;
     if (mostRecentSubmissions.length) {
-      return mostRecentSubmissions.map(s => (
-        <Card key={s._id}>{JSON.stringify(s)}</Card>
+      return mostRecentSubmissions.slice(0, 3).map(s => (
+        <Link
+          key={s._id}
+          to={`/dashboard/course/${s.course._id}/${s.assignment._id}`}
+        >
+          <Card className="sub">
+            <div className="name">{s.assignment.name}</div>
+            <div>
+              {s.course.department}-{s.course.number} {s.course.section}
+            </div>
+            <div>Submitted: {dayjs(s.submissionDate).fromNow()}</div>
+            <div>
+              Attempt: {s.attemptNumber}/{s.assignment.numAttempts}
+            </div>
+            <PieChart
+              lineWidth={30}
+              label
+              labelStyle={{
+                fontSize: '1rem'
+              }}
+              labelPosition={45}
+              className="pie"
+              data={[
+                {
+                  title: 'Pass',
+                  color: '#61e786',
+                  value: s.cases.studentFacing.pass
+                },
+                {
+                  title: 'Fail',
+                  color: '#e27a70',
+                  value: s.cases.studentFacing.fail
+                }
+              ]}
+            />
+          </Card>
+        </Link>
       ));
-    } else {
-      return (
-        <Card>
-          <Empty description="Nothing submitted yet!" />
-        </Card>
-      );
     }
+    return (
+      <Card>
+        <Empty description="Nothing submitted yet!" />
+      </Card>
+    );
   }
 
   render() {

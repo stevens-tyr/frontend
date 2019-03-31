@@ -22,7 +22,7 @@ const Navigation = () => (
           <Tear sizeClass="icon" />
         </Link>
         <NavLink to="/dashboard" text="Dashboard" />
-        <NavLink to="/dashboard/courses" text="Courses" />
+        <NavLink to="/dashboard/course" text="Courses" />
         <NavLink to="/dashboard/calendar" text="Calendar" />
       </div>
       <div className="right">
