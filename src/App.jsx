@@ -12,7 +12,7 @@ const App = () => (
         <Route path="/login" component={() => <Pages.Auth type="login" />} />
         <Route path="/signup" component={() => <Pages.Auth type="signup" />} />
         <Route path="/dashboard" component={Pages.Dashboard} />
-        <Route path="*" component={() => <Redirect to="/dashboard/" />} />
+        <Route path="*" component={() => <Redirect to="/dashboard" />} />
       </Switch>
     </>
   </BrowserRouter>

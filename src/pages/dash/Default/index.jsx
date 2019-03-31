@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import tyr from '../../../utils/tyr';
 import Card from 'Components/Card';
+import { Empty } from 'antd';
+import * as eva from 'eva-icons';
 import './styles.scss';
 
 // Src: https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
@@ -39,6 +41,10 @@ class Default extends Component {
     this._mounted = false;
   }
 
+  componentDidUpdate() {
+    eva.replace();
+  }
+
   renderCourses() {
     const { courses } = this.state;
     return courses.map(c => (
@@ -60,46 +66,94 @@ class Default extends Component {
   }
 
   renderTodo() {
-    const { assignments } = this.state;
-    // const filtered = assignments.filter(e => new Date(e.dueDate) > new Date());
-    // if (filtered.length) {
-    return assignments.map(a => <Card key={a.id}>{JSON.stringify(a)}</Card>);
-    // } else {
-    //   return <Card>Nothing To Do!</Card>;
-    // }
+    const { assignments, courses } = this.state;
+    const filtered = assignments.filter(e => new Date(e.dueDate) > new Date());
+    console.log(courses);
+    if (filtered.length) {
+      return filtered.map(a => {
+        const c = courses.find(e => e._id === a.couseID);
+        return (
+          <Card key={a.id}>
+            <div>{a.name}</div>
+            <div>{c.longName}</div>
+            <div>{new Date(a.dueDate).toLocaleDateString()}</div>
+          </Card>
+        );
+      });
+    } else {
+      return (
+        <Card>
+          <Empty description="Nothing to do!" />
+        </Card>
+      );
+    }
   }
 
   renderRecent() {
     const { mostRecentSubmissions } = this.state;
-    return mostRecentSubmissions.map(s => (
-      <Card key={s._id}>{JSON.stringify(s)}</Card>
-    ));
+    if (mostRecentSubmissions.length) {
+      return mostRecentSubmissions.map(s => (
+        <Card key={s._id}>{JSON.stringify(s)}</Card>
+      ));
+    } else {
+      return (
+        <Card>
+          <Empty description="Nothing submitted yet!" />
+        </Card>
+      );
+    }
   }
 
   render() {
-    const { user, fetched } = this.state;
-    console.log(this.state);
-    if (!fetched) return null;
+    const { user, fetched, courses, assignments } = this.state;
+    if (!fetched) return null; // im lazy
     return (
       <>
         <div className="intro">
           <Card className="profile dark">
             <div>
-              <h1>
+              <div className="name">
                 {user.firstName} {user.lastName}
-              </h1>
+              </div>
+              <div>{user.email}</div>
             </div>
-            <div>{user.email}</div>
+            <i
+              data-eva="person-outline"
+              data-eva-height="72"
+              data-eva-width="72"
+            />
           </Card>
-          <Card className="courses">Lorem ipsum</Card>
-          <Card className="courses">Lorem ipsum</Card>
+          <Card className="secondary">
+            <i
+              data-eva="layers-outline"
+              data-eva-height="100"
+              data-eva-width="100"
+            />
+            <div className="num">{courses.length}</div>
+            <div className="label">Total Courses</div>
+          </Card>
+          <Card className="secondary">
+            <i
+              data-eva="file-text-outline"
+              data-eva-height="100"
+              data-eva-width="100"
+            />
+            <div className="num">{assignments.length}</div>
+            <div className="label">Total Assignments</div>
+          </Card>
         </div>
-        <h3 className="m-l-1">Courses</h3>
+        <div className="dash-label">Courses</div>
         <div className="courses">{this.renderCourses()}</div>
-        <h3 className="m-l-1">Todo Assignments</h3>
-        <div className="recent-submissions">{this.renderTodo()}</div>
-        <h3 className="m-l-1">Most Recent Submissions</h3>
-        <div className="recent-submissions">{this.renderRecent()}</div>
+        <div className="split">
+          <div className="recent">
+            <div className="dash-label">Most Recent Submissions</div>
+            {this.renderRecent()}
+          </div>
+          <div className="upcoming">
+            <div className="dash-label">Upcoming Assignments</div>
+            {this.renderTodo()}
+          </div>
+        </div>
       </>
     );
   }

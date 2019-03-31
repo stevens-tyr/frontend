@@ -8,13 +8,13 @@
   box-sizing: border-box;
   height: 56px;
   background-color: $grey;
-  border-bottom: 1px solid $primary;
   color: $light;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   box-shadow: $nav;
+  z-index: 9999;
   .nav-container {
     display: flex;
     align-items: center;
