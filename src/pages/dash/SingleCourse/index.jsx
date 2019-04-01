@@ -16,6 +16,7 @@ class Course extends Component {
 
   async componentDidMount() {
     const { cid } = this.props.match.params;
+    console.log(this.props);
     this._mounted = true;
     try {
       const {

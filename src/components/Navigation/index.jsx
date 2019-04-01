@@ -6,24 +6,34 @@ import './styles.scss';
 import Tear from '../common/Tear';
 
 // eslint-disable-next-line no-underscore-dangle
-const _NavLink = ({ to, text, location }) => (
-  <Link to={to} className={`${location.pathname === to && 'active'} navlink`}>
+const NavLink = ({ to, text, active }) => (
+  <Link to={to} className={`${active() && 'active'} navlink`}>
     <div className="text">{text}</div>
   </Link>
 );
 
-const NavLink = withRouter(_NavLink);
-
-const Navigation = () => (
+const Navigation = ({ location: { pathname } }) => (
   <header className="nav">
     <div className="nav-container">
       <div className="left">
         <Link to="/dashboard">
           <Tear sizeClass="icon" />
         </Link>
-        <NavLink to="/dashboard" text="Dashboard" />
-        <NavLink to="/dashboard/course" text="Courses" />
-        <NavLink to="/dashboard/calendar" text="Calendar" />
+        <NavLink
+          to="/dashboard"
+          text="Dashboard"
+          active={() => ['/dashboard', '/dashboard/'].includes(pathname)}
+        />
+        <NavLink
+          to="/dashboard/course"
+          text="Courses"
+          active={() => pathname.includes('/dashboard/course')}
+        />
+        <NavLink
+          to="/dashboard/calendar"
+          text="Calendar"
+          active={() => pathname.includes('/dashboard/calendar')}
+        />
       </div>
       <div className="right">
         <a href="/logout" className="logout">
@@ -34,4 +44,4 @@ const Navigation = () => (
   </header>
 );
 
-export default Navigation;
+export default withRouter(Navigation);
