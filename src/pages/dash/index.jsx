@@ -7,6 +7,7 @@ import tyr from '../../utils/tyr';
 
 import Navigation from '../../components/Navigation';
 import Default from './Default';
+import Courses from './Courses';
 
 import './styles.scss';
 
@@ -27,11 +28,7 @@ class Dashboard extends Component {
         <Navigation />
         <Switch>
           <Route exact path="/dashboard/" component={Default} />
-          <Route
-            exact
-            path="/dashboard/course"
-            component={() => <p>course list page</p>}
-          />
+          <Route exact path="/dashboard/course" component={Courses} />
           <Route
             exact
             path="/dashboard/calendar"
