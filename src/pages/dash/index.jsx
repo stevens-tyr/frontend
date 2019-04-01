@@ -1,57 +1,51 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router';
+
+import { addMsg } from '../../actions/auth.actions';
 import tyr from '../../utils/tyr';
-import Sidebar from '../../components/sidebar';
-import ListItem from '../../components/listItem';
-import ListRow from '../../components/listRow';
+
+import Navigation from '../../components/Navigation';
+import Default from './Default';
+import Courses from './Courses';
+import SingleCourse from './SingleCourse';
 
 import './styles.scss';
-import { courses, assignments } from './data';
 
 class Dashboard extends Component {
-  state = {};
-
   async componentDidMount() {
     const { history } = this.props;
     try {
       await tyr.get('auth/logged_in');
-      const { data } = await tyr.get('plague_doctor/dashboard');
-      /* eslint-disable-next-line */
-      console.log(data);
     } catch (e) {
-      history.push('/not-authorized');
+      addMsg('ERR', 'Not Authorized', 'Please Login');
+      history.push('/login');
     }
   }
 
   render() {
     return (
       <div className="dashboard">
-        <Sidebar />
-        <div className="content-dashboard">
-          <h1 className="header">Dashboard</h1>
-          <h2>Courses</h2>
-          {courses.map(({ department, number, section, name, color }) => (
-            <ListItem
-              key={`${department}-${number}-${section}`}
-              header={`${department}${number} ${section} - ${name}`}
-              subheader="Last updated on 2018-06-01"
-              thumbnailColor={color}
-            />
-          ))}
-
-          <h2>Recent Assignments</h2>
-          {assignments.map(({ course, name, dueDate }) => (
-            <ListRow
-              key={`${course}-${name}`}
-              header={`${course} | ${name}`}
-              subheader={`Due on ${dueDate}`}
-              thumbnailColor="red"
-              cols={['Submitted on 2018-12-01', '85']}
-            />
-          ))}
-        </div>
+        <Navigation />
+        <Switch>
+          <Route exact path="/dashboard/" component={Default} />
+          <Route exact path="/dashboard/course" component={Courses} />
+          <Route exact path="/dashboard/course/:cid" component={SingleCourse} />
+          <Route
+            path="/dashboard/course/:cid/:aid"
+            component={() => <p>assignment page</p>}
+          />
+          <Route
+            exact
+            path="/dashboard/calendar"
+            component={() => <p>calendar page</p>}
+          />
+        </Switch>
       </div>
     );
   }
 }
-
-export default Dashboard;
+export default connect(
+  null,
+  { addMsg }
+)(Dashboard);

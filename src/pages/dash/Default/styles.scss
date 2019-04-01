@@ -1,0 +1,101 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+.dash-label {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: $thicc;
+}
+
+.intro {
+  display: flex;
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    width: calc(50% - 2rem);
+    height: 125px;
+    svg {
+      fill: $white;
+    }
+    .name {
+      font-size: 2rem;
+      font-weight: $thicc;
+    }
+  }
+  .secondary {
+    flex: 1;
+    overflow: scroll;
+    padding: 0.5rem;
+    padding-right: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    svg {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 0.5rem;
+      opacity: 0.2;
+      fill: $secondary;
+    }
+    .num {
+      line-height: 5rem;
+      font-size: 5rem;
+      font-weight: $thicc;
+      color: $dark;
+    }
+    .label {
+      color: $secondary;
+    }
+  }
+}
+
+.courses {
+  display: flex;
+  flex-wrap: wrap;
+  a {
+    width: calc(50% - 2rem);
+    margin: 1rem;
+  }
+  .card {
+    margin: 0;
+    .number {
+      font-size: 1.5rem;
+      font-weight: $thicc;
+    }
+  }
+}
+
+.split {
+  display: flex;
+  .name {
+    font-size: 1.5rem;
+    font-weight: $thicc;
+  }
+  .upcoming {
+    width: 50%;
+    .assignment {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .date {
+      font-weight: $thicc;
+    }
+  }
+  .recent {
+    width: 50%;
+    .sub {
+      position: relative;
+      .pie {
+        top: 2rem;
+        right: 2rem;
+        position: absolute;
+        height: 100px;
+        width: 100px;
+      }
+    }
+  }
+}

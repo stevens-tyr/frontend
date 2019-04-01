@@ -1,0 +1,18 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/input.scss';
+@import 'Style/shadows.scss';
+
+.card {
+  background-color: $white;
+  box-shadow: $raised;
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 6px;
+}
+
+.dark {
+  background-color: $grey;
+  color: $bg;
+}

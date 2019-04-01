@@ -9,6 +9,8 @@
 body {
   // IBM Plex with System Font fallback
   font-family: $default-font;
+  background-color: #fff;
+  background-color: $bg;
 }
 
 .loading-bar {
@@ -16,4 +18,19 @@ body {
   height: 2px;
   background-color: $green;
   position: absolute;
+}
+
+#app {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    width: 100vw;
+    height: 10rem;
+    background-color: $light-purp;
+    top: 0;
+    right: 0;
+    content: '';
+    z-index: -1;
+  }
 }
