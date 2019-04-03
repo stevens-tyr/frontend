@@ -1,0 +1,32 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/input.scss';
+@import 'Style/shadows.scss';
+
+.collapse {
+  margin: 1rem;
+  background-color: $bg
+}
+
+.panel {
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: $white;
+  box-shadow: $raised;
+  margin-bottom: 20px;
+}
+
+.dark {
+  background-color: $grey;
+  color: $bg;
+}
+
+// Put arrows on right
+.ant-collapse .ant-collapse-item .ant-collapse-header .anticon {
+  left: initial;
+  right: 16px;
+}
+
+.ant-collapse-header {
+  padding-left: 16px;
+}
