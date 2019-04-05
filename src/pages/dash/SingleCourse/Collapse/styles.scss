@@ -5,28 +5,66 @@
 
 .collapse {
   margin: 1rem;
-  background-color: $bg
-}
+  background-color: $bg;
 
-.panel {
-  padding: 2rem;
-  border-radius: 10px;
-  background-color: $white;
-  box-shadow: $raised;
-  margin-bottom: 20px;
-}
+  // expanded collapse item
+  .ant-collapse-item > .ant-collapse-content {
+    margin-top: 30px;
+    padding: 15px;
 
-.dark {
-  background-color: $grey;
-  color: $bg;
-}
+    .panel-body {
+      border-left: 3px solid $grey;
+      padding-left: 20px;
 
-// Put arrows on right
-.ant-collapse .ant-collapse-item .ant-collapse-header .anticon {
-  left: initial;
-  right: 16px;
-}
+      .required-lang {
+        margin-top: 10px;
+        font-weight: $medium;
+      }
 
-.ant-collapse-header {
-  padding-left: 16px;
+      // panel description header
+      .panel-label {
+        font-size: 1.1em;
+        font-weight: $medium;
+        margin: 10px 0;
+      }
+
+      // center submit button
+      .button-container {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .panel {
+    // custom collapse css
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: $white;
+    box-shadow: $raised;
+    margin-bottom: 20px;
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      margin-right: 30px;
+    }
+
+    .ant-collapse-header {
+      .assignment-name {
+        font-size: 1.2rem;
+      }
+
+      // Line up header text with description text
+      padding-left: 16px;
+      font-weight: $medium;
+
+      .anticon {
+        // Put arrows on right
+        left: initial;
+        right: 16px;
+      }
+    }
+  }
 }

@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import Card from 'Components/Card';
+import dayjs from 'dayjs';
 import tyr from '../../../utils/tyr';
 import './styles.scss';
 
+import Collapse from './Collapse';
 import StudentView from './views/Student';
 import ProfessorView from './views/Professor';
 
@@ -16,7 +16,6 @@ class Course extends Component {
 
   async componentDidMount() {
     const { cid } = this.props.match.params;
-    console.log(this.props);
     this._mounted = true;
     try {
       const {
@@ -35,11 +34,32 @@ class Course extends Component {
 
   render() {
     const { fetched, course } = this.state;
+    let pastAssignments, upcomingAssignments;
+
+    if (course) {
+      pastAssignments = course.assignments.filter(a =>
+        dayjs(a.dueDate).isAfter(dayjs())
+      );
+      upcomingAssignments = course.assignments
+        .filter(a => dayjs(a.dueDate).isBefore(dayjs()))
+        .reverse();
+    }
+
     if (!fetched) return null;
-    return course.role === 'student' ? (
-      <StudentView data={course} />
-    ) : (
-      <ProfessorView data={course} />
+    return (
+      <div className="course">
+        {course.role === 'student' ? (
+          <StudentView data={course} />
+        ) : (
+          <ProfessorView data={course} />
+        )}
+
+        <div className="dash-label">Upcoming Assignments</div>
+        <Collapse data={upcomingAssignments} />
+
+        <div className="dash-label">Past Assignments</div>
+        <Collapse data={pastAssignments} />
+      </div>
     );
   }
 }

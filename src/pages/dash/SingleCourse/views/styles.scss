@@ -1,0 +1,26 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+.course-info {
+  display: flex;
+  justify-content: space-between;
+
+  .card {
+    margin: 0;
+
+    // header card fonts
+    .number,
+    .profs > div > .name,
+    .assistants > div > .name {
+      font-size: 1.5rem;
+      font-weight: $thicc;
+    }
+  }
+}
+
+.student-view {
+}
+
+.professor-view {
+}

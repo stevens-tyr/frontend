@@ -41,22 +41,23 @@ class Default extends Component {
 
   renderCourses() {
     const { courses } = this.state;
-    return courses.map(c => (
-      <Link key={c.id} to={`/dashboard/course/${c.id}`}>
-        <Card
-          style={{
-            borderLeft: `0.8rem solid ${stringToColour(
-              c.department + c.number + c.role
-            )}`
-          }}
-        >
-          <div className="number">
-            {c.department}-{c.number} {c.section}
-          </div>
-          <div>{c.longName}</div>
-        </Card>
-      </Link>
-    ));
+    if (typeof courses !== 'undefined')
+      return courses.map(c => (
+        <Link key={c.id} to={`/dashboard/course/${c.id}`}>
+          <Card
+            style={{
+              borderLeft: `0.8rem solid ${stringToColour(
+                c.department + c.number + c.role
+              )}`
+            }}
+          >
+            <div className="number">
+              {c.department}-{c.number} {c.section}
+            </div>
+            <div>{c.longName}</div>
+          </Card>
+        </Link>
+      ));
   }
 
   renderTodo() {
