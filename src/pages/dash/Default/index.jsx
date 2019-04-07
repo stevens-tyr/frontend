@@ -93,7 +93,7 @@ class Default extends Component {
 
   renderRecent() {
     const { mostRecentSubmissions } = this.state;
-    if (mostRecentSubmissions.length) {
+    if (mostRecentSubmissions && mostRecentSubmissions.length) {
       return mostRecentSubmissions.slice(0, 3).map(s => (
         <Link
           key={s._id}
@@ -185,6 +185,7 @@ class Default extends Component {
             <div className="dash-label">Most Recent Submissions</div>
             {this.renderRecent()}
           </div>
+
           <div className="upcoming">
             <div className="dash-label">Upcoming Assignments</div>
             {this.renderTodo()}
