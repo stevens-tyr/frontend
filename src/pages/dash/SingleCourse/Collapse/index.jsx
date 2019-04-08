@@ -12,7 +12,7 @@ dayjs.extend(advancedFormat);
 
 const { Panel } = Collapse;
 
-export default ({ data }) => {
+export default ({ data, role }) => {
   if (data.length === 0) {
     return (
       <Card>
@@ -68,9 +68,11 @@ export default ({ data }) => {
             <div>{`Number of Submissions: ${a.numAttempts}`}</div>
             <div style={{ color: 'red' }}>IMPLEMENT SUBMISSIONS</div>
 
-            <div className="button-container">
-              <Button type="primary">Submit Assignment</Button>
-            </div>
+            {role !== 'teacher' && (
+              <div className="button-container">
+                <Button type="primary">Submit Assignment</Button>
+              </div>
+            )}
           </div>
         </Panel>
       ))}

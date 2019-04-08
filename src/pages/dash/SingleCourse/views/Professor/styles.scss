@@ -22,17 +22,20 @@
 .dash-label {
   margin-left: 1rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: $thicc;
 }
 
-.student-view {
-}
-
 .professor-view {
-  // .ant-menu {
-  //   background-color: $bg;
-  // }
+
+  .course-name {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 42px;
+    padding-left: 30px;
+  }
+
   .ant-menu-horizontal > .ant-menu-item:hover,
   .ant-menu-horizontal > .ant-menu-submenu:hover,
   .ant-menu-horizontal > .ant-menu-item-active,
@@ -43,5 +46,7 @@
   .ant-menu-horizontal > .ant-menu-submenu-selected {
     color: $primary;
     border-bottom: 2px solid $primary;
+    font-family: $default-font;
+    font-weight: $thicc;
   }
 }

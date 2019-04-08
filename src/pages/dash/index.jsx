@@ -30,11 +30,7 @@ class Dashboard extends Component {
         <Switch>
           <Route exact path="/dashboard/" component={Default} />
           <Route exact path="/dashboard/course" component={Courses} />
-          <Route exact path="/dashboard/course/:cid" component={SingleCourse} />
-          <Route
-            path="/dashboard/course/:cid/:aid"
-            component={() => <p>assignment page</p>}
-          />
+          <Route path="/dashboard/course/:cid" component={SingleCourse} />
           <Route
             exact
             path="/dashboard/calendar"
