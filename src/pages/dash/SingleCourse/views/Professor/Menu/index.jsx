@@ -4,9 +4,22 @@ import { Menu, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 class ProfessorMenu extends Component {
-  state = {
-    selectedKey: 'assignments'
-  };
+  state = {};
+
+  componentDidMount() {
+    const selectedKey = this.getProfessorSubPath();
+    this.setState({ selectedKey });
+  }
+
+  // TODO: Fix this to be more efficient
+  getProfessorSubPath() {
+    const { location } = this.props;
+    let path = location.pathname;
+    if (path[path.length - 1] === '/') {
+      path = path.substr(0, path.length - 1);
+    }
+    return path.split('/').slice(-1)[0];
+  }
 
   /**
    * When a user clicks on the top menu in the
@@ -37,8 +50,8 @@ class ProfessorMenu extends Component {
         <Menu.Item key="assignments">
           <Icon type="inbox" /> Assignments
         </Menu.Item>
-        <Menu.Item key="students">
-          <Icon type="user" /> Students
+        <Menu.Item key="people">
+          <Icon type="user" /> People
         </Menu.Item>
       </Menu>
     );

@@ -64,6 +64,7 @@ class DashCalendar extends Component {
 
   dateCellRender = value => {
     const assignments = this.getListData(value);
+    console.log('test', assignments);
     return (
       <ul className="events">
         {assignments.map(a => {

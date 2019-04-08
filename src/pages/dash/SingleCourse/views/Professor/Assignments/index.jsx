@@ -1,29 +1,17 @@
 import React from 'react';
 
-import { Table, Divider, Button } from 'antd';
+import { Table, Divider, Button, Icon } from 'antd';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { splitAssignments } from './utils';
 import './styles.scss';
 
-const Assignments = ({ assignments }) => {
-  let pastAssignments;
-  let upcomingAssignments;
-
-  // Should really be doing this in the backend, but we aint got no time
-  if (assignments) {
-    pastAssignments = assignments
-      .filter(a => dayjs(a.dueDate).isBefore(dayjs()))
-      .map(a => {
-        const { name, dueDate, language } = a;
-        return { name, dueDate, language };
-      });
-    upcomingAssignments = assignments
-      .filter(a => dayjs(a.dueDate).isAfter(dayjs()))
-      .reverse()
-      .map(a => {
-        const { name, dueDate, language } = a;
-        return { name, dueDate, language };
-      });
-  }
+const Assignments = ({ assignments, match }) => {
+  // TODO: Offload intermediate data processing to backend
+  const { pastAssignments, upcomingAssignments } = splitAssignments(
+    assignments
+  );
 
   // reference: https://ant.design/components/table/
   const tableColumns = [
@@ -56,11 +44,25 @@ const Assignments = ({ assignments }) => {
     }
   ];
 
+  /**
+   * Builds a url for any path under /dashboard/course/:cid
+   * @param {Any subpath under :cid} subpath
+   */
+  const buildPath = subpath => {
+    const { cid } = match.params;
+    return `/dashboard/course/${cid}/${subpath}`;
+  };
+
   return (
     <>
       <div className="flex-container">
         <div className="dash-label">Upcoming Assignments</div>
-        <Button type="primary">New Assignment</Button>
+        {/* TODO: This should open a model */}
+        <Link to={buildPath('assignments/new')}>
+          <Button type="primary">
+            <Icon type="plus" /> New Assignment
+          </Button>
+        </Link>
       </div>
       <Table columns={tableColumns} dataSource={upcomingAssignments} />
 
@@ -70,4 +72,4 @@ const Assignments = ({ assignments }) => {
   );
 };
 
-export default Assignments;
+export default withRouter(Assignments);
