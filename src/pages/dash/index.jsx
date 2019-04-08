@@ -9,6 +9,7 @@ import Navigation from '../../components/Navigation';
 import Default from './Default';
 import Courses from './Courses';
 import SingleCourse from './SingleCourse';
+import Calendar from './Calendar';
 
 import './styles.scss';
 
@@ -31,11 +32,7 @@ class Dashboard extends Component {
           <Route exact path="/dashboard/" component={Default} />
           <Route exact path="/dashboard/course" component={Courses} />
           <Route path="/dashboard/course/:cid" component={SingleCourse} />
-          <Route
-            exact
-            path="/dashboard/calendar"
-            component={() => <p>calendar page</p>}
-          />
+          <Route exact path="/dashboard/calendar" component={Calendar} />
         </Switch>
       </div>
     );
