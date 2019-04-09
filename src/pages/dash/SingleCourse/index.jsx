@@ -1,10 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import Card from 'Components/Card';
 import tyr from '../../../utils/tyr';
-import './styles.scss';
 
 import StudentView from './views/Student';
 import ProfessorView from './views/Professor';
@@ -16,7 +13,6 @@ class Course extends Component {
 
   async componentDidMount() {
     const { cid } = this.props.match.params;
-    console.log(this.props);
     this._mounted = true;
     try {
       const {
@@ -35,11 +31,16 @@ class Course extends Component {
 
   render() {
     const { fetched, course } = this.state;
+
     if (!fetched) return null;
-    return course.role === 'student' ? (
-      <StudentView data={course} />
-    ) : (
-      <ProfessorView data={course} />
+    return (
+      <div className="course">
+        {course.role === 'student' ? (
+          <StudentView data={course} />
+        ) : (
+          <ProfessorView data={course} />
+        )}
+      </div>
     );
   }
 }

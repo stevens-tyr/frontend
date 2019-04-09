@@ -1,0 +1,47 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+.course-info {
+  display: flex;
+  justify-content: space-between;
+
+  .card {
+    margin: 0;
+
+    // header card fonts
+    .number,
+    .profs > div > .name,
+    .assistants > div > .name {
+      font-size: 1.5rem;
+      font-weight: $thicc;
+    }
+  }
+}
+
+.dash-label {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: $thicc;
+}
+
+.student-view {
+}
+
+.professor-view {
+  // .ant-menu {
+  //   background-color: $bg;
+  // }
+  .ant-menu-horizontal > .ant-menu-item:hover,
+  .ant-menu-horizontal > .ant-menu-submenu:hover,
+  .ant-menu-horizontal > .ant-menu-item-active,
+  .ant-menu-horizontal > .ant-menu-submenu-active,
+  .ant-menu-horizontal > .ant-menu-item-open,
+  .ant-menu-horizontal > .ant-menu-submenu-open,
+  .ant-menu-horizontal > .ant-menu-item-selected,
+  .ant-menu-horizontal > .ant-menu-submenu-selected {
+    color: $primary;
+    border-bottom: 2px solid $primary;
+  }
+}

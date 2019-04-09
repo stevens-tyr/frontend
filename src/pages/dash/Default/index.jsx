@@ -41,22 +41,23 @@ class Default extends Component {
 
   renderCourses() {
     const { courses } = this.state;
-    return courses.map(c => (
-      <Link key={c.id} to={`/dashboard/course/${c.id}`}>
-        <Card
-          style={{
-            borderLeft: `0.8rem solid ${stringToColour(
-              c.department + c.number + c.role
-            )}`
-          }}
-        >
-          <div className="number">
-            {c.department}-{c.number} {c.section}
-          </div>
-          <div>{c.longName}</div>
-        </Card>
-      </Link>
-    ));
+    if (typeof courses !== 'undefined')
+      return courses.map(c => (
+        <Link key={c.id} to={`/dashboard/course/${c.id}`}>
+          <Card
+            style={{
+              borderLeft: `0.8rem solid ${stringToColour(
+                c.department + c.number + c.role
+              )}`
+            }}
+          >
+            <div className="number">
+              {c.department}-{c.number} {c.section}
+            </div>
+            <div>{c.longName}</div>
+          </Card>
+        </Link>
+      ));
   }
 
   renderTodo() {
@@ -92,7 +93,7 @@ class Default extends Component {
 
   renderRecent() {
     const { mostRecentSubmissions } = this.state;
-    if (mostRecentSubmissions.length) {
+    if (mostRecentSubmissions && mostRecentSubmissions.length) {
       return mostRecentSubmissions.slice(0, 3).map(s => (
         <Link
           key={s._id}
@@ -184,6 +185,7 @@ class Default extends Component {
             <div className="dash-label">Most Recent Submissions</div>
             {this.renderRecent()}
           </div>
+
           <div className="upcoming">
             <div className="dash-label">Upcoming Assignments</div>
             {this.renderTodo()}
