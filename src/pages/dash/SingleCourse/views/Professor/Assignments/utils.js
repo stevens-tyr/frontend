@@ -36,7 +36,9 @@ const splitAssignments = assignments => {
 
   const past = [];
   const future = [];
-  data.forEach(a => {
+  data.forEach((a, i) => {
+    // eslint-disable-next-line no-param-reassign
+    a = { ...a, uid: i };
     const dueDate = dayjs(a.dueDate);
     // this assignment is a past assignment
     if (dueDate.isBefore(dayjs())) {

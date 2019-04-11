@@ -8,15 +8,15 @@ const Students = ({ students, assistants }) => {
 
   // Should really be doing this in the backend, but we aint got no time
   if (students) {
-    studentsData = students.map(s => {
+    studentsData = students.map((s, uid) => {
       const { firstName, lastName, email } = s;
-      return { name: `${firstName} ${lastName}`, email };
+      return { name: `${firstName} ${lastName}`, email, uid };
     });
   }
   if (assistants) {
-    assistantsData = assistants.map(a => {
+    assistantsData = assistants.map((a, uid) => {
       const { firstName, lastName, email } = a;
-      return { name: `${firstName} ${lastName}`, email };
+      return { name: `${firstName} ${lastName}`, email, uid };
     });
   }
 
@@ -49,10 +49,10 @@ const Students = ({ students, assistants }) => {
   return (
     <>
       <div className="dash-label">Course Assistants</div>
-      <Table columns={tableColumns} dataSource={assistantsData} />
+      <Table columns={tableColumns} dataSource={assistantsData} rowKey="uid" />
 
       <div className="dash-label">Enrolled Students</div>
-      <Table columns={tableColumns} dataSource={studentsData} />
+      <Table columns={tableColumns} dataSource={studentsData} rowKey="uid" />
     </>
   );
 };

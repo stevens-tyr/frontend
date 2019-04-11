@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import { Table, Divider, Button, Icon } from 'antd';
+import { Table, Divider, Button, Icon, Modal } from 'antd';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+// eslint-disable-next-line import/no-unresolved
+import Form from 'Components/Form';
 import dayjs from 'dayjs';
 import { splitAssignments } from './utils';
+import { assignmentForm } from './data';
+import tyr from '../../../../../../utils/tyr';
 import './styles.scss';
 
-const Assignments = ({ assignments, match }) => {
-  // TODO: Offload intermediate data processing to backend
-  const { pastAssignments, upcomingAssignments } = splitAssignments(
-    assignments
-  );
-
+class Assignments extends Component {
   // reference: https://ant.design/components/table/
-  const tableColumns = [
+  tableColumns = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -44,32 +42,76 @@ const Assignments = ({ assignments, match }) => {
     }
   ];
 
-  /**
-   * Builds a url for any path under /dashboard/course/:cid
-   * @param {Any subpath under :cid} subpath
-   */
-  const buildPath = subpath => {
-    const { cid } = match.params;
-    return `/dashboard/course/${cid}/${subpath}`;
+  state = {
+    modalVisible: false
   };
 
-  return (
-    <>
-      <div className="flex-container">
-        <div className="dash-label">Upcoming Assignments</div>
-        {/* TODO: This should open a model */}
-        <Link to={buildPath('assignments/new')}>
-          <Button type="primary">
+  componentDidMount() {
+    const { assignments } = this.props;
+    // TODO: Offload intermediate data processing to backend
+    const { pastAssignments, upcomingAssignments } = splitAssignments(
+      assignments
+    );
+    this.setState({ pastAssignments, upcomingAssignments });
+  }
+
+  toggleModal = () => {
+    const { modalVisible } = this.state;
+    this.setState({ modalVisible: !modalVisible });
+  };
+
+  submitForm = async values => {
+    const { match } = this.props;
+    const { cid } = match.params;
+    const body = {
+      ...values,
+      dueDate: values.dueDate.valueOf(),
+      tests: ['./thing'],
+      supportingFiles: values.supportingFiles.file,
+      version: '3.7'
+    };
+    const res = await tyr.post(
+      `plague_doctor/course/${cid}/assignment/create`,
+      body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if (res.status === 200) {
+      console.log('success in submitForm');
+    } else {
+      console.log('dang:', res.status, res.statusText);
+    }
+  };
+
+  render() {
+    const { modalVisible, pastAssignments, upcomingAssignments } = this.state;
+    const { toggleModal, tableColumns, submitForm } = this;
+    return (
+      <>
+        <div className="flex-container">
+          <div className="dash-label">Upcoming Assignments</div>
+          <Button type="primary" onClick={toggleModal}>
             <Icon type="plus" /> New Assignment
           </Button>
-        </Link>
-      </div>
-      <Table columns={tableColumns} dataSource={upcomingAssignments} />
+        </div>
+        <Table columns={tableColumns} dataSource={upcomingAssignments} />
 
-      <div className="dash-label">Past Assignments</div>
-      <Table columns={tableColumns} dataSource={pastAssignments} />
-    </>
-  );
-};
+        <div className="dash-label">Past Assignments</div>
+        <Table
+          columns={tableColumns}
+          dataSource={pastAssignments}
+          rowKey="uid"
+        />
+        <Modal title="New Assignment" visible={modalVisible} footer={null}>
+          <Form fields={assignmentForm} onSubmit={submitForm} />
+        </Modal>
+      </>
+    );
+  }
+}
 
 export default withRouter(Assignments);
