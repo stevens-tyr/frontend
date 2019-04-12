@@ -23,6 +23,16 @@ const grabAssignments = (assignments, past = true) => {
   });
 };
 
+const sortAssignments = (a, b, asc = true) => {
+  const timeA = dayjs(a.dueDate);
+  const timeB = dayjs(b.dueDate);
+  if (timeA.isSame(timeB)) return 0;
+  if (asc) {
+    return timeA.isBefore(timeB) ? 1 : -1;
+  }
+  return timeA.isAfter(timeB) ? 1 : -1;
+};
+
 const splitAssignments = assignments => {
   if (assignments.length === 0) {
     return null;
@@ -33,9 +43,9 @@ const splitAssignments = assignments => {
     const { id, name, dueDate, language } = a;
     return { key: id, name, dueDate, language };
   });
-
   const past = [];
   const future = [];
+  data.sort((a, b) => sortAssignments(a, b, false));
   data.forEach((a, i) => {
     // eslint-disable-next-line no-param-reassign
     a = { ...a, uid: i };

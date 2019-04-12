@@ -7,6 +7,7 @@ import tyr from '../../../utils/tyr';
 import { stringToColour } from '../../../utils/misc';
 import dayjs from 'dayjs';
 
+import './styles.scss';
 class DashCalendar extends Component {
   async componentDidMount() {
     this._mounted = true;
@@ -23,13 +24,15 @@ class DashCalendar extends Component {
     }
   }
 
-  // TODO: offload this functionality to the backend
   /**
+   * TODO: offload this functionality to the backend
+   *
    * Create a dictionary of the schema: {Date: [{id, courseId, name}]}
    */
   buildAssignmentsDict = assignments => {
     let dict = {};
     for (let a of assignments) {
+      console.log(a);
       let { id, courseID, dueDate, name } = a;
       dueDate = dayjs(dueDate).format('YYYY-MM-DD');
       if (dict[dueDate] === undefined) {
@@ -64,16 +67,12 @@ class DashCalendar extends Component {
 
   dateCellRender = value => {
     const assignments = this.getListData(value);
-    console.log('test', assignments);
     return (
       <ul className="events">
         {assignments.map(a => {
-          console.log(a);
           return (
             <li key={a.id}>
-              {/*<Badge color={stringToColour(a.courseID)} text={a.name} />*/}
-              {/* TODO: Fix this color. For some reason, antd color property not working... */}
-              <Badge status="error" text={a.name} />
+              <Badge color={stringToColour(a.courseID)} text={a.name} />
             </li>
           );
         })}
@@ -93,15 +92,19 @@ class DashCalendar extends Component {
 
   render() {
     return (
-      <Card>
-        <Badge style={{ color: 'red' }} text={'Test'} />
-        {this.state && (
-          <Calendar
-            dateCellRender={this.dateCellRender}
-            monthCellRender={this.monthCellRender}
-          />
-        )}
-      </Card>
+      this.state && (
+        <div>
+          <Card>
+            <div className="calendar-header-box">
+              <h2 className="calendar-header">Your Calendar</h2>
+            </div>
+            <Calendar
+              dateCellRender={this.dateCellRender}
+              monthCellRender={this.monthCellRender}
+            />
+          </Card>
+        </div>
+      )
     );
   }
 }

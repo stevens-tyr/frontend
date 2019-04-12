@@ -67,9 +67,12 @@ class Assignments extends Component {
       ...values,
       dueDate: values.dueDate.valueOf(),
       tests: ['./thing'],
-      supportingFiles: values.supportingFiles.file,
+      supportingFiles: values.supportingFiles
+        ? values.supportingFiles.file
+        : null,
       version: '3.7'
     };
+    console.log('Body:', body);
     const res = await tyr.post(
       `plague_doctor/course/${cid}/assignment/create`,
       body,
@@ -85,6 +88,7 @@ class Assignments extends Component {
     } else {
       console.log('dang:', res.status, res.statusText);
     }
+    this.toggleModal();
   };
 
   render() {
@@ -106,8 +110,14 @@ class Assignments extends Component {
           dataSource={pastAssignments}
           rowKey="uid"
         />
-        <Modal title="New Assignment" visible={modalVisible} footer={null}>
-          <Form fields={assignmentForm} onSubmit={submitForm} />
+        <Modal
+          title="New Assignment"
+          visible={modalVisible}
+          footer={null}
+          onCancel={toggleModal}
+        >
+          {/* eslint-disable-next-line react/jsx-no-bind */}
+          <Form fields={assignmentForm} onSubmit={submitForm.bind(this)} />
         </Modal>
       </>
     );

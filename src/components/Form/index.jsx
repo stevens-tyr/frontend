@@ -31,9 +31,12 @@ class CustomForm extends Component {
   };
 
   draggerProps = {
+    multiple: true,
     name: 'file',
     action: '//jsonplaceholder.typicode.com/posts/',
-    multiple: true,
+    headers: {
+      authorization: 'authorization-text'
+    },
     onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {
@@ -63,6 +66,12 @@ class CustomForm extends Component {
 
   state = {};
 
+  /**
+   * No-op function to be used in the upload component to
+   * stop it from POSTing upon file upload
+   *  */
+  dummyUpload = () => {};
+
   handleSubmit = e => {
     e.preventDefault();
     const { form, onSubmit } = this.props;
@@ -78,8 +87,22 @@ class CustomForm extends Component {
     });
   };
 
+  // onUploadChange = info => {
+  //   const reader = new FileReader();
+  //   reader.onloadend = obj => {
+  //     this.setState({ fileDataUrl: obj.srcElement.result });
+  //   };
+  //   reader.readAsDataURL(info.file.originFileObj);
+  // };
+
   render() {
-    const { dataFields, handleSubmit, formItemLayout, draggerProps } = this;
+    const {
+      dataFields,
+      handleSubmit,
+      formItemLayout,
+      draggerProps,
+      dummyUpload
+    } = this;
     const { title, fields, form } = this.props;
     const { getFieldDecorator } = form;
     return (
@@ -114,7 +137,7 @@ class CustomForm extends Component {
                   break;
                 case 'file':
                   output = fieldDecorator(
-                    <Dragger {...draggerProps}>
+                    <Dragger {...draggerProps} customRequest={dummyUpload}>
                       <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
                       </p>
