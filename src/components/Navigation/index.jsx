@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import tyr from '../../utils/tyr';
 import './styles.scss';
 
 import Tear from '../common/Tear';
@@ -12,7 +13,7 @@ const NavLink = ({ to, text, active }) => (
   </Link>
 );
 
-const Navigation = ({ location: { pathname } }) => (
+const Navigation = ({ location: { pathname }, history }) => (
   <header className="nav">
     <div className="nav-container">
       <div className="left">
@@ -36,9 +37,16 @@ const Navigation = ({ location: { pathname } }) => (
         />
       </div>
       <div className="right">
-        <a href="/logout" className="logout">
+        <button
+          type="button"
+          onClick={async () => {
+            await tyr.get('auth/logout');
+            history.push('/');
+          }}
+          className="logout"
+        >
           Log Out
-        </a>
+        </button>
       </div>
     </div>
   </header>

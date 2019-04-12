@@ -4,7 +4,6 @@
 @import 'Style/shadows.scss';
 
 .nav {
-  padding: 0 2rem;
   box-sizing: border-box;
   height: 56px;
   background-color: $grey;
@@ -21,7 +20,9 @@
     justify-content: space-between;
     box-sizing: border-box;
     max-width: 1200px;
+    box-sizing: border-box;
     margin: 0 auto;
+    padding: 0 2.5rem;
   }
   .tyr-drop {
     margin-right: 1rem;
@@ -76,6 +77,10 @@
     font-size: 0.8rem;
     font-weight: $thicc;
     color: $white;
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
   }
 
   .active {
