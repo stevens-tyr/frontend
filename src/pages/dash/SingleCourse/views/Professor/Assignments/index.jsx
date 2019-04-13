@@ -7,6 +7,7 @@ import Form from 'Components/Form';
 import dayjs from 'dayjs';
 import { splitAssignments } from './utils';
 import { assignmentForm } from './data';
+import PastAssignmentsTable from './PastAssignmentsTable';
 import tyr from '../../../../../../utils/tyr';
 import './styles.scss';
 
@@ -105,11 +106,13 @@ class Assignments extends Component {
         <Table columns={tableColumns} dataSource={upcomingAssignments} />
 
         <div className="dash-label">Past Assignments</div>
-        <Table
-          columns={tableColumns}
-          dataSource={pastAssignments}
-          rowKey="uid"
-        />
+        {
+          <PastAssignmentsTable
+            tableColumns={tableColumns}
+            pastAssignments={pastAssignments}
+            rowKey="uid"
+          />
+        }
         <Modal
           title="New Assignment"
           visible={modalVisible}
