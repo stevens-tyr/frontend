@@ -10,18 +10,20 @@ class PastAssignmentsTable extends Component {
   }
 
   setModalData = async record => {
-    const { uid } = record;
+    let { uid } = record;
+    uid = '5c55c6885da3fe5041f96be4';
     if (uid === null || uid === undefined) {
       return 'Assignment not found';
     }
     const { cid } = this.props;
 
-    // TODO: debug this get() so i can format stuff
+    // TODO: how do i find assignment ID?
+    // s = `plague_doctor/course/${cid}/assignment/${uid}/details`
     const res = await tyr.get(
       `plague_doctor/course/${cid}/assignment/${uid}/details`
     );
     console.log('res is', res);
-    this.setState({ modalData: res });
+    this.setState({ modalData: JSON.stringify(res) });
     return res;
   };
 
