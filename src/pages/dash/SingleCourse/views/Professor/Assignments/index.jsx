@@ -93,6 +93,8 @@ class Assignments extends Component {
   };
 
   render() {
+    const { match } = this.props;
+    const { cid } = match.params;
     const { modalVisible, pastAssignments, upcomingAssignments } = this.state;
     const { toggleModal, tableColumns, submitForm } = this;
     return (
@@ -111,6 +113,7 @@ class Assignments extends Component {
             tableColumns={tableColumns}
             pastAssignments={pastAssignments}
             rowKey="uid"
+            cid={cid}
           />
         }
         <Modal
