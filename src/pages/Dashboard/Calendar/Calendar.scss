@@ -1,0 +1,16 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+
+.calendar-header-box {
+    border-bottom: 4px solid $primary;
+    margin-bottom: 30px;
+
+    .calendar-header {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: $thicc;
+    }
+
+}

@@ -5,8 +5,16 @@
   "env": {
     "browser": true
   },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./webpack.config.js"
+      }
+    }
+  },
   "rules": {
     "strict": 0,
+    "no-underscore-dangle": 0,
     "no-nested-ternary": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/prop-types": 0,

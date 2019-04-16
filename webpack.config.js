@@ -5,11 +5,11 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SERVER_PORT = 5000;
 const DEV_PORT = 3000;
 
-module.exports = (env, options) => ({
+module.exports = {
   output: {
     publicPath: '/'
   },
-  devtool: options.mode === 'production' ? false : 'source-map',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
   devServer: {
     compress: true,
     open: false,
@@ -90,9 +90,11 @@ module.exports = (env, options) => ({
     ]
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.json', '.scss'],
     alias: {
       Style: path.resolve(__dirname, './src/style/'),
-      Components: path.resolve(__dirname, './src/components/')
+      Components: path.resolve(__dirname, './src/components/'),
+      Utils: path.resolve(__dirname, './src/utils/')
     }
   },
   plugins: [
@@ -109,4 +111,4 @@ module.exports = (env, options) => ({
       }
     })
   ]
-});
+};
