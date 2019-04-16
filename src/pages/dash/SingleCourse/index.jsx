@@ -1,10 +1,10 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 
-import tyr from '../../../utils/tyr';
+import tyr from 'Utils/tyr';
 
-import StudentView from './views/Student';
-import ProfessorView from './views/Professor';
+import StudentView from './Student';
+import ProfessorView from './Professor';
 
 class Course extends Component {
   state = {

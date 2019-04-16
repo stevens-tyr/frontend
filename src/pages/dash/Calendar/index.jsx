@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 
 import Card from 'Components/Card';
 import { Calendar, Badge } from 'antd';
-import tyr from '../../../utils/tyr';
-import { stringToColour } from '../../../utils/misc';
+import tyr from 'Utils/tyr';
+import { stringToColour } from 'Utils/misc';
 import dayjs from 'dayjs';
 
 import './styles.scss';

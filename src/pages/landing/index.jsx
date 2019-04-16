@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import tyr from '../../utils/tyr';
+import tyr from 'Utils/tyr';
 import './styles.scss';
 import Tear from '../../components/common/Tear';
 

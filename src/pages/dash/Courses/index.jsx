@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import Card from 'Components/Card';
-import tyr from '../../../utils/tyr';
-import { stringToColour } from '../../../utils/misc';
+import tyr from 'Utils/tyr';
+import { stringToColour } from 'Utils/misc';
 import './styles.scss';
 
 class Courses extends Component {

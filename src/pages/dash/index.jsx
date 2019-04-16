@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
+import tyr from 'Utils/tyr';
 import { addMsg } from '../../actions/auth.actions';
-import tyr from '../../utils/tyr';
 
 import Navigation from '../../components/Navigation';
 import Default from './Default';

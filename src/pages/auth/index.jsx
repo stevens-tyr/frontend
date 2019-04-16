@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
-import tyr from '../../utils/tyr';
+import tyr from 'Utils/tyr';
 import { addMsg, clearMsg } from '../../actions/auth.actions';
 import './styles.scss';
 import Tear from '../../components/common/Tear';

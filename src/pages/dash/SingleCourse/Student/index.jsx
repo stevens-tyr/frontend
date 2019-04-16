@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 
 import dayjs from 'dayjs';
 
-// eslint-disable-next-line import/no-unresolved
 import Card from 'Components/Card';
+import { stringToColour } from 'Utils/misc';
 import Collapse from '../Collapse';
-import { stringToColour } from '../../../../utils/misc';
 
 import './styles.scss';
 

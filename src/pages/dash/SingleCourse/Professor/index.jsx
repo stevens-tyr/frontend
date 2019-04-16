@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import Card from 'Components/Card';
+import { stringToColour } from 'Utils/misc';
 import Menu from './Menu';
 import Assignments from './Assignments';
 import People from './People';
-import { stringToColour } from '../../../../../utils/misc';
 
 import './styles.scss';
 

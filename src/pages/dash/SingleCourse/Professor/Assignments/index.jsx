@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
 import { Table, Divider, Button, Icon, Modal } from 'antd';
 import { withRouter } from 'react-router';
-import Form from 'Components/Form';
 import dayjs from 'dayjs';
+
+import Form from 'Components/Form';
+import tyr from 'Utils/tyr';
 import { splitAssignments } from './utils';
 import { assignmentForm } from './data';
-import tyr from '../../../../../../utils/tyr';
 import './styles.scss';
 
 /* eslint-disable no-console */

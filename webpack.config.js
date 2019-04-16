@@ -93,7 +93,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.json', '.scss'],
     alias: {
       Style: path.resolve(__dirname, './src/style/'),
-      Components: path.resolve(__dirname, './src/components/')
+      Components: path.resolve(__dirname, './src/components/'),
+      Utils: path.resolve(__dirname, './src/utils/')
     }
   },
   plugins: [
