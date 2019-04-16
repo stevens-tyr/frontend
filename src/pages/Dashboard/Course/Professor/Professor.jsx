@@ -18,17 +18,19 @@ class Professor extends Component {
     return (
       <div className="professor-view">
         <Card>
-          <div
-            className="course-name"
-            style={{
-              borderLeft: `6px solid ${stringToColour(
-                course.department + course.number + course.role
-              )}`
-            }}
-          >
-            {`${course.department} ${course.number}${course.section}: ${
-              course.longName
-            }`}
+          <div className="course-name">
+            <span
+              style={{
+                backgroundColor: stringToColour(
+                  course.department + course.number + course.role
+                )
+              }}
+            />
+            <h2>
+              {`${course.department} ${course.number}${course.section}: ${
+                course.longName
+              }`}
+            </h2>
           </div>
 
           <Menu />

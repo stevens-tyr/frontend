@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Table, Divider, Button, Icon, Modal } from 'antd';
 import { withRouter } from 'react-router';
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 
 import Form from 'Components/Form/Form';
 import tyr from 'Utils/tyr';
 import { assignmentForm } from './formTemplate';
 import './Assignments.scss';
+
+dayjs.extend(advancedFormat);
 
 /* eslint-disable no-console */
 
@@ -48,7 +51,7 @@ class Assignments extends Component {
     {
       title: 'Due Date',
       key: 'dueDate',
-      render: record => dayjs(record.dueDate).format('MMM Do YYYY')
+      render: record => dayjs(record.dueDate).format('MMM Do, YYYY')
     },
     {
       title: 'Required Language',
