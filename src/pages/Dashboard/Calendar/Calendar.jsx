@@ -33,7 +33,6 @@ class DashCalendar extends Component {
   buildAssignmentsDict = assignments => {
     let dict = {};
     for (let a of assignments) {
-      console.log(a);
       let { id, courseID, dueDate, name } = a;
       dueDate = dayjs(dueDate).format('YYYY-MM-DD');
       if (dict[dueDate] === undefined) {
