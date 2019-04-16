@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { Switch, Route } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import Card from 'Components/Card';
 import { stringToColour } from 'Utils/misc';
 import Menu from './Menu';
@@ -14,7 +14,7 @@ class Professor extends Component {
   state = {};
 
   render() {
-    const { data: course, history, match } = this.props;
+    const { data: course, match } = this.props;
     return (
       <div className="professor-view">
         <Card>
@@ -54,12 +54,12 @@ class Professor extends Component {
               }
             />
             <Route
-              render={() => {
-                history.push(
-                  `/dashboard/course/${match.params.cid}/assignments`
-                );
-                return null;
-              }}
+              path="*"
+              component={() => (
+                <Redirect
+                  to={`/dashboard/course/${match.params.cid}/assignments/`}
+                />
+              )}
             />
           </Switch>
         </Card>
