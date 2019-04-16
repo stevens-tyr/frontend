@@ -14,18 +14,18 @@ import {
 } from 'antd';
 import './styles.scss';
 
+/* eslint-disable no-console */
+
 const { Dragger } = Upload;
 const { TextArea } = Input;
 const { Option } = Select;
 class CustomForm extends Component {
   formItemLayout = {
     labelCol: {
-      xs: { span: 24 },
-      sm: { span: 8 }
+      xs: { span: 24 }
     },
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 }
+      xs: { span: 24 }
     },
     labelAlign: 'right'
   };

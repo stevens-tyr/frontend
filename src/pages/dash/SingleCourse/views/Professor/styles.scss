@@ -28,10 +28,9 @@
 }
 
 .professor-view {
-
   .course-name {
     font-size: 2.2rem;
-    font-weight: 900;
+    font-weight: $thicc;
     margin-bottom: 42px;
     padding-left: 30px;
   }
@@ -47,6 +46,5 @@
     color: $primary;
     border-bottom: 2px solid $primary;
     font-family: $default-font;
-    font-weight: $thicc;
   }
 }

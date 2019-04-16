@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 import { Table, Divider, Button, Icon, Modal } from 'antd';
 import { withRouter } from 'react-router';
-// eslint-disable-next-line import/no-unresolved
 import Form from 'Components/Form';
 import dayjs from 'dayjs';
 import { splitAssignments } from './utils';
 import { assignmentForm } from './data';
 import tyr from '../../../../../../utils/tyr';
 import './styles.scss';
+
+/* eslint-disable no-console */
 
 class Assignments extends Component {
   // reference: https://ant.design/components/table/

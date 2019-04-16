@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { Switch, Route } from 'react-router';
 import { withRouter } from 'react-router-dom';
-// eslint-disable-next-line import/no-unresolved
 import Card from 'Components/Card';
 import Menu from './Menu';
 import Assignments from './Assignments';
@@ -63,9 +62,6 @@ class Professor extends Component {
               }}
             />
           </Switch>
-
-          {/* eslint-disable-next-line react/destructuring-assignment */}
-          {this.props.children}
         </Card>
       </div>
     );

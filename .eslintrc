@@ -5,6 +5,13 @@
   "env": {
     "browser": true
   },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./webpack.config.js"
+      }
+    }
+  },
   "rules": {
     "strict": 0,
     "no-nested-ternary": "off",
