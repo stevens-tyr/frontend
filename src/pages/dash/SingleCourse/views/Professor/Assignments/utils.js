@@ -39,16 +39,10 @@ const splitAssignments = assignments => {
   }
 
   // convert assignments in desired format for antd table
-  const data = assignments.map(a => {
-    const { id, name, dueDate, language } = a;
-    return { key: id, name, dueDate, language };
-  });
   const past = [];
   const future = [];
-  data.sort((a, b) => sortAssignments(a, b, false));
-  data.forEach((a, i) => {
-    // eslint-disable-next-line no-param-reassign
-    a = { ...a, uid: i };
+  assignments.sort((a, b) => sortAssignments(a, b, false));
+  assignments.forEach(a => {
     const dueDate = dayjs(a.dueDate);
     // this assignment is a past assignment
     if (dueDate.isBefore(dayjs())) {

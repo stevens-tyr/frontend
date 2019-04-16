@@ -7,8 +7,7 @@ class ProfessorMenu extends Component {
   state = {};
 
   componentDidMount() {
-    const selectedKey = this.getProfessorSubPath();
-    this.setState({ selectedKey });
+    this.setState({ selectedKey: 'assignments' });
   }
 
   // TODO: Fix this to be more efficient

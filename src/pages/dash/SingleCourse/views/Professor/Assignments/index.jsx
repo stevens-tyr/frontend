@@ -103,13 +103,16 @@ class Assignments extends Component {
             <Icon type="plus" /> New Assignment
           </Button>
         </div>
-        <Table columns={tableColumns} dataSource={upcomingAssignments} />
-
+        <Table
+          columns={tableColumns}
+          dataSource={upcomingAssignments}
+          rowKey="_id"
+        />
         <div className="dash-label">Past Assignments</div>
         <Table
           columns={tableColumns}
           dataSource={pastAssignments}
-          rowKey="uid"
+          rowKey="_id"
         />
         <Modal
           title="New Assignment"
@@ -117,8 +120,7 @@ class Assignments extends Component {
           footer={null}
           onCancel={toggleModal}
         >
-          {/* eslint-disable-next-line react/jsx-no-bind */}
-          <Form fields={assignmentForm} onSubmit={submitForm.bind(this)} />
+          <Form fields={assignmentForm} onSubmit={() => submitForm()} />
         </Modal>
       </>
     );
