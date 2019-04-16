@@ -37,12 +37,9 @@ const splitAssignments = assignments => {
   if (assignments.length === 0) {
     return null;
   }
-  console.log('Splitting assignments:', assignments);
-
   // convert assignments in desired format for antd table
   const data = assignments.map(a => {
     const { _id, name, dueDate, language } = a;
-    console.log('id is', _id);
     return { key: _id, name, dueDate, language };
   });
   const past = [];
