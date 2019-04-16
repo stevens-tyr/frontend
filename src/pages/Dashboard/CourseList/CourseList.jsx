@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Card from 'Components/Card';
+import Card from 'Components/Card/Card';
 import tyr from 'Utils/tyr';
 import { stringToColour } from 'Utils/misc';
-import './styles.scss';
+import './CourseList.scss';
 
 class Courses extends Component {
   state = {

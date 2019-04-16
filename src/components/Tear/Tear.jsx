@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles.scss';
+import './Tear.scss';
 
 export default props => {
   const { className, sizeClass } = props;

@@ -1,13 +1,14 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-
-import Card from 'Components/Card';
 import { Calendar, Badge } from 'antd';
+
+import Card from 'Components/Card/Card';
 import tyr from 'Utils/tyr';
 import { stringToColour } from 'Utils/misc';
 import dayjs from 'dayjs';
 
-import './styles.scss';
+import './Calendar.scss';
+
 class DashCalendar extends Component {
   async componentDidMount() {
     this._mounted = true;

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 
 import tyr from 'Utils/tyr';
 
-import StudentView from './Student';
-import ProfessorView from './Professor';
+import StudentView from './Student/Student';
+import ProfessorView from './Professor/Professor';
 
 class Course extends Component {
   state = {
@@ -36,9 +36,9 @@ class Course extends Component {
     return (
       <div className="course">
         {course.role === 'student' ? (
-          <StudentView data={course} />
+          <StudentView course={course} />
         ) : (
-          <ProfessorView data={course} />
+          <ProfessorView course={course} />
         )}
       </div>
     );

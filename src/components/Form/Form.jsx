@@ -12,7 +12,7 @@ import {
   Select,
   InputNumber
 } from 'antd';
-import './styles.scss';
+import './Form.scss';
 
 /* eslint-disable no-console */
 

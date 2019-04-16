@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
 import tyr from 'Utils/tyr';
+import Navigation from 'Components/Navigation/Navigation';
 import { addMsg } from '../../actions/auth.actions';
 
-import Navigation from '../../components/Navigation';
-import Default from './Default';
-import Courses from './Courses';
-import SingleCourse from './SingleCourse';
-import Calendar from './Calendar';
+import Default from './Default/Default';
+import CourseList from './CourseList/CourseList';
+import Course from './Course/Course';
+import Calendar from './Calendar/Calendar';
 
-import './styles.scss';
+import './Dashboard.scss';
 
 class Dashboard extends Component {
   async componentDidMount() {
@@ -30,8 +30,8 @@ class Dashboard extends Component {
         <Navigation />
         <Switch>
           <Route exact path="/dashboard/" component={Default} />
-          <Route exact path="/dashboard/course" component={Courses} />
-          <Route path="/dashboard/course/:cid" component={SingleCourse} />
+          <Route exact path="/dashboard/course" component={CourseList} />
+          <Route path="/dashboard/course/:cid" component={Course} />
           <Route exact path="/dashboard/calendar" component={Calendar} />
         </Switch>
       </div>

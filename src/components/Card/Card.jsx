@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.scss';
+import './Card.scss';
 
 const Card = props => (
   <div

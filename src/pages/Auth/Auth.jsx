@@ -4,9 +4,9 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import tyr from 'Utils/tyr';
+import Tear from 'Components/Tear/Tear';
 import { addMsg, clearMsg } from '../../actions/auth.actions';
-import './styles.scss';
-import Tear from '../../components/common/Tear';
+import './Auth.scss';
 
 class Auth extends Component {
   componentWillUnmount = () => {

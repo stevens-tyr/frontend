@@ -8,10 +8,10 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PieChart from 'react-minimal-pie-chart';
 
-import Card from 'Components/Card';
+import Card from 'Components/Card/Card';
 import tyr from 'Utils/tyr';
 import { stringToColour } from 'Utils/misc';
-import './styles.scss';
+import './Default.scss';
 
 dayjs.extend(relativeTime);
 

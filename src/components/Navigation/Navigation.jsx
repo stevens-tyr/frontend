@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import tyr from 'Utils/tyr';
-import './styles.scss';
+import './Navigation.scss';
 
-import Tear from '../common/Tear';
+import Tear from '../Tear/Tear';
 
 // eslint-disable-next-line no-underscore-dangle
 const NavLink = ({ to, text, active }) => (
