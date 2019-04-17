@@ -8,6 +8,8 @@ import Menu from '../Menu/Menu';
 import Assignments from '../Assignments/Assignments';
 import People from '../People/People';
 
+import { Roles } from '../vars';
+
 import './Professor.scss';
 
 class Professor extends Component {
@@ -41,7 +43,8 @@ class Professor extends Component {
               path="/dashboard/course/:cid/assignments/"
               component={() =>
                 Assignments({
-                  assignments: course.assignments
+                  assignments: course.assignments,
+                  role: Roles.teacher
                 })
               }
             />

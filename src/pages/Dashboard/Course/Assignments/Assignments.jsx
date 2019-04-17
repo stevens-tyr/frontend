@@ -6,6 +6,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 
 import tyr from 'Utils/tyr';
 import Form from './AssignmentForm';
+import Assignment from './Assignment';
 import './Assignments.scss';
 
 const { confirm } = Modal;
@@ -65,6 +66,7 @@ class Assignments extends Component {
       // eslint-disable-next-line no-unused-vars
       render: (text, record) => (
         <Group>
+          <Button onClick={() => this.openAssignmentModal(record)}>View</Button>
           <Button onClick={() => this.toggleModal('edit')}>Edit</Button>
           <Button onClick={this.showConfirm}>Delete</Button>
         </Group>
@@ -75,7 +77,8 @@ class Assignments extends Component {
   state = {
     modalVisible: {
       new: false,
-      edit: false
+      edit: false,
+      assignment: false
     }
   };
 
@@ -93,6 +96,11 @@ class Assignments extends Component {
     this.setState({
       modalVisible: { ...modalVisible, [type]: !modalVisible[type] }
     });
+  };
+
+  openAssignmentModal = currentAssignment => {
+    this.setState({ currentAssignment });
+    this.toggleModal('assignment');
   };
 
   showConfirm = () => {
@@ -140,7 +148,12 @@ class Assignments extends Component {
   };
 
   render() {
-    const { modalVisible, pastAssignments, upcomingAssignments } = this.state;
+    const {
+      modalVisible,
+      pastAssignments,
+      upcomingAssignments,
+      currentAssignment
+    } = this.state;
     const { toggleModal, tableColumns, submitForm } = this;
     return (
       <>
@@ -177,6 +190,15 @@ class Assignments extends Component {
           }}
         >
           <Form onSubmit={() => submitForm()} />
+        </Modal>
+        <Modal
+          title="Edit Assignment"
+          visible={modalVisible.assignment}
+          footer={null}
+          onCancel={() => toggleModal('assignment')}
+          width={800}
+        >
+          <Assignment assignment={currentAssignment} />
         </Modal>
         <Modal
           title="Edit Assignment"
