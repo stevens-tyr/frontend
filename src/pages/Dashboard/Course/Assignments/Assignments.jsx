@@ -167,8 +167,14 @@ class Assignments extends Component {
           title="New Assignment"
           visible={modalVisible.new}
           footer={null}
-          onCancel={() => toggleModal('new')}
           width={800}
+          onCancel={() => {
+            // eslint-disable-next-line no-alert
+            const result = window.confirm(
+              'Are you sure you want to close? (Changes will not be saved)'
+            );
+            if (result) toggleModal('new');
+          }}
         >
           <Form onSubmit={() => submitForm()} />
         </Modal>
