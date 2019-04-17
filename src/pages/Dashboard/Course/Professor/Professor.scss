@@ -29,10 +29,18 @@
 
 .professor-view {
   .course-name {
-    font-size: 2.2rem;
-    font-weight: $thicc;
-    margin-bottom: 42px;
-    padding-left: 30px;
+    span {
+      height: 1.5rem;
+      width: 1.5rem;
+      border-radius: 1rem;
+      display: inline-block;
+    }
+    h2 {
+      margin-left: 1rem;
+      display: inline-block;
+      font-size: 2.1rem;
+      font-weight: $thicc;
+    }
   }
 
   .ant-menu-horizontal > .ant-menu-item:hover,

@@ -7,7 +7,8 @@ const DEV_PORT = 3000;
 
 module.exports = {
   output: {
-    publicPath: '/'
+    publicPath: '/',
+    filename: '[name].[hash].js'
   },
   devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
   devServer: {
@@ -20,6 +21,31 @@ module.exports = {
     },
     historyApiFallback: {
       index: `http://localhost:${DEV_PORT}/index.html`
+    }
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: 'vendors',
+          chunks: 'all'
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
     }
   },
   module: {
@@ -62,6 +88,27 @@ module.exports = {
           },
           {
             loader: 'sass-loader'
+          }
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'primary-color': '#828dd3',
+                'link-color': '#5343b3'
+              },
+              javascriptEnabled: true
+            }
           }
         ]
       },

@@ -1,0 +1,20 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.primary-button {
+  background-color: $green;
+  color: $white;
+}
+
+.ant-form-item-label {
+  font-weight: $thicc;
+  label {
+    color: $grey;
+  }
+}

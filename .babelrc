@@ -5,6 +5,6 @@
     "@babel/plugin-transform-react-constant-elements",
     "@babel/plugin-proposal-class-properties",
     "react-hot-loader/babel",
-    ["import", { "libraryName": "antd", "style": "css" }]
+    ["import", { "libraryName": "antd", "style": true }]
   ]
 }
