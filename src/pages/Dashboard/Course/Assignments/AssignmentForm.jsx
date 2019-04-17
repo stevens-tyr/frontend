@@ -15,6 +15,7 @@ import {
 } from 'antd';
 import Quill from 'Components/Quill/Quill';
 import Ace from 'Components/Ace/Ace';
+import TestCaseInput from 'Components/TestCaseInput/TestCaseInput';
 
 const { Dragger } = Upload;
 const { Option } = Select;
@@ -95,22 +96,12 @@ class CustomForm extends Component {
         {getFieldDecorator(`testCases[${index}]`, {
           rules: [{ required: true, message: 'Please enter a test case!' }]
         })(
-          <Ace
-            name={`testCase-${index}`}
-            height="50px"
-            width="90%"
-            style={{ display: 'inline-block' }}
+          <TestCaseInput
+            cmdName={`testCase-name-${index}`}
+            outputName={`testCase-output-${index}`}
+            onRemove={() => this.removeTestCase(k)}
           />
         )}
-        <Icon
-          type="close-square"
-          theme="twoTone"
-          twoToneColor="#ef2d56"
-          style={{
-            fontSize: '32px'
-          }}
-          onClick={() => this.removeTestCase(k)}
-        />
       </Form.Item>
     ));
   };

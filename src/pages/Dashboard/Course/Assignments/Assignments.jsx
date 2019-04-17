@@ -181,6 +181,7 @@ class Assignments extends Component {
           visible={modalVisible.new}
           footer={null}
           width={800}
+          destroyOnClose
           onCancel={() => {
             // eslint-disable-next-line no-alert
             const result = window.confirm(

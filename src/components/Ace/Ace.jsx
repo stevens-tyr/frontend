@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import AceEditor from 'react-ace';
 
 import 'brace/mode/sh';
@@ -8,9 +9,6 @@ class CodeEditor extends Component {
   constructor(props) {
     super(props);
 
-    // const defaultStr = props.build
-    //   ? '# Shell Commands to initialize each assignment\n #Use for Makefiles, installing dependencies, etc'
-    //   : '';
     const value = props.value || props.defaultStr || '';
     this.state = { text: value };
   }
@@ -47,6 +45,7 @@ class CodeEditor extends Component {
         onChange={this.handleChange}
         value={this.state.text}
         editorProps={{ $blockScrolling: true }}
+        setOptions={{ showInvisibles: true }}
         style={{
           border: '1px solid #d9d9d9',
           borderRadius: '4px',
@@ -56,5 +55,9 @@ class CodeEditor extends Component {
     );
   }
 }
+
+CodeEditor.propTypes = {
+  name: PropTypes.string.isRequired
+};
 
 export default CodeEditor;

@@ -1,0 +1,27 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+
+.testcase {
+  margin-left: 2rem;
+  .header {
+    font-size: 0.8rem;
+    font-weight: $thicc;
+  }
+  .editor {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    width: 100% !important;
+    margin-bottom: 0.5rem;
+  }
+  .cmd {
+    @extend .editor;
+    height: 50px !important;
+  }
+  .output {
+    @extend .editor;
+    height: 100px !important;
+  }
+  .ant-checkbox-wrapper {
+    margin-left: 1rem;
+  }
+}
