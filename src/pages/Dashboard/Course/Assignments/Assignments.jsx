@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Table, Divider, Button, Icon, Modal } from 'antd';
+import { Table, Button, Icon, Modal } from 'antd';
 import { withRouter } from 'react-router';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 
-import Form from 'Components/Form/Form';
 import tyr from 'Utils/tyr';
-import { assignmentForm } from './formTemplate';
+import Form from './AssignmentForm';
 import './Assignments.scss';
 
+const { confirm } = Modal;
+const { Group } = Button;
 dayjs.extend(advancedFormat);
 
 /* eslint-disable no-console */
@@ -63,17 +64,19 @@ class Assignments extends Component {
       key: 'action',
       // eslint-disable-next-line no-unused-vars
       render: (text, record) => (
-        <span>
-          <a href="/#">Edit</a>
-          <Divider type="vertical" />
-          <a href="/#">Delete</a>
-        </span>
+        <Group>
+          <Button onClick={() => this.toggleModal('edit')}>Edit</Button>
+          <Button onClick={this.showConfirm}>Delete</Button>
+        </Group>
       )
     }
   ];
 
   state = {
-    modalVisible: false
+    modalVisible: {
+      new: false,
+      edit: false
+    }
   };
 
   componentDidMount() {
@@ -85,9 +88,24 @@ class Assignments extends Component {
     this.setState({ pastAssignments, upcomingAssignments });
   }
 
-  toggleModal = () => {
+  toggleModal = type => {
     const { modalVisible } = this.state;
-    this.setState({ modalVisible: !modalVisible });
+    this.setState({
+      modalVisible: { ...modalVisible, [type]: !modalVisible[type] }
+    });
+  };
+
+  showConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this assignment?',
+      content: 'This cannot be undone.',
+      okText: 'Delete',
+      okType: 'danger',
+      cancelText: 'Go Back',
+      onOk() {
+        console.log('CALL DELETE ROUTE HERE');
+      }
+    });
   };
 
   submitForm = async values => {
@@ -118,7 +136,7 @@ class Assignments extends Component {
     } else {
       console.log('dang:', res.status, res.statusText);
     }
-    this.toggleModal();
+    this.toggleModal('new');
   };
 
   render() {
@@ -128,7 +146,7 @@ class Assignments extends Component {
       <>
         <div className="flex-container">
           <div className="dash-label">Upcoming Assignments</div>
-          <Button type="primary" onClick={toggleModal}>
+          <Button type="primary" onClick={() => toggleModal('new')}>
             <Icon type="plus" /> New Assignment
           </Button>
         </div>
@@ -136,20 +154,32 @@ class Assignments extends Component {
           columns={tableColumns}
           dataSource={upcomingAssignments}
           rowKey="_id"
+          pagination={{ pageSize: 5 }}
         />
         <div className="dash-label">Past Assignments</div>
         <Table
           columns={tableColumns}
           dataSource={pastAssignments}
           rowKey="_id"
+          pagination={{ pageSize: 5 }}
         />
         <Modal
           title="New Assignment"
-          visible={modalVisible}
+          visible={modalVisible.new}
           footer={null}
-          onCancel={toggleModal}
+          onCancel={() => toggleModal('new')}
+          width={800}
         >
-          <Form fields={assignmentForm} onSubmit={() => submitForm()} />
+          <Form onSubmit={() => submitForm()} />
+        </Modal>
+        <Modal
+          title="Edit Assignment"
+          visible={modalVisible.edit}
+          footer={null}
+          onCancel={() => toggleModal('edit')}
+          width={800}
+        >
+          <Form onSubmit={() => submitForm()} />
         </Modal>
       </>
     );

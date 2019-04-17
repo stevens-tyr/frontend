@@ -4,9 +4,9 @@ import { Switch, Route } from 'react-router';
 import { withRouter, Redirect } from 'react-router-dom';
 import Card from 'Components/Card/Card';
 import { stringToColour } from 'Utils/misc';
-import Menu from './Menu/Menu';
-import Assignments from './Assignments/Assignments';
-import People from './People/People';
+import Menu from '../Menu/Menu';
+import Assignments from '../Assignments/Assignments';
+import People from '../People/People';
 
 import './Professor.scss';
 
