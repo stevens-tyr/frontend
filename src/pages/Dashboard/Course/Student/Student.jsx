@@ -4,12 +4,10 @@ import { Switch, Route } from 'react-router';
 import { withRouter, Redirect } from 'react-router-dom';
 import Card from 'Components/Card/Card';
 import { stringToColour } from 'Utils/misc';
+import { Roles } from 'Utils/vars';
 import Menu from '../Menu/Menu';
 import Assignments from '../Assignments/Assignments';
 import People from '../People/People';
-
-// Enumerator for roles
-import { Roles } from '../vars';
 
 import './Student.scss';
 
