@@ -5,13 +5,13 @@ import {
   Row,
   Col,
   Form,
-  message,
   Input,
   Button,
   Icon,
   DatePicker,
   Select,
-  InputNumber
+  InputNumber,
+  message
 } from 'antd';
 import Quill from 'Components/Quill/Quill';
 import Ace from 'Components/Ace/Ace';
@@ -35,23 +35,19 @@ class CustomForm extends Component {
   };
 
   draggerProps = {
-    multiple: true,
-    name: 'file',
-    action: '//jsonplaceholder.typicode.com/posts/',
-    headers: {
-      authorization: 'authorization-text'
+    name: 'supportingFiles',
+    accept: '.zip,.tar.gz',
+    beforeUpload: () => {
+      this.setState({ fileSelected: true });
+      return false;
     },
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
+    onRemove: () => {
+      this.setState({ fileSelected: false });
     }
+  };
+
+  state = {
+    fileSelected: false
   };
 
   addTestCase = () => {
@@ -73,25 +69,37 @@ class CustomForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.props;
+    const { form, onSubmit } = this.props;
     form.validateFields(async (err, values) => {
-      console.log(values);
       if (!err) {
-        console.log('Form has received values of form: ', values);
-        try {
-          // await onSubmit(values);
-        } catch (error) {
-          console.log(error);
-        }
+        const formData = new FormData();
+        formData.append('language', values.language);
+        // formData.append('version', values.version);
+        formData.append('name', values.name);
+        formData.append('numAttempts', values.numAttempts);
+        formData.append('description', values.description.text);
+        formData.append('dueDate', values.dueDate.valueOf());
+        formData.append('testBuildCMD', values.buildCMD.text);
+        if (values.supportingFiles)
+          formData.append('supportingFiles', values.supportingFiles.file);
+        values.testCases.forEach((test, i) => {
+          formData.append(
+            'tests',
+            JSON.stringify({ name: `Test ${i + 1}`, ...test })
+          );
+        });
+        await onSubmit(formData);
+      } else {
+        message.error('Please fill all fields!');
       }
     });
   };
 
   renderTestCases = () => {
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    getFieldDecorator('keys', { initialValue: [] });
+    getFieldDecorator('keys', { initialValue: [0] });
     const keys = getFieldValue('keys');
-    return keys.map((k, index) => (
+    return keys.map((k, index, allKeys) => (
       <Form.Item label={`Test Case ${index + 1}`} required={false} key={k}>
         {getFieldDecorator(`testCases[${index}]`, {
           rules: [{ required: true, message: 'Please enter a test case!' }]
@@ -100,6 +108,7 @@ class CustomForm extends Component {
             cmdName={`testCase-name-${index}`}
             outputName={`testCase-output-${index}`}
             onRemove={() => this.removeTestCase(k)}
+            allKeys={allKeys}
           />
         )}
       </Form.Item>
@@ -107,7 +116,8 @@ class CustomForm extends Component {
   };
 
   render() {
-    const { handleSubmit, formItemLayout, draggerProps, dummyUpload } = this;
+    const { handleSubmit, formItemLayout, draggerProps } = this;
+    const { fileSelected } = this.state;
     const { title, form } = this.props;
     const { getFieldDecorator } = form;
     return (
@@ -168,8 +178,10 @@ class CustomForm extends Component {
             </Col>
           </Row>
           <Form.Item label="Supporting File(s)">
-            {getFieldDecorator('supportingFiles')(
-              <Dragger {...draggerProps} customRequest={dummyUpload}>
+            {getFieldDecorator('supportingFiles', {
+              rules: [{ required: true, message: 'Please upload a file!' }]
+            })(
+              <Dragger {...draggerProps} disabled={fileSelected}>
                 <p className="ant-upload-drag-icon">
                   <Icon type="inbox" />
                 </p>
@@ -180,7 +192,11 @@ class CustomForm extends Component {
             )}
           </Form.Item>
           <Form.Item label="Build Command">
-            {getFieldDecorator('buildCMD')(
+            {getFieldDecorator('buildCMD', {
+              rules: [
+                { required: true, message: 'Please enter a build command!' }
+              ]
+            })(
               <Ace
                 defaultStr={
                   '# Shell Commands to initialize each assignment\n# Use for Makefiles, installing dependencies, etc\n'

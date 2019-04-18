@@ -28,5 +28,16 @@ export default {
       console.log(e);
       throw e;
     }
+  },
+  delete: async (url, config = {}) => {
+    try {
+      const res = await tyr.delete(url, {
+        ...config,
+        withCredentials: true
+      });
+      return res;
+    } catch (e) {
+      throw e;
+    }
   }
 };

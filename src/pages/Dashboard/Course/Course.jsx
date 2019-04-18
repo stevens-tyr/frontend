@@ -12,6 +12,14 @@ class Course extends Component {
   };
 
   async componentDidMount() {
+    await this.fetchInfo();
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+  }
+
+  fetchInfo = async () => {
     const { cid } = this.props.match.params;
     this._mounted = true;
     try {
@@ -23,11 +31,7 @@ class Course extends Component {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  componentWillUnmount() {
-    this._mounted = false;
-  }
+  };
 
   render() {
     const { fetched, course } = this.state;
@@ -38,7 +42,7 @@ class Course extends Component {
         {course.role === 'student' ? (
           <StudentView course={course} />
         ) : (
-          <ProfessorView course={course} />
+          <ProfessorView course={course} updateParent={this.fetchInfo} />
         )}
       </div>
     );

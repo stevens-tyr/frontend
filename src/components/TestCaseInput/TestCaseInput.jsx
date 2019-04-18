@@ -14,9 +14,9 @@ class TestCaseInput extends Component {
 
     const value = props.value || {};
     this.state = {
-      cmd: value.cmd || '',
-      output: value.output || '',
-      hidden: value.hidden || false
+      testCMD: value.testCMD || '',
+      expectedOutput: value.expectedOutput || '',
+      studentFacing: value.studentFacing || false
     };
   }
 
@@ -44,16 +44,16 @@ class TestCaseInput extends Component {
   };
 
   render() {
-    const { cmdName, outputName, onRemove } = this.props;
-    const { cmd, output, hidden } = this.state;
+    const { cmdName, outputName, onRemove, allKeys } = this.props;
+    const { testCMD, expectedOutput, studentFacing } = this.state;
     return (
       <div className="testcase">
         <div className="header">Command:</div>
         <AceEditor
           mode="sh"
           theme="tomorrow"
-          onChange={e => this.handleChange(['cmd', e])}
-          value={cmd}
+          onChange={e => this.handleChange(['testCMD', e])}
+          value={testCMD}
           name={cmdName}
           editorProps={{ $blockScrolling: true }}
           setOptions={{ showInvisibles: true }}
@@ -63,19 +63,22 @@ class TestCaseInput extends Component {
         <AceEditor
           mode="plain_text"
           theme="tomorrow"
-          onChange={e => this.handleChange(['output', e])}
-          value={output}
+          onChange={e => this.handleChange(['expectedOutput', e])}
+          value={expectedOutput}
           name={outputName}
           editorProps={{ $blockScrolling: true }}
           setOptions={{ showInvisibles: true }}
           className="output"
         />
-        <Button onClick={onRemove} icon="delete" type="danger">
-          Delete Test Case
-        </Button>
+        {allKeys &&
+          allKeys.length > 1 && (
+            <Button onClick={onRemove} icon="delete" type="danger">
+              Delete Test Case
+            </Button>
+          )}
         <Checkbox
-          checked={hidden}
-          onChange={() => this.handleChange(['hidden', !hidden])}
+          checked={studentFacing}
+          onChange={() => this.handleChange(['studentFacing', !studentFacing])}
         >
           Hidden Test Case
         </Checkbox>

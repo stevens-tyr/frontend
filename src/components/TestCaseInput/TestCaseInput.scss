@@ -2,7 +2,7 @@
 @import 'Style/typography.scss';
 
 .testcase {
-  margin-left: 2rem;
+  margin: 0 2rem;
   .header {
     font-size: 0.8rem;
     font-weight: $thicc;
@@ -21,7 +21,7 @@
     @extend .editor;
     height: 100px !important;
   }
-  .ant-checkbox-wrapper {
-    margin-left: 1rem;
+  .ant-btn {
+    margin-right: 1rem;
   }
 }
