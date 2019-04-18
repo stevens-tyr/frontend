@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Icon, Modal } from 'antd';
+import { Table, Button, Icon, Modal, message } from 'antd';
 import { withRouter } from 'react-router';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -12,8 +12,6 @@ import './Assignments.scss';
 const { confirm } = Modal;
 const { Group } = Button;
 dayjs.extend(advancedFormat);
-
-/* eslint-disable no-console */
 
 const sortAssignments = (a, b, asc = true) => {
   const timeA = dayjs(a.dueDate);
@@ -63,12 +61,11 @@ class Assignments extends Component {
     {
       title: 'Action(s)',
       key: 'action',
-      // eslint-disable-next-line no-unused-vars
-      render: (text, record) => (
+      render: (_, record) => (
         <Group>
           <Button onClick={() => this.openAssignmentModal(record)}>View</Button>
           <Button onClick={() => this.toggleModal('edit')}>Edit</Button>
-          <Button onClick={this.showConfirm}>Delete</Button>
+          <Button onClick={() => this.showConfirm(record)}>Delete</Button>
         </Group>
       )
     }
@@ -103,48 +100,49 @@ class Assignments extends Component {
     this.toggleModal('assignment');
   };
 
-  showConfirm = () => {
+  showConfirm = record => {
+    const { match, updateParent } = this.props;
+    const { cid } = match.params;
     confirm({
       title: 'Are you sure delete this assignment?',
       content: 'This cannot be undone.',
       okText: 'Delete',
       okType: 'danger',
       cancelText: 'Go Back',
-      onOk() {
-        console.log('CALL DELETE ROUTE HERE');
+      onOk: async () => {
+        try {
+          await tyr.delete(
+            `plague_doctor/course/${cid}/assignment/${record._id}/delete`
+          );
+          await updateParent();
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('DELETE ASSIGNMENT ERROR:', err);
+          message.error('An error occurred while deleting the assignment!');
+        }
       }
     });
   };
 
-  submitForm = async values => {
-    const { match } = this.props;
+  submitForm = async formData => {
+    const { match, updateParent } = this.props;
     const { cid } = match.params;
-    const body = {
-      ...values,
-      dueDate: values.dueDate.valueOf(),
-      tests: ['./thing'],
-      supportingFiles: values.supportingFiles
-        ? values.supportingFiles.file
-        : null,
-      version: '3.7'
-    };
-    console.log('Body:', body);
-    const res = await tyr.post(
-      `plague_doctor/course/${cid}/assignment/create`,
-      body,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
 
-    if (res.status === 200) {
-      console.log('success in submitForm');
-    } else {
-      console.log('dang:', res.status, res.statusText);
+    try {
+      await tyr.post(
+        `plague_doctor/course/${cid}/assignment/create`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+
+      message.success('Assignment Created Successfully.');
+      this.toggleModal('new');
+      await updateParent();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('CREATE ASSIGNMENT ERROR:', err);
+      message.error('An error occurred while creating the assignment!');
     }
-    this.toggleModal('new');
   };
 
   render() {
@@ -181,6 +179,7 @@ class Assignments extends Component {
           visible={modalVisible.new}
           footer={null}
           width={800}
+          destroyOnClose
           onCancel={() => {
             // eslint-disable-next-line no-alert
             const result = window.confirm(
@@ -189,7 +188,7 @@ class Assignments extends Component {
             if (result) toggleModal('new');
           }}
         >
-          <Form onSubmit={() => submitForm()} />
+          <Form onSubmit={this.submitForm} />
         </Modal>
         <Modal
           title="View Assignment"
