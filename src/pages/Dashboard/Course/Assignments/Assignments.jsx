@@ -6,7 +6,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 
 import tyr from 'Utils/tyr';
 import Form from './AssignmentForm';
-import Assignment from './Assignment';
+import Assignment from './Assignment/Assignment';
 import './Assignments.scss';
 
 const { confirm } = Modal;
@@ -192,7 +192,7 @@ class Assignments extends Component {
           <Form onSubmit={() => submitForm()} />
         </Modal>
         <Modal
-          title="Edit Assignment"
+          title="View Assignment"
           visible={modalVisible.assignment}
           footer={null}
           onCancel={() => toggleModal('assignment')}
