@@ -16,6 +16,7 @@ import {
 import Quill from 'Components/Quill/Quill';
 import Ace from 'Components/Ace/Ace';
 import TestCaseInput from 'Components/TestCaseInput/TestCaseInput';
+import moment from 'moment';
 
 const { Dragger } = Upload;
 const { Option } = Select;
@@ -50,20 +51,55 @@ class CustomForm extends Component {
     fileSelected: false
   };
 
-  addTestCase = () => {
-    const { form } = this.props;
-    const keys = form.getFieldValue('keys');
-    const nextKeys = keys.concat((id += 1));
-    form.setFieldsValue({
-      keys: nextKeys
-    });
+  componentDidMount() {
+    const { updateData } = this.props;
+    if (updateData) updateData.tests.slice(0, -1).forEach(this.addTestCase);
+  }
+
+  getInitial = field => {
+    const { updateData } = this.props;
+    if (!updateData) return undefined;
+    if (field.startsWith('testCases')) {
+      const i = field.match(/testCases\[([0-9])*\]/)[1];
+      return updateData.tests[i];
+    }
+    switch (field) {
+      case 'name':
+      case 'language':
+      case 'numAttempts':
+        return updateData[field];
+      case 'description':
+      case 'testBuildCMD':
+        return {
+          text: updateData[field]
+        };
+      case 'dueDate':
+        return moment(updateData.dueDate);
+      default:
+        return undefined;
+    }
   };
+
+  getFieldDecoratorWrap = (name, options = {}) =>
+    this.props.form.getFieldDecorator(name, {
+      initialValue: this.getInitial(name),
+      ...options
+    });
 
   removeTestCase = k => {
     const { form } = this.props;
     const keys = form.getFieldValue('keys');
     form.setFieldsValue({
       keys: keys.filter(key => key !== k)
+    });
+  };
+
+  addTestCase = () => {
+    const { form } = this.props;
+    const keys = form.getFieldValue('keys');
+    const nextKeys = keys.concat((id += 1));
+    form.setFieldsValue({
+      keys: nextKeys
     });
   };
 
@@ -79,7 +115,7 @@ class CustomForm extends Component {
         formData.append('numAttempts', values.numAttempts);
         formData.append('description', values.description.text);
         formData.append('dueDate', values.dueDate.valueOf());
-        formData.append('testBuildCMD', values.buildCMD.text);
+        formData.append('testBuildCMD', values.testBuildCMD.text);
         if (values.supportingFiles)
           formData.append('supportingFiles', values.supportingFiles.file);
         values.testCases.forEach((test, i) => {
@@ -101,7 +137,7 @@ class CustomForm extends Component {
     const keys = getFieldValue('keys');
     return keys.map((k, index, allKeys) => (
       <Form.Item label={`Test Case ${index + 1}`} required={false} key={k}>
-        {getFieldDecorator(`testCases[${index}]`, {
+        {this.getFieldDecoratorWrap(`testCases[${index}]`, {
           rules: [{ required: true, message: 'Please enter a test case!' }]
         })(
           <TestCaseInput
@@ -116,16 +152,21 @@ class CustomForm extends Component {
   };
 
   render() {
-    const { handleSubmit, formItemLayout, draggerProps } = this;
+    const {
+      handleSubmit,
+      formItemLayout,
+      draggerProps,
+      getFieldDecoratorWrap
+    } = this;
     const { fileSelected } = this.state;
-    const { title, form } = this.props;
+    const { title, form, updateData } = this.props;
     const { getFieldDecorator } = form;
     return (
       <>
         {title && <h1>{title}</h1>}
         <Form {...formItemLayout} hideRequiredMark onSubmit={handleSubmit}>
           <Form.Item label="Assignment Name">
-            {getFieldDecorator('name', {
+            {getFieldDecoratorWrap('name', {
               rules: [
                 {
                   required: true,
@@ -135,14 +176,14 @@ class CustomForm extends Component {
             })(<Input placeholder="Assignment Name" />)}
           </Form.Item>
           <Form.Item label="Description">
-            {getFieldDecorator('description', {
+            {getFieldDecoratorWrap('description', {
               rules: [
                 { required: true, message: 'Please enter a description!' }
               ]
             })(<Quill placeholder="Type a Description Here!" />)}
           </Form.Item>
           <Form.Item label="Language">
-            {getFieldDecorator('language', {
+            {getFieldDecoratorWrap('language', {
               rules: [{ required: true, message: 'Please choose a language!' }]
             })(
               <Select placeholder="Pick a Programming Language">
@@ -156,7 +197,7 @@ class CustomForm extends Component {
           <Row>
             <Col xs={24} sm={24} md={12}>
               <Form.Item label="Due Date">
-                {getFieldDecorator('dueDate', {
+                {getFieldDecoratorWrap('dueDate', {
                   rules: [
                     { required: true, message: 'Please select a due date!' }
                   ]
@@ -165,7 +206,7 @@ class CustomForm extends Component {
             </Col>
             <Col xs={24} sm={24} md={12}>
               <Form.Item label="Maximum Allowed Submissions">
-                {getFieldDecorator('numAttempts', {
+                {getFieldDecoratorWrap('numAttempts', {
                   rules: [
                     {
                       required: true,
@@ -178,9 +219,7 @@ class CustomForm extends Component {
             </Col>
           </Row>
           <Form.Item label="Supporting File(s)">
-            {getFieldDecorator('supportingFiles', {
-              rules: [{ required: true, message: 'Please upload a file!' }]
-            })(
+            {getFieldDecorator('supportingFiles')(
               <Dragger {...draggerProps} disabled={fileSelected}>
                 <p className="ant-upload-drag-icon">
                   <Icon type="inbox" />
@@ -192,7 +231,7 @@ class CustomForm extends Component {
             )}
           </Form.Item>
           <Form.Item label="Build Command">
-            {getFieldDecorator('buildCMD', {
+            {getFieldDecoratorWrap('testBuildCMD', {
               rules: [
                 { required: true, message: 'Please enter a build command!' }
               ]
@@ -219,7 +258,7 @@ class CustomForm extends Component {
           </Form.Item>
           <Row type="flex" justify="center">
             <Button type="primary" icon="export" htmlType="submit">
-              Create Assignment
+              {updateData ? 'Update Assignment' : 'Create Assignment'}
             </Button>
           </Row>
         </Form>

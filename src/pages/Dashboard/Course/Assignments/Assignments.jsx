@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 
+import LanguageTag from 'Components/LanguageTag/LanguageTag';
 import tyr from 'Utils/tyr';
 import Form from './AssignmentForm';
 import Assignment from './Assignment/Assignment';
@@ -55,16 +56,22 @@ class Assignments extends Component {
     },
     {
       title: 'Required Language',
-      dataIndex: 'language',
-      key: 'language'
+      key: 'language',
+      render: (_, record) => <LanguageTag language={record.language} />
     },
     {
       title: 'Action(s)',
       key: 'action',
       render: (_, record) => (
         <Group>
-          <Button onClick={() => this.openAssignmentModal(record)}>View</Button>
-          <Button onClick={() => this.toggleModal('edit')}>Edit</Button>
+          <Button
+            onClick={() => this.openAssignmentModal(record, 'assignment')}
+          >
+            View
+          </Button>
+          <Button onClick={() => this.openAssignmentModal(record, 'edit')}>
+            Edit
+          </Button>
           <Button onClick={() => this.showConfirm(record)}>Delete</Button>
         </Group>
       )
@@ -76,7 +83,8 @@ class Assignments extends Component {
       new: false,
       edit: false,
       assignment: false
-    }
+    },
+    currentAssignment: null
   };
 
   componentDidMount() {
@@ -95,9 +103,9 @@ class Assignments extends Component {
     });
   };
 
-  openAssignmentModal = currentAssignment => {
+  openAssignmentModal = (currentAssignment, type) => {
     this.setState({ currentAssignment });
-    this.toggleModal('assignment');
+    this.toggleModal(type);
   };
 
   showConfirm = record => {
@@ -124,7 +132,31 @@ class Assignments extends Component {
     });
   };
 
-  submitForm = async formData => {
+  updateAssignment = async formData => {
+    const { match, updateParent } = this.props;
+    const { cid } = match.params;
+    const {
+      currentAssignment: { _id: aid }
+    } = this.state;
+
+    try {
+      await tyr.patch(
+        `plague_doctor/course/${cid}/assignment/${aid}/update`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+
+      message.success('Assignment Updated Successfully.');
+      this.toggleModal('edit');
+      await updateParent();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('UPDATE ASSIGNMENT ERROR:', err);
+      message.error('An error occurred while updating the assignment!');
+    }
+  };
+
+  createAssignment = async formData => {
     const { match, updateParent } = this.props;
     const { cid } = match.params;
 
@@ -152,7 +184,12 @@ class Assignments extends Component {
       upcomingAssignments,
       currentAssignment
     } = this.state;
-    const { toggleModal, tableColumns, submitForm } = this;
+    const {
+      toggleModal,
+      tableColumns,
+      createAssignment,
+      updateAssignment
+    } = this;
     return (
       <>
         <div className="flex-container">
@@ -188,7 +225,7 @@ class Assignments extends Component {
             if (result) toggleModal('new');
           }}
         >
-          <Form onSubmit={this.submitForm} />
+          <Form onSubmit={createAssignment} />
         </Modal>
         <Modal
           title="View Assignment"
@@ -196,6 +233,7 @@ class Assignments extends Component {
           footer={null}
           onCancel={() => toggleModal('assignment')}
           width={800}
+          destroyOnClose
         >
           <Assignment assignment={currentAssignment} />
         </Modal>
@@ -203,10 +241,17 @@ class Assignments extends Component {
           title="Edit Assignment"
           visible={modalVisible.edit}
           footer={null}
-          onCancel={() => toggleModal('edit')}
           width={800}
+          destroyOnClose
+          onCancel={() => {
+            // eslint-disable-next-line no-alert
+            const result = window.confirm(
+              'Are you sure you want to close? (Changes will not be saved)'
+            );
+            if (result) toggleModal('edit');
+          }}
         >
-          <Form onSubmit={() => submitForm()} />
+          <Form updateData={currentAssignment} onSubmit={updateAssignment} />
         </Modal>
       </>
     );

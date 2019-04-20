@@ -29,6 +29,19 @@ export default {
       throw e;
     }
   },
+  patch: async (url, data, config = {}) => {
+    try {
+      const res = await tyr.patch(url, data, {
+        ...config,
+        withCredentials: true
+      });
+      return res;
+    } catch (e) {
+      /* eslint-disable-next-line */
+      console.log(e);
+      throw e;
+    }
+  },
   delete: async (url, config = {}) => {
     try {
       const res = await tyr.delete(url, {
