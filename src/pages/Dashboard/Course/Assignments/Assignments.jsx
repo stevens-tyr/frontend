@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Icon, Modal, message } from 'antd';
+import { Table, Button, Icon, Modal, Checkbox, message } from 'antd';
 import { withRouter } from 'react-router';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -47,12 +47,25 @@ class Assignments extends Component {
     {
       title: 'Name',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      width: '250px'
+    },
+    {
+      title: 'Published',
+      key: 'published',
+      render: (_, record) => (
+        <Checkbox
+          checked={record.published}
+          onClick={async () =>
+            this.togglePubAssignment(record._id, !record.published)
+          }
+        />
+      )
     },
     {
       title: 'Due Date',
       key: 'dueDate',
-      render: record => dayjs(record.dueDate).format('MMM Do, YYYY')
+      render: (_, record) => dayjs(record.dueDate).format('MMM Do, YYYY')
     },
     {
       title: 'Required Language',
@@ -101,6 +114,30 @@ class Assignments extends Component {
     this.setState({
       modalVisible: { ...modalVisible, [type]: !modalVisible[type] }
     });
+  };
+
+  togglePubAssignment = async (aid, toggle) => {
+    const { match, updateParent } = this.props;
+    const { cid } = match.params;
+
+    const verb = toggle ? 'Published' : 'Hidden';
+    try {
+      const formData = new FormData();
+      formData.append('published', toggle);
+      await tyr.patch(
+        `plague_doctor/course/${cid}/assignment/${aid}/update`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      message.success(`Assignment ${verb} Successfully.`);
+      await updateParent();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('TOGGLE ASSIGNMENT ERROR:', err);
+      message.error(
+        `An error occurred, assignment could not be ${verb.toLowerCase()}.`
+      );
+    }
   };
 
   openAssignmentModal = (currentAssignment, type) => {
