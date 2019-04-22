@@ -2,7 +2,7 @@ const languageColors = {
   java: 'volcano',
   python: 'gold',
   c: 'geekblue',
-  cpp: 'orange',
+  'c++': 'orange',
   javascript: 'lime',
   html: 'cyan',
   css: 'blue',
