@@ -24,6 +24,7 @@ class Default extends Component {
     this._mounted = true;
     try {
       const { data } = await tyr.get('plague_doctor/dashboard');
+      console.log(data);
       // Prevents state from being updated when component becomes unmounted
       this._mounted && this.setState({ ...data, fetched: true });
     } catch (e) {
@@ -94,7 +95,7 @@ class Default extends Component {
   renderRecent() {
     const { mostRecentSubmissions } = this.state;
     if (mostRecentSubmissions && mostRecentSubmissions.length) {
-      return mostRecentSubmissions.slice(0, 3).map(s => (
+      return mostRecentSubmissions.map(s => (
         <Link
           key={s._id}
           to={`/dashboard/course/${s.course._id}/${s.assignment._id}`}
@@ -120,12 +121,12 @@ class Default extends Component {
                 {
                   title: 'Pass',
                   color: '#61e786',
-                  value: s.cases.studentFacing.pass
+                  value: s.results.filter(e => e.passed).length
                 },
                 {
                   title: 'Fail',
                   color: '#e27a70',
-                  value: s.cases.studentFacing.fail
+                  value: s.results.filter(e => !e.passed).length
                 }
               ]}
             />

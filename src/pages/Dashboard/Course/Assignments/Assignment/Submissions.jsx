@@ -2,12 +2,12 @@ import React from 'react';
 import { Table, Icon } from 'antd';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Roles } from 'Utils/vars';
 
 dayjs.extend(advancedFormat);
 
-const Submissions = ({ submissions, role }) => {
+const Submissions = ({ submissions }) => {
   const expandedRowRender = record => {
+    if (record.inProgress) return 'Currently grading...';
     const columns = [
       {
         title: (
@@ -41,24 +41,29 @@ const Submissions = ({ submissions, role }) => {
       }
     ];
 
-    // TODO: Add Teacher-facing test cases
-    const data =
-      role === Roles.student
-        ? record.cases.studentFacing
-        : record.cases.studentFacing;
+    const data = record.results.reduce(
+      (acc, curr) =>
+        curr.passed
+          ? { pass: acc.pass++, ...acc }
+          : { fail: acc.fail++, ...acc },
+      { pass: 0, fail: 0 }
+    );
 
     return (
-      <Table
-        columns={columns}
-        dataSource={[data]}
-        pagination={false}
-        rowKey={(r, index) => index}
-      />
+      <>
+        <Table
+          columns={columns}
+          dataSource={[data]}
+          pagination={false}
+          rowKey={(r, index) => index}
+        />
+        <code>{JSON.stringify(record, null, '  ')}</code>
+      </>
     );
   };
 
   const columns = [
-    { title: 'Attempt', dataIndex: 'attemptNumber', key: 'attemptNumber' },
+    { title: 'Attempt #', dataIndex: 'attemptNumber', key: 'attemptNumber' },
     {
       title: 'Submission Date',
       dataIndex: 'submissionDate',

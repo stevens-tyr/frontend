@@ -266,9 +266,11 @@ class Assignments extends Component {
       <>
         <div className="flex-container">
           <div className="dash-label">Upcoming Assignments</div>
-          <Button type="primary" onClick={() => toggleModal('new')}>
-            <Icon type="plus" /> New Assignment
-          </Button>
+          {this.props.role === 'teacher' && (
+            <Button type="primary" onClick={() => toggleModal('new')}>
+              <Icon type="plus" /> New Assignment
+            </Button>
+          )}
         </div>
         <Table
           columns={tableColumns}
