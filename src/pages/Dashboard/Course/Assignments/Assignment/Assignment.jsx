@@ -1,19 +1,24 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
-// import tyr from 'Utils/tyr';
-// import { Tag } from 'antd';
+import sanitizeHtml from 'sanitize-html';
 import LanguageTag from 'Components/LanguageTag/LanguageTag';
-import Submissions from './Submissions';
 
 import './Assignment.scss';
+import UploadAssignment from 'Components/UploadAssignment/UploadAssignment';
+import Submissions from './Submissions';
 
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
 
-const Assignments = ({ assignment }) => {
+const Assignments = ({ assignment, updateParent, match }) => {
   const {
+    params: { cid }
+  } = match;
+  const {
+    _id: aid,
     name,
     description,
     dueDate,
@@ -32,8 +37,13 @@ const Assignments = ({ assignment }) => {
           <p>{dayjs(dueDate).fromNow()}</p>
         </div>
       </div>
-      <div className="subheader">
-        <p>{description}</p>
+      <div className="subheader desc">
+        <div
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(description)
+          }}
+        />
       </div>
       <div className="subheader">
         <h3>
@@ -59,11 +69,11 @@ const Assignments = ({ assignment }) => {
       </div>
       <div className="subheader">
         <h3>Submissions:</h3>
-        {/* submissions.map(s => <p>{JSON.stringify(s)}</p>) */}
         <Submissions submissions={submissions} />
       </div>
+      <UploadAssignment updateParent={updateParent} cid={cid} aid={aid} />
     </div>
   );
 };
 
-export default Assignments;
+export default withRouter(Assignments);

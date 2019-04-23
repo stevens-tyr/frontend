@@ -40,7 +40,7 @@ class Course extends Component {
     return (
       <div className="course">
         {course.role === 'student' ? (
-          <StudentView course={course} />
+          <StudentView course={course} updateParent={this.fetchInfo} />
         ) : (
           <ProfessorView course={course} updateParent={this.fetchInfo} />
         )}

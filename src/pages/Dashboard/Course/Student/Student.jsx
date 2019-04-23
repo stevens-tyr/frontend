@@ -15,7 +15,7 @@ class Student extends Component {
   state = {};
 
   render() {
-    const { course, match } = this.props;
+    const { course, match, updateParent } = this.props;
     return (
       <div className="professor-view">
         <Card>
@@ -43,7 +43,8 @@ class Student extends Component {
               component={() =>
                 Assignments({
                   assignments: course.assignments,
-                  role: Roles.student
+                  role: Roles.student,
+                  updateParent
                 })
               }
             />

@@ -1,17 +1,26 @@
 .assignment {
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  p {
+    margin: 0;
+  }
 
-    a.download-file {
-        color: blue;
-        text-decoration: underline;
-    }
+  .desc {
+    padding: 1rem 0;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+  }
 
-    .subheader {
-        margin: 30px 0;
-    }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
+  a.download-file {
+    color: blue;
+    text-decoration: underline;
+  }
+
+  .subheader {
+    margin: 30px 0;
+  }
 }

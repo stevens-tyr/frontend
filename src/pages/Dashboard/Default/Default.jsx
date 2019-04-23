@@ -24,7 +24,6 @@ class Default extends Component {
     this._mounted = true;
     try {
       const { data } = await tyr.get('plague_doctor/dashboard');
-      console.log(data);
       // Prevents state from being updated when component becomes unmounted
       this._mounted && this.setState({ ...data, fetched: true });
     } catch (e) {

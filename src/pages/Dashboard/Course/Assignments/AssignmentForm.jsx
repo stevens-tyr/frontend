@@ -37,7 +37,7 @@ class CustomForm extends Component {
 
   draggerProps = {
     name: 'supportingFiles',
-    accept: '.zip,.tar.gz',
+    accept: '.gz',
     beforeUpload: () => {
       this.setState({ fileSelected: true });
       return false;
@@ -226,6 +226,9 @@ class CustomForm extends Component {
                 </p>
                 <p className="ant-upload-text">
                   Click or drag file to this area to upload!
+                </p>
+                <p className="ant-upload-text">
+                  Compressed Tarball (tar.gz) Only!
                 </p>
               </Dragger>
             )}

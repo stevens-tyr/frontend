@@ -309,7 +309,10 @@ class Assignments extends Component {
           width={800}
           destroyOnClose
         >
-          <Assignment assignment={currentAssignment} />
+          <Assignment
+            assignment={currentAssignment}
+            updateParent={this.props.updateParent}
+          />
         </Modal>
         <Modal
           title="Edit Assignment"
