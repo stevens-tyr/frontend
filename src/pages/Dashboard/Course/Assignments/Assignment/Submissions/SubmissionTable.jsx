@@ -1,10 +1,42 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Icon, Table } from 'antd';
 import './SubmissionTable.scss';
 
 export default class SubmissionTable extends Component {
+  testCaseSelectorColumns = [
+    {
+      title: 'Test Case #',
+      dataIndex: 'idx',
+      render: (text, record) => (
+        <div key={record.result.id}>
+          {`Test Case ${text}`}
+          {record.result.passed ? (
+            <Icon
+              style={{ marginLeft: 10 }}
+              type="check-circle"
+              theme="twoTone"
+              twoToneColor="#52c41a"
+            />
+          ) : (
+            <Icon
+              style={{ marginLeft: 10 }}
+              type="close-circle"
+              theme="twoTone"
+              twoToneColor="#f5222d"
+            />
+          )}
+        </div>
+      )
+    }
+  ];
+
+  testCaseSelectorData = this.props.submissions.results.map((r, idx) => ({
+    idx,
+    result: r
+  }));
+
   state = {
     submissions: this.props.submissions,
     testNum: 0,
@@ -24,42 +56,28 @@ export default class SubmissionTable extends Component {
 
   render() {
     const { submissions, testNum, currTestCase } = this.state;
-    const { selectTestCase } = this;
+    const {
+      selectTestCase,
+      testCaseSelectorData,
+      testCaseSelectorColumns
+    } = this;
     return submissions.inProgress ? (
       'Currently grading...'
     ) : (
       <div className="submission-table">
-        <div className="cases-selector">
-          {submissions.results.map((s, idx) => (
-            <div
-              key={s.id}
-              className={`testcase ${testNum === idx ? 'active' : 'nonactive'}`}
-              onClick={() => selectTestCase(idx)}
-            >
-              <div
-                className={`testcase-name ${s.passed ? 'passed' : 'failed'}`}
-              >
-                Test Case {idx + 1}
-                {s.passed ? (
-                  <Icon
-                    style={{ marginLeft: 10 }}
-                    type="check-circle"
-                    theme="twoTone"
-                    twoToneColor="#52c41a"
-                  />
-                ) : (
-                  <Icon
-                    style={{ marginLeft: 10 }}
-                    type="close-circle"
-                    theme="twoTone"
-                    twoToneColor="#f5222d"
-                  />
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        <Table
+          className="cases-selector"
+          dataSource={testCaseSelectorData}
+          columns={testCaseSelectorColumns}
+          pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}
+          showHeader={false}
+          scroll={{ y: 500 }}
+          onRow={(record, rowIndex) => ({
+            onClick: () => selectTestCase(rowIndex)
+          })}
+        />
         <div className="case-viewer">
+          <h1>{`Test Case ${testNum}`}</h1>
           <div className="subheader">Test Case Status:</div>
           <div className="status">
             {currTestCase.passed ? 'Success' : 'Failure'}
