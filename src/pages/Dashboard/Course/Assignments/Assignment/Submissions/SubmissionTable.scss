@@ -1,0 +1,58 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+.submission-table {
+    display: flex;
+    height: 500px;
+    // box-shadow: 0 6px 16px 0 rgba(0,0,0,.2);
+
+    .cases-selector {
+        overflow-y: scroll;
+        width: 30%;
+
+        .active {
+            // background-color: white;
+        }
+
+        .nonactive {
+            // background-color: rgb(183, 201, 204);
+        }
+        
+        .testcase {
+            border-top-color: grey;
+            border-bottom-color: grey;
+
+            .testcase-name {
+                font-weight: $medium;
+                font-size: 1.5em;
+                padding: 10px;
+            }
+
+            .testcase-name.passed {
+                // color: #52c41a;
+            }
+            .testcase-name.failed {
+                // color: #f5222d;
+            }
+        }
+    }
+
+    .case-viewer {
+        background-color: white;
+        width: 100%;
+        padding: 30px;
+    }
+
+    .subheader {
+        color: #576871;
+    }
+
+    .diff, .status {
+        font-weight: $thicc;
+        background-color: #f3f7f7;
+        width: 100%;
+        padding: 25px;
+
+    }
+}

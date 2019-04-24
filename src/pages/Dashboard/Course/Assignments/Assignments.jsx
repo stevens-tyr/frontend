@@ -306,7 +306,7 @@ class Assignments extends Component {
           visible={modalVisible.assignment}
           footer={null}
           onCancel={() => toggleModal('assignment')}
-          width={800}
+          width={1000}
           destroyOnClose
         >
           <Assignment
