@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Icon, Table } from 'antd';
+import sanitizeHtml from 'sanitize-html';
 import './SubmissionTable.scss';
 
 export default class SubmissionTable extends Component {
@@ -10,8 +11,8 @@ export default class SubmissionTable extends Component {
       title: 'Test Case #',
       dataIndex: 'idx',
       render: (text, record) => (
-        <div key={record.result.id}>
-          {`Test Case ${text}`}
+        <div style={{ cursor: 'pointer' }}>
+          {record.result.name}
           {record.result.passed ? (
             <Icon
               style={{ marginLeft: 10 }}
@@ -32,22 +33,18 @@ export default class SubmissionTable extends Component {
     }
   ];
 
-  testCaseSelectorData = this.props.submissions.results.map((r, idx) => ({
-    idx,
-    result: r
-  }));
+  testCaseSelectorData = (this.props.submissions.results || []).map(
+    (r, idx) => ({
+      idx,
+      result: r
+    })
+  );
 
   state = {
     submissions: this.props.submissions,
     testNum: 0,
-    currTestCase: this.props.submissions.results[0]
+    currTestCase: (this.props.submissions.results || [])[0]
   };
-
-  // TODO: Remove this lifecycle method after developing submission ui
-  componentDidMount() {
-    const { submissions } = this.state;
-    console.log(submissions);
-  }
 
   selectTestCase = testNum => {
     const { submissions } = this.state;
@@ -72,12 +69,14 @@ export default class SubmissionTable extends Component {
           pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}
           showHeader={false}
           scroll={{ y: 500 }}
+          // eslint-disable-next-line
+          rowKey={r => r.result.id}
           onRow={(record, rowIndex) => ({
             onClick: () => selectTestCase(rowIndex)
           })}
         />
         <div className="case-viewer">
-          <h1>{`Test Case ${testNum}`}</h1>
+          <h1>{`Test Case ${testNum + 1}`}</h1>
           <div className="subheader">Test Case Status:</div>
           <div className="status">
             {currTestCase.passed ? 'Success' : 'Failure'}
@@ -86,7 +85,14 @@ export default class SubmissionTable extends Component {
             Output Diff (Comparison between expected output and actual output):
           </div>
           <div className="diff">
-            <code dangerouslySetInnerHTML={{ __html: currTestCase.html }} />
+            <code // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(currTestCase.html, {
+                  allowedTags: ['span', 'del', 'ins'],
+                  allowedAttributes: false
+                })
+              }}
+            />
           </div>
         </div>
       </div>
