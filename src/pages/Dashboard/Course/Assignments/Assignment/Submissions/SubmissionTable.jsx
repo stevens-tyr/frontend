@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Icon, Table } from 'antd';
 import sanitizeHtml from 'sanitize-html';
+import Spinner from 'react-spinkit';
 import './SubmissionTable.scss';
 
 export default class SubmissionTable extends Component {
@@ -59,7 +60,16 @@ export default class SubmissionTable extends Component {
       testCaseSelectorColumns
     } = this;
     return submissions.inProgress ? (
-      'Currently grading...'
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }}
+      >
+        <h2>Grading in Progress...</h2>
+        <Spinner name="ball-pulse-sync" />
+      </div>
     ) : (
       <div className="submission-table">
         <Table
