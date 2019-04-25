@@ -8,7 +8,7 @@ import LanguageTag from 'Components/LanguageTag/LanguageTag';
 
 import './Assignment.scss';
 import UploadAssignment from 'Components/UploadAssignment/UploadAssignment';
-import Submissions from './Submissions';
+import Submissions from './Submissions/Submissions';
 
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
@@ -69,6 +69,7 @@ const Assignments = ({ assignment, updateParent, match }) => {
       </div>
       <div className="subheader">
         <h3>Submissions:</h3>
+        {/* <code>{JSON.stringify(submissions[0], null, '   ')}</code> */}
         <Submissions submissions={submissions} />
       </div>
       <UploadAssignment updateParent={updateParent} cid={cid} aid={aid} />
