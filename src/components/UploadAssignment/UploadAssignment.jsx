@@ -59,6 +59,7 @@ class UploadAssignment extends Component {
 
   render() {
     const { handleSubmit, formItemLayout, draggerProps } = this;
+    const { disabled } = this.props;
     const { fileSelected } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
@@ -72,7 +73,7 @@ class UploadAssignment extends Component {
               }
             ]
           })(
-            <Dragger {...draggerProps} disabled={fileSelected}>
+            <Dragger {...draggerProps} disabled={fileSelected || disabled}>
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
               </p>
@@ -86,7 +87,12 @@ class UploadAssignment extends Component {
           )}
         </Form.Item>
         <Row type="flex" justify="center">
-          <Button type="primary" icon="export" htmlType="submit">
+          <Button
+            type="primary"
+            icon="export"
+            htmlType="submit"
+            disabled={disabled}
+          >
             Upload Submission
           </Button>
         </Row>

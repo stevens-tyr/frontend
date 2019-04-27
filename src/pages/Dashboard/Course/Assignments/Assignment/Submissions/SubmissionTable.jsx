@@ -71,14 +71,14 @@ export default class SubmissionTable extends Component {
         <Spinner name="ball-pulse-sync" />
       </div>
     ) : submissions.errorTesting ? (
-      <h2 style={{ color: '#F5222D', textAlign: 'center' }}>
+      <h3 style={{ color: '#F5222D', textAlign: 'center' }}>
         <Icon
           style={{ marginRight: '1rem' }}
           type="close-circle"
           theme="twoTone"
           twoToneColor="#f5222d"
-        />An error occurred while Grading.
-      </h2>
+        />An error occurred while testing.
+      </h3>
     ) : (
       <div className="submission-table">
         <Table

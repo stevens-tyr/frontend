@@ -108,29 +108,30 @@ class Default extends Component {
             <div>
               Attempt: {s.attemptNumber}/{s.assignment.numAttempts}
             </div>
-            {!s.inProgress && (
-              <PieChart
-                lineWidth={30}
-                label
-                labelStyle={{
-                  fontSize: '1rem'
-                }}
-                labelPosition={45}
-                className="pie"
-                data={[
-                  {
-                    title: 'Pass',
-                    color: '#61e786',
-                    value: s.results.filter(e => e.passed).length
-                  },
-                  {
-                    title: 'Fail',
-                    color: '#e27a70',
-                    value: s.results.filter(e => !e.passed).length
-                  }
-                ]}
-              />
-            )}
+            {!s.inProgress &&
+              (!s.errorTesting && (
+                <PieChart
+                  lineWidth={30}
+                  label
+                  labelStyle={{
+                    fontSize: '1rem'
+                  }}
+                  labelPosition={45}
+                  className="pie"
+                  data={[
+                    {
+                      title: 'Pass',
+                      color: '#61e786',
+                      value: s.results.filter(e => e.passed).length
+                    },
+                    {
+                      title: 'Fail',
+                      color: '#e27a70',
+                      value: s.results.filter(e => !e.passed).length
+                    }
+                  ]}
+                />
+              ))}
           </Card>
         </Link>
       ));

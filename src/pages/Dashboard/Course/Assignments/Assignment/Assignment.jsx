@@ -69,10 +69,19 @@ const Assignments = ({ assignment, updateParent, match }) => {
       </div>
       <div className="subheader">
         <h3>Submissions:</h3>
-        {/* <code>{JSON.stringify(submissions[0], null, '   ')}</code> */}
         <Submissions submissions={submissions} />
       </div>
-      <UploadAssignment updateParent={updateParent} cid={cid} aid={aid} />
+      <UploadAssignment
+        disabled={!(numAttempts - submissions.length)}
+        updateParent={updateParent}
+        cid={cid}
+        aid={aid}
+      />
+      {!(numAttempts - submissions.length) && (
+        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+          Maximum Submissions Reached
+        </div>
+      )}
     </div>
   );
 };
