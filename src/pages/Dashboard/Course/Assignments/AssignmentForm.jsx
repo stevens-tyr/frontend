@@ -187,10 +187,9 @@ class CustomForm extends Component {
               rules: [{ required: true, message: 'Please choose a language!' }]
             })(
               <Select placeholder="Pick a Programming Language">
-                <Option value="python">Python</Option>
-                <Option value="java">Java</Option>
-                <Option value="c">C</Option>
-                <Option value="c++">C++</Option>
+                <Option value="python">Python (3.7.3)</Option>
+                <Option value="java">Java (openjdk 13)</Option>
+                <Option value="gcc">C/C++ (gcc 8.3.0)</Option>
               </Select>
             )}
           </Form.Item>
