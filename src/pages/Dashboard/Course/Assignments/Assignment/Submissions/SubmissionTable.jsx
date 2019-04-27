@@ -79,6 +79,15 @@ export default class SubmissionTable extends Component {
           twoToneColor="#f5222d"
         />An error occurred while testing.
       </h3>
+    ) : !submissions.results.length ? (
+      <h3 style={{ textAlign: 'center' }}>
+        <Icon
+          style={{ marginRight: '1rem' }}
+          type="eye-invisible"
+          theme="twoTone"
+          twoToneColor="#f5222d"
+        />No visible test cases!
+      </h3>
     ) : (
       <div className="submission-table">
         <Table
