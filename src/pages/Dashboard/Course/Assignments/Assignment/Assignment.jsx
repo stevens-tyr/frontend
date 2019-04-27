@@ -24,8 +24,8 @@ const Assignments = ({ assignment, updateParent, match }) => {
     dueDate,
     language,
     numAttempts,
-    submissions,
-    supportingFiles
+    submissions
+    // supportingFiles
   } = assignment;
 
   return (
@@ -55,9 +55,8 @@ const Assignments = ({ assignment, updateParent, match }) => {
         <h3>Total Number of Attempts: {numAttempts}</h3>
         <p>You have {numAttempts - submissions.length} attempts left.</p>
       </div>
-      <div className="subheader">
+      {/* <div className="subheader">
         <h3>Supporting Files:</h3>
-        {/* TODO: Use the download file url here. */}
         <a
           className="download-file"
           href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
@@ -66,7 +65,7 @@ const Assignments = ({ assignment, updateParent, match }) => {
         >
           {supportingFiles}
         </a>
-      </div>
+      </div> */}
       <div className="subheader">
         <h3>Submissions:</h3>
         <Submissions submissions={submissions} />
