@@ -19,10 +19,7 @@ const Submissions = ({ submissions }) => {
     {
       title: 'Errors',
       dataIndex: 'errorTesting',
-      render: text =>
-        text
-          ? 'An error occurred while testing. Please check your code.'
-          : 'None'
+      render: text => (text ? 'An error occurred while testing.' : 'None')
     }
   ];
   return (
