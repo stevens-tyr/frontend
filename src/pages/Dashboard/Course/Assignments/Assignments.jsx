@@ -7,7 +7,6 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import LanguageTag from 'Components/LanguageTag/LanguageTag';
 import tyr from 'Utils/tyr';
 import Form from './AssignmentForm';
-import Assignment from './Assignment/Assignment';
 import './Assignments.scss';
 
 const { confirm } = Modal;
@@ -43,88 +42,68 @@ const splitAssignments = assignments => {
 
 class Assignments extends Component {
   // reference: https://ant.design/components/table/
-  tableColumns =
-    this.props.role === 'teacher'
-      ? [
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            width: '250px'
-          },
-          {
-            title: 'Published',
-            key: 'published',
-            render: (_, record) => (
-              <Checkbox
-                checked={record.published}
-                onClick={async () =>
-                  this.togglePubAssignment(record._id, !record.published)
-                }
-              />
-            )
-          },
-          {
-            title: 'Due Date',
-            key: 'dueDate',
-            render: (_, record) => dayjs(record.dueDate).format('MMM Do, YYYY')
-          },
-          {
-            title: 'Required Language',
-            key: 'language',
-            render: (_, record) => <LanguageTag language={record.language} />
-          },
-          {
-            title: 'Action(s)',
-            key: 'action',
-            render: (_, record) => (
-              <Group>
-                <Button
-                  onClick={() => this.openAssignmentModal(record, 'assignment')}
-                >
-                  View
-                </Button>
-                <Button
-                  onClick={() => this.openAssignmentModal(record, 'edit')}
-                >
+  tableColumns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: '250px'
+    },
+    {
+      title: 'Published',
+      key: 'published',
+      render: (_, record) => (
+        <Checkbox
+          checked={record.published}
+          onClick={async () =>
+            this.togglePubAssignment(record._id, !record.published)
+          }
+        />
+      )
+    },
+    {
+      title: 'Due Date',
+      key: 'dueDate',
+      render: (_, record) => dayjs(record.dueDate).format('MMM Do, YYYY')
+    },
+    {
+      title: 'Required Language',
+      key: 'language',
+      render: (_, record) => <LanguageTag language={record.language} />
+    },
+    {
+      title: 'Action(s)',
+      key: 'action',
+      render: (_, a) => {
+        const {
+          role,
+          history,
+          match: {
+            params: { cid }
+          }
+        } = this.props;
+        return (
+          <Group>
+            <Button
+              onClick={() =>
+                history.push(`/dashboard/course/${cid}/assignments/${a._id}`)
+              }
+            >
+              View
+            </Button>
+            {role === 'teacher' && (
+              <>
+                <Button onClick={() => this.openAssignmentModal(a, 'edit')}>
                   Edit
                 </Button>
-                <Button onClick={() => this.showConfirm(record)}>Delete</Button>
-              </Group>
-            )
-          }
-        ]
-      : [
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            width: '250px'
-          },
-          {
-            title: 'Due Date',
-            key: 'dueDate',
-            render: (_, record) => dayjs(record.dueDate).format('MMM Do, YYYY')
-          },
-          {
-            title: 'Required Language',
-            key: 'language',
-            render: (_, record) => <LanguageTag language={record.language} />
-          },
-          {
-            title: 'Action(s)',
-            key: 'action',
-            render: (_, record) => (
-              <Group>
-                <Button
-                  onClick={() => this.openAssignmentModal(record, 'assignment')}
-                >
-                  View
-                </Button>
-              </Group>
-            )
-          }
-        ];
+                <Button onClick={() => this.showConfirm(a)}>Delete</Button>
+              </>
+            )}
+          </Group>
+        );
+      }
+    }
+  ];
 
   state = {
     modalVisible: {
@@ -300,19 +279,6 @@ class Assignments extends Component {
           }}
         >
           <Form onSubmit={createAssignment} />
-        </Modal>
-        <Modal
-          title="View Assignment"
-          visible={modalVisible.assignment}
-          footer={null}
-          onCancel={() => toggleModal('assignment')}
-          width={1000}
-          destroyOnClose
-        >
-          <Assignment
-            assignment={currentAssignment}
-            updateParent={this.props.updateParent}
-          />
         </Modal>
         <Modal
           title="Edit Assignment"

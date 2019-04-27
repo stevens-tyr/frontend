@@ -121,7 +121,12 @@ class CustomForm extends Component {
         values.testCases.forEach((test, i) => {
           formData.append(
             'tests',
-            JSON.stringify({ name: `Test ${i + 1}`, ...test })
+            JSON.stringify({
+              ...test,
+              name: `Test ${i + 1}`,
+              // add last newline for tests
+              expectedOutput: `${test.expectedOutput}\n`
+            })
           );
         });
         await onSubmit(formData);

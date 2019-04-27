@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Icon, Table } from 'antd';
 import sanitizeHtml from 'sanitize-html';
 import Spinner from 'react-spinkit';
-import './SubmissionTable.scss';
+import './Submission.scss';
 
 export default class SubmissionTable extends Component {
   testCaseSelectorColumns = [

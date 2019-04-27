@@ -1,0 +1,42 @@
+@import 'Style/colors.scss';
+@import 'Style/typography.scss';
+@import 'Style/space.scss';
+
+.submission-table {
+  display: flex;
+  height: 500px;
+
+  .cases-selector {
+    overflow-y: scroll;
+    width: 20%;
+
+    .testcase {
+      border-top-color: grey;
+      border-bottom-color: grey;
+
+      .testcase-name {
+        font-weight: $medium;
+        font-size: 1.5em;
+        padding: 10px;
+      }
+    }
+  }
+
+  .case-viewer {
+    background-color: white;
+    width: 100%;
+    padding: 30px;
+  }
+
+  .subheader {
+    color: #576871;
+  }
+
+  .diff,
+  .status {
+    font-weight: $thicc;
+    background-color: #f3f7f7;
+    width: 100%;
+    padding: 25px;
+  }
+}

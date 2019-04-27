@@ -8,7 +8,7 @@ import LanguageTag from 'Components/LanguageTag/LanguageTag';
 
 import './Assignment.scss';
 import UploadAssignment from 'Components/UploadAssignment/UploadAssignment';
-import Submissions from './Submissions/Submissions';
+import Submissions from './SubmissionList/SubmissionList';
 
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);

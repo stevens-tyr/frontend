@@ -9,6 +9,7 @@ import { addMsg } from '../../actions/auth.actions';
 import Default from './Default/Default';
 import CourseList from './CourseList/CourseList';
 import Course from './Course/Course';
+import AssignmentInfo from './AssignmentInfo/AssignmentInfo';
 import Calendar from './Calendar/Calendar';
 
 import './Dashboard.scss';
@@ -31,6 +32,11 @@ class Dashboard extends Component {
         <Switch>
           <Route exact path="/dashboard/" component={Default} />
           <Route exact path="/dashboard/course" component={CourseList} />
+          <Route
+            exact
+            path="/dashboard/course/:cid/assignments/:aid"
+            component={AssignmentInfo}
+          />
           <Route path="/dashboard/course/:cid" component={Course} />
           <Route exact path="/dashboard/calendar" component={Calendar} />
         </Switch>

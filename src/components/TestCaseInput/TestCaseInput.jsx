@@ -16,7 +16,7 @@ class TestCaseInput extends Component {
     this.state = {
       testCMD: value.testCMD || '',
       expectedOutput: value.expectedOutput || '',
-      studentFacing: value.studentFacing || false
+      studentFacing: value.studentFacing || true
     };
   }
 
@@ -77,7 +77,7 @@ class TestCaseInput extends Component {
             </Button>
           )}
         <Checkbox
-          checked={studentFacing}
+          checked={!studentFacing}
           onChange={() => this.handleChange(['studentFacing', !studentFacing])}
         >
           Hidden Test Case

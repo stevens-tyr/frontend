@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import SubmissionTable from './SubmissionTable';
+import SubmissionTable from './Submission';
 
 dayjs.extend(advancedFormat);
 
