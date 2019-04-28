@@ -123,9 +123,7 @@ class CustomForm extends Component {
             'tests',
             JSON.stringify({
               ...test,
-              name: `Test ${i + 1}`,
-              // add last newline for tests
-              expectedOutput: `${test.expectedOutput}\n`
+              name: `Test ${i + 1}`
             })
           );
         });

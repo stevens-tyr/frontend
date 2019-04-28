@@ -61,7 +61,10 @@ class AssignmentInfo extends Component {
           {typeof assignment.studentSubmissions !== 'undefined' ? (
             <ProfessorAssignment assignment={assignment} />
           ) : (
-            <StudentAssignment assignment={assignment} />
+            <StudentAssignment
+              assignment={assignment}
+              updateParent={this.fetchInfo}
+            />
           )}
         </Card>
       </>
