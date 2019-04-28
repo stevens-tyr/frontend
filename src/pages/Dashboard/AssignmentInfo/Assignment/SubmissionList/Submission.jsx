@@ -138,7 +138,16 @@ class SubmissionTable extends Component {
           })}
         />
         <div className="case-viewer">
-          <h1>{`Test Case ${testNum + 1}`}</h1>
+          <h1>
+            {!currTestCase.studentFacing && (
+              <Icon
+                style={{ marginRight: 10 }}
+                type="eye-invisible"
+                theme="twoTone"
+              />
+            )}
+            {`Test Case ${testNum + 1}`}
+          </h1>
           <pre>{currTestCase.testCMD}</pre>
           <div className="subheader">Test Case Status:</div>
           <div className="status">

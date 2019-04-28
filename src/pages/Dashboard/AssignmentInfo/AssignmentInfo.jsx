@@ -3,7 +3,8 @@ import { Button, Icon } from 'antd';
 import tyr from 'Utils/tyr';
 import Card from 'Components/Card/Card';
 
-import Assignment from './Assignment/Assignment';
+import StudentAssignment from './Assignment/StudentAssignment';
+import ProfessorAssignment from './Assignment/ProfessorAssignment';
 
 class AssignmentInfo extends Component {
   state = {
@@ -57,7 +58,11 @@ class AssignmentInfo extends Component {
           <Icon type="left" />Back to Course
         </Button>
         <Card>
-          <Assignment assignment={assignment} />
+          {typeof assignment.studentSubmissions !== 'undefined' ? (
+            <ProfessorAssignment assignment={assignment} />
+          ) : (
+            <StudentAssignment assignment={assignment} />
+          )}
         </Card>
       </>
     );

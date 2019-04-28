@@ -27,6 +27,7 @@ const Submissions = ({ submissions }) => {
       columns={columns}
       dataSource={submissions}
       expandedRowRender={expandedRowRender}
+      pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}
       rowKey={record => record._id}
     />
   );
