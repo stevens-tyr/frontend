@@ -26,6 +26,15 @@
     background-color: white;
     width: 100%;
     padding: 30px;
+
+    pre {
+      border-radius: 4px;
+      padding: 0.2rem;
+      color: $purp;
+      &:before {
+        content: '$ ';
+      }
+    }
   }
 
   .subheader {

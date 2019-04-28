@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
-import { Icon, Table } from 'antd';
+import { Icon, Table, Spin, Alert } from 'antd';
+import { withRouter } from 'react-router-dom';
 import sanitizeHtml from 'sanitize-html';
-import Spinner from 'react-spinkit';
+
+import tyr from 'Utils/tyr';
 import './Submission.scss';
 
-export default class SubmissionTable extends Component {
+class SubmissionTable extends Component {
   testCaseSelectorColumns = [
     {
       title: 'Test Case #',
@@ -34,52 +36,82 @@ export default class SubmissionTable extends Component {
     }
   ];
 
-  testCaseSelectorData = (this.props.submissions.results || []).map(
-    (r, idx) => ({
-      idx,
-      result: r
-    })
-  );
-
   state = {
-    submissions: this.props.submissions,
     testNum: 0,
-    currTestCase: (this.props.submissions.results || [])[0]
+    currTestCase: null,
+    fetched: false,
+    submission: {}
+  };
+
+  async componentDidMount() {
+    await this.fetchInfo();
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+    if (this.timer) clearInterval(this.timer);
+  }
+
+  fetchInfo = async () => {
+    const { cid, aid } = this.props.match.params;
+    const { id } = this.props;
+    this._mounted = true;
+    try {
+      const {
+        data: { submission }
+      } = await tyr.get(
+        `plague_doctor/course/${cid}/assignment/${aid}/submission/${id}/details`
+      );
+      // Prevents state from being updated when component becomes unmounted
+      // eslint-disable-next-line no-unused-expressions
+      if (submission.inProgress) {
+        if (!this.timer) this.timer = setInterval(this.fetchInfo, 2000);
+      } else if (this.timer) clearInterval(this.timer);
+
+      // eslint-disable-next-line no-unused-expressions
+      this._mounted &&
+        this.setState({
+          submission,
+          currTestCase: (submission.results || [])[0],
+          fetched: true
+        });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
   };
 
   selectTestCase = testNum => {
-    const { submissions } = this.state;
-    this.setState({ testNum, currTestCase: submissions.results[testNum] });
+    const { submission } = this.state;
+    this.setState({ testNum, currTestCase: submission.results[testNum] });
   };
 
-  render() {
-    const { submissions, testNum, currTestCase } = this.state;
-    const {
-      selectTestCase,
-      testCaseSelectorData,
-      testCaseSelectorColumns
-    } = this;
-    return submissions.inProgress ? (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}
-      >
-        <h2>Grading in Progress...</h2>
-        <Spinner name="ball-pulse-sync" />
-      </div>
-    ) : submissions.errorTesting ? (
-      <h3 style={{ color: '#F5222D', textAlign: 'center' }}>
-        <Icon
-          style={{ marginRight: '1rem' }}
-          type="close-circle"
-          theme="twoTone"
-          twoToneColor="#f5222d"
-        />An error occurred while testing.
-      </h3>
-    ) : !submissions.results.length ? (
+  renderInProgress = () => (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+      }}
+    >
+      <Spin size="large" tip="Grading in progress..." />
+    </div>
+  );
+
+  renderError = () => (
+    <Alert
+      message="Error"
+      description="An irrecoverable error occurred while testing the submission."
+      type="error"
+      showIcon
+    />
+  );
+
+  renderTestCases() {
+    const { submission, testNum, currTestCase, fetched } = this.state;
+    const { selectTestCase, testCaseSelectorColumns } = this;
+    if (!fetched) return null;
+    return !submission.results.length ? (
       <h3 style={{ textAlign: 'center' }}>
         <Icon
           style={{ marginRight: '1rem' }}
@@ -92,12 +124,14 @@ export default class SubmissionTable extends Component {
       <div className="submission-table">
         <Table
           className="cases-selector"
-          dataSource={testCaseSelectorData}
+          dataSource={(this.state.submission.results || []).map((r, idx) => ({
+            idx,
+            result: r
+          }))}
           columns={testCaseSelectorColumns}
           pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}
           showHeader={false}
           scroll={{ y: 500 }}
-          // eslint-disable-next-line
           rowKey={r => r.result.id}
           onRow={(record, rowIndex) => ({
             onClick: () => selectTestCase(rowIndex)
@@ -105,25 +139,51 @@ export default class SubmissionTable extends Component {
         />
         <div className="case-viewer">
           <h1>{`Test Case ${testNum + 1}`}</h1>
+          <pre>{currTestCase.testCMD}</pre>
           <div className="subheader">Test Case Status:</div>
           <div className="status">
             {currTestCase.passed ? 'Success' : 'Failure'}
           </div>
-          <div className="subheader">
-            Output Diff (Comparison between expected output and actual output):
-          </div>
-          <div className="diff">
-            <code // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(currTestCase.html, {
-                  allowedTags: ['span', 'del', 'ins'],
-                  allowedAttributes: false
-                })
-              }}
+          {currTestCase.panicked ? (
+            <Alert
+              message="Execution Error"
+              description="This test case caused the program to crash with a non-zero exit code."
+              type="warning"
+              style={{ marginTop: '2rem' }}
+              showIcon
             />
-          </div>
+          ) : (
+            <>
+              <div className="subheader">
+                Output Diff (Comparison between expected output and actual
+                output):
+              </div>
+              <div className="diff">
+                <code // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeHtml(currTestCase.html, {
+                      allowedTags: ['span', 'del', 'ins'],
+                      allowedAttributes: false
+                    })
+                  }}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     );
   }
+
+  render() {
+    const { submission } = this.state;
+
+    return submission.inProgress
+      ? this.renderInProgress()
+      : submission.errorTesting
+        ? this.renderError()
+        : this.renderTestCases();
+  }
 }
+
+export default withRouter(SubmissionTable);
