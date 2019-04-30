@@ -22,7 +22,7 @@ const sortAssignments = (a, b, asc = true) => {
 
 const splitAssignments = assignments => {
   if (assignments.length === 0) {
-    return null;
+    return {};
   }
 
   const pastAssignments = [];
@@ -117,9 +117,11 @@ class Assignments extends Component {
   componentDidMount() {
     const { assignments } = this.props;
     // TODO: Offload intermediate data processing to backend
-    const { pastAssignments, upcomingAssignments } = splitAssignments(
+    let { pastAssignments, upcomingAssignments } = splitAssignments(
       assignments
     );
+    pastAssignments = pastAssignments || [];
+    upcomingAssignments = upcomingAssignments || [];
     this.setState({ pastAssignments, upcomingAssignments });
   }
 
