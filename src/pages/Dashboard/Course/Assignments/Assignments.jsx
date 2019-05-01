@@ -22,7 +22,7 @@ const sortAssignments = (a, b, asc = true) => {
 
 const splitAssignments = assignments => {
   if (assignments.length === 0) {
-    return null;
+    return {};
   }
 
   const pastAssignments = [];
@@ -115,11 +115,17 @@ class Assignments extends Component {
   };
 
   componentDidMount() {
-    const { assignments } = this.props;
+    const { assignments, role } = this.props;
     // TODO: Offload intermediate data processing to backend
-    const { pastAssignments, upcomingAssignments } = splitAssignments(
+    let { pastAssignments, upcomingAssignments } = splitAssignments(
       assignments
     );
+    pastAssignments = pastAssignments || [];
+    upcomingAssignments = upcomingAssignments || [];
+    // remove publish table column if the current user is a student
+    if (role === 'student') {
+      this.tableColumns = this.tableColumns.filter(c => c.key !== 'published');
+    }
     this.setState({ pastAssignments, upcomingAssignments });
   }
 
