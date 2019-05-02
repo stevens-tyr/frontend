@@ -7,7 +7,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import sanitizeHtml from 'sanitize-html';
 import LanguageTag from 'Components/LanguageTag/LanguageTag';
 import SubmissionList from './SubmissionList/SubmissionList';
-// import SubmissionList from './SubmissionList/SubmissionList'
 
 import './Assignment.scss';
 
@@ -85,7 +84,12 @@ const Assignments = ({ assignment }) => {
         <div
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(description)
+            __html: sanitizeHtml(description, {
+              allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                'h1',
+                'h2'
+              ])
+            })
           }}
         />
       </div>

@@ -41,7 +41,12 @@ const Assignments = ({ assignment, updateParent, match }) => {
         <div
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(description)
+            __html: sanitizeHtml(description, {
+              allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                'h1',
+                'h2'
+              ])
+            })
           }}
         />
       </div>
