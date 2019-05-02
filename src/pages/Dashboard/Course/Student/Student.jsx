@@ -23,7 +23,7 @@ class Student extends Component {
             <span
               style={{
                 backgroundColor: stringToColour(
-                  course.department + course.number + course.role
+                  `${course.department} ${course.number} ${course.section}`
                 )
               }}
             />

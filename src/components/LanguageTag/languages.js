@@ -9,6 +9,7 @@ const languageColors = {
   ruby: 'red',
   csharp: 'blue',
   golang: 'cyan',
+  'C/C++': 'geekblue',
   other: '#e8e8e8'
 };
 

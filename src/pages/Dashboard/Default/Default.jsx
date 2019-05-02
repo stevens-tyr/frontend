@@ -2,7 +2,7 @@
 // TODO: Cleanup this into multiple components
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Empty } from 'antd';
+import { Empty, Tag } from 'antd';
 import * as eva from 'eva-icons';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -47,7 +47,7 @@ class Default extends Component {
           <Card
             style={{
               borderLeft: `0.8rem solid ${stringToColour(
-                c.department + c.number + c.role
+                `${c.department} ${c.number} ${c.section}`
               )}`
             }}
           >
@@ -70,15 +70,26 @@ class Default extends Component {
   renderTodo() {
     const { assignments, courses } = this.state;
     const filtered = assignments.filter(e => new Date(e.dueDate) > new Date());
+    filtered.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
     if (filtered.length) {
-      return filtered.map(a => {
+      return filtered.slice(0, 5).map(a => {
         const c = courses.find(e => e.id === a.courseID);
         return (
           <Link key={a.id} to={`/dashboard/course/${c.id}/assignments/${a.id}`}>
             <Card className="assignment">
               <div>
                 <div className="name">{a.name}</div>
-                <div>{c.longName}</div>
+                <div>
+                  <span
+                    className="dot"
+                    style={{
+                      backgroundColor: stringToColour(
+                        `${c.department} ${c.number} ${c.section}`
+                      )
+                    }}
+                  />
+                  {c.longName}
+                </div>
               </div>
               <div>
                 <div className="date">

@@ -38,7 +38,7 @@ class Courses extends Component {
             <Card
               style={{
                 borderLeft: `0.8rem solid ${stringToColour(
-                  c.department + c.number + c.role
+                  `${c.department} ${c.number} ${c.section}`
                 )}`
               }}
             >

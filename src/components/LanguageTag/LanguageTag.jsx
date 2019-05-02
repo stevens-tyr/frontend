@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { Tag } from 'antd';
 import Languages from './languages';
@@ -7,18 +8,15 @@ const capitalizeFirstLetter = string =>
 
 export default ({ language, style }) => {
   if (typeof language === 'string') {
-    if (language in Languages) {
-      return (
-        <Tag style={style} color={Languages[language]}>
-          {capitalizeFirstLetter(language)}
-        </Tag>
-      );
+    if (language === 'gcc') language = 'C/C++';
+    if (!(language in Languages)) {
+      language = 'other';
     }
     return (
-      <Tag style={style} color={Languages.other}>
+      <Tag style={style} color={Languages[language]}>
         {capitalizeFirstLetter(language)}
       </Tag>
     );
   }
-  return <p>Invalid input language!</p>;
+  return null;
 };

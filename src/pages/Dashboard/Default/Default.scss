@@ -80,6 +80,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .dot {
+        height: 0.6rem;
+        width: 0.6rem;
+        border-radius: 1rem;
+        margin-right: 0.5rem;
+        display: inline-block;
+      }
     }
     .date {
       font-weight: $thicc;
