@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import SubmissionTable from './Submission';
@@ -17,9 +17,18 @@ const Submissions = ({ submissions }) => {
       render: text => dayjs(text).format('MMM Do, YYYY hh:mm')
     },
     {
-      title: 'Errors',
-      dataIndex: 'errorTesting',
-      render: text => (text ? 'An error occurred while testing.' : 'None')
+      title: 'Grade',
+      key: 'grade',
+      render: r =>
+        r.errorTesting ? (
+          <Tag color="red">Error</Tag>
+        ) : r.inProgress ? (
+          <Tag color="blue">Testing</Tag>
+        ) : (
+          <Tag color="green">
+            {r.results.reduce((acc, e) => acc + e.passed, 0)}/{r.results.length}
+          </Tag>
+        )
     }
   ];
   return (

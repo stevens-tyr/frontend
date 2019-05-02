@@ -47,6 +47,25 @@ const Assignments = ({ assignment }) => {
       title: 'Email',
       dataIndex: 'student.email',
       key: 'email'
+    },
+    {
+      title: 'Attempts',
+      key: 'attempts',
+      render: r => `${r.submissions.length} out of ${numAttempts}`
+    },
+    {
+      title: 'Highest Grade',
+      key: 'high',
+      render: r => {
+        const high = r.submissions.reduce((max, sub) => {
+          const currGrade = (sub.results || []).reduce(
+            (acc, e) => acc + e.passed,
+            0
+          );
+          return currGrade > max ? currGrade : max;
+        }, 0);
+        return high;
+      }
     }
   ];
   const expandedRowRender = record => (
@@ -77,12 +96,13 @@ const Assignments = ({ assignment }) => {
         </h3>
       </div>
       <div className="subheader">
-        <h3>Number of Attempts: {numAttempts}</h3>
+        <h3>Total Number of Attempts: {numAttempts}</h3>
       </div>
       <div className="subheader">
-        <h3>Submissions:</h3>
+        <h3>Student Submissions</h3>
         <Table
           columns={columns}
+          rowKey={r => r.student.email}
           expandedRowRender={expandedRowRender}
           dataSource={studentSubmissions.sort(nameSort)}
           pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}

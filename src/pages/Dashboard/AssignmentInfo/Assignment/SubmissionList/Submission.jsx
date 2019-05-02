@@ -31,6 +31,13 @@ class SubmissionTable extends Component {
               twoToneColor="#f5222d"
             />
           )}
+          {!record.result.studentFacing && (
+            <Icon
+              style={{ marginLeft: 10 }}
+              type="eye-invisible"
+              theme="twoTone"
+            />
+          )}
         </div>
       )
     }

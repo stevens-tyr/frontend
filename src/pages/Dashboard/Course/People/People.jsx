@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Table, Divider } from 'antd';
+import { Table } from 'antd';
 
 const Students = ({ students, assistants }) => {
   let studentsData;
@@ -31,28 +31,39 @@ const Students = ({ students, assistants }) => {
       title: 'Email',
       key: 'email',
       dataIndex: 'email'
-    },
-    {
-      title: 'Action(s)',
-      key: 'action',
-      // eslint-disable-next-line no-unused-vars
-      render: (text, record) => (
-        <span>
-          <a href="/#">Edit</a>
-          <Divider type="vertical" />
-          <a href="/#">Delete</a>
-        </span>
-      )
     }
+    // {
+    //   title: 'Action(s)',
+    //   key: 'action',
+    //   // eslint-disable-next-line no-unused-vars
+    //   render: (text, record) => (
+    //     <span>
+    //       <a href="/#">Edit</a>
+    //       <Divider type="vertical" />
+    //       <a href="/#">Delete</a>
+    //     </span>
+    //   )
+    // }
   ];
 
   return (
     <>
       <div className="dash-label">Course Assistants</div>
-      <Table columns={tableColumns} dataSource={assistantsData} rowKey="uid" />
+      <Table
+        columns={tableColumns}
+        dataSource={assistantsData}
+        rowKey="uid"
+        pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}
+        style={{ marginBottom: '3rem' }}
+      />
 
       <div className="dash-label">Enrolled Students</div>
-      <Table columns={tableColumns} dataSource={studentsData} rowKey="uid" />
+      <Table
+        columns={tableColumns}
+        dataSource={studentsData}
+        rowKey="uid"
+        pagination={{ defaultPageSize: Infinity, hideOnSinglePage: true }}
+      />
     </>
   );
 };

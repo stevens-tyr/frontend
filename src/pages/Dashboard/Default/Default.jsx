@@ -41,7 +41,7 @@ class Default extends Component {
 
   renderCourses() {
     const { courses } = this.state;
-    if (typeof courses !== 'undefined')
+    if (courses.length) {
       return courses.map(c => (
         <Link key={c.id} to={`/dashboard/course/${c.id}`}>
           <Card
@@ -58,6 +58,13 @@ class Default extends Component {
           </Card>
         </Link>
       ));
+    } else {
+      return (
+        <Card style={{ marginLeft: '1rem', width: '100%' }}>
+          <Empty description="You're not in any courses!" />
+        </Card>
+      );
+    }
   }
 
   renderTodo() {
@@ -65,9 +72,9 @@ class Default extends Component {
     const filtered = assignments.filter(e => new Date(e.dueDate) > new Date());
     if (filtered.length) {
       return filtered.map(a => {
-        const c = courses.find(e => e._id === a.couseID); // im vv lazy
+        const c = courses.find(e => e.id === a.courseID);
         return (
-          <Link key={a.id} to={`/dashboard/course/${c.id}/${a.id}`}>
+          <Link key={a.id} to={`/dashboard/course/${c.id}/assignments/${a.id}`}>
             <Card className="assignment">
               <div>
                 <div className="name">{a.name}</div>
@@ -97,7 +104,9 @@ class Default extends Component {
       return mostRecentSubmissions.map(s => (
         <Link
           key={s._id}
-          to={`/dashboard/course/${s.course._id}/${s.assignment._id}`}
+          to={`/dashboard/course/${s.course._id}/assignments/${
+            s.assignment._id
+          }`}
         >
           <Card className="sub">
             <div className="name">{s.assignment.name}</div>
