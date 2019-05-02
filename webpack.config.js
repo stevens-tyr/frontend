@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const SERVER_PORT = 5000;
@@ -149,6 +150,7 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html'
     }),
+    new CopyWebpackPlugin([{ from: 'assets', to: 'assets' }]),
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [
