@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
-const SERVER_PORT = 8080;
+const SERVER_PORT = 5000;
 const DEV_PORT = 3000;
 
 module.exports = {

@@ -175,8 +175,7 @@ class SubmissionTable extends Component {
           ) : (
             <>
               <div className="subheader">
-                Output Diff (Comparison between expected output and actual
-                output):
+                Your Output (Differences between Expected is Highlighted):
               </div>
               <div className="diff">
                 <code // eslint-disable-next-line react/no-danger
