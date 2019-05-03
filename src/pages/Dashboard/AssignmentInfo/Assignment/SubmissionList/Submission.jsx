@@ -176,10 +176,13 @@ class SubmissionTable extends Component {
                 output):
               </div>
               <div className="diff">
+                {console.log(
+                  currTestCase.html.replace(/&para;/, '</span><br><span>')
+                )}
                 <code // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{
                     __html: sanitizeHtml(currTestCase.html, {
-                      allowedTags: ['span', 'del', 'ins'],
+                      allowedTags: ['span', 'del', 'ins', 'br'],
                       allowedAttributes: false
                     })
                   }}

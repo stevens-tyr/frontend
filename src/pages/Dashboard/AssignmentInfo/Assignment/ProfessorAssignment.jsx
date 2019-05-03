@@ -21,7 +21,7 @@ const nameSort = (a, b) => {
   return 0;
 };
 
-const Assignments = ({ assignment }) => {
+const Assignments = ({ assignment, updateParent }) => {
   const {
     name,
     description,
@@ -68,7 +68,10 @@ const Assignments = ({ assignment }) => {
     }
   ];
   const expandedRowRender = record => (
-    <SubmissionList submissions={record.submissions} />
+    <SubmissionList
+      submissions={record.submissions}
+      updateParent={updateParent}
+    />
   );
 
   return (
