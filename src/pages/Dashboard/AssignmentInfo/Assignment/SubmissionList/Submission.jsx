@@ -118,6 +118,7 @@ class SubmissionTable extends Component {
   renderTestCases() {
     const { submission, testNum, currTestCase, fetched } = this.state;
     const { selectTestCase, testCaseSelectorColumns } = this;
+    const { tests } = this.props;
     if (!fetched) return null;
     return !submission.results.length ? (
       <h3 style={{ textAlign: 'center' }}>
@@ -156,11 +157,13 @@ class SubmissionTable extends Component {
             )}
             {`Test Case ${testNum + 1}`}
           </h1>
-          <pre>{currTestCase.testCMD}</pre>
+          <pre className="cmd">{currTestCase.testCMD}</pre>
           <div className="subheader">Test Case Status:</div>
           <div className="status">
             {currTestCase.passed ? 'Success' : 'Failure'}
           </div>
+          <div className="subheader">Expected Output:</div>
+          <pre className="expected">{tests[testNum].expectedOutput}</pre>
           {currTestCase.panicked ? (
             <Alert
               message="Execution Error"
@@ -176,15 +179,15 @@ class SubmissionTable extends Component {
                 output):
               </div>
               <div className="diff">
-                {console.log(
-                  currTestCase.html.replace(/&para;/, '</span><br><span>')
-                )}
                 <code // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(currTestCase.html, {
-                      allowedTags: ['span', 'del', 'ins', 'br'],
-                      allowedAttributes: false
-                    })
+                    __html: sanitizeHtml(
+                      currTestCase.html.replace(/&para;/g, ''),
+                      {
+                        allowedTags: ['span', 'del', 'ins', 'br'],
+                        allowedAttributes: false
+                      }
+                    )
                   }}
                 />
               </div>

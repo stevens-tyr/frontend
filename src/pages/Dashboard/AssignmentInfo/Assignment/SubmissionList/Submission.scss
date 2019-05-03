@@ -34,7 +34,7 @@
     width: 100%;
     padding: 30px;
 
-    pre {
+    .cmd {
       border-radius: 4px;
       padding: 0.2rem;
       color: $purp;
@@ -48,6 +48,7 @@
     color: #576871;
   }
 
+  .expected,
   .diff,
   .status {
     font-weight: $thicc;

@@ -24,7 +24,8 @@ const Assignments = ({ assignment, updateParent, match }) => {
     dueDate,
     language,
     numAttempts,
-    submissions
+    submissions,
+    tests
     // supportingFiles
   } = assignment;
 
@@ -73,7 +74,11 @@ const Assignments = ({ assignment, updateParent, match }) => {
       </div> */}
       <div className="subheader">
         <h3>Submissions:</h3>
-        <Submissions submissions={submissions} updateParent={updateParent} />
+        <Submissions
+          submissions={submissions}
+          updateParent={updateParent}
+          tests={tests}
+        />
       </div>
       <UploadAssignment
         disabled={!(numAttempts - submissions.length)}

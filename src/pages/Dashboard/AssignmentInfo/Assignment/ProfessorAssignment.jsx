@@ -28,7 +28,8 @@ const Assignments = ({ assignment, updateParent }) => {
     dueDate,
     language,
     numAttempts,
-    studentSubmissions
+    studentSubmissions,
+    tests
   } = assignment;
 
   const columns = [
@@ -71,6 +72,7 @@ const Assignments = ({ assignment, updateParent }) => {
     <SubmissionList
       submissions={record.submissions}
       updateParent={updateParent}
+      tests={tests}
     />
   );
 
