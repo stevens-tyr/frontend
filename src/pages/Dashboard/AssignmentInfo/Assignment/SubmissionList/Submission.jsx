@@ -61,7 +61,7 @@ class SubmissionTable extends Component {
 
   fetchInfo = async () => {
     const { cid, aid } = this.props.match.params;
-    const { id } = this.props;
+    const { id, updateParent } = this.props;
     this._mounted = true;
     try {
       const {
@@ -75,6 +75,7 @@ class SubmissionTable extends Component {
         if (!this.timer) this.timer = setInterval(this.fetchInfo, 2000);
       } else if (this.timer) clearInterval(this.timer);
 
+      await updateParent();
       // eslint-disable-next-line no-unused-expressions
       this._mounted &&
         this.setState({

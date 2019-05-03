@@ -6,8 +6,10 @@ import SubmissionTable from './Submission';
 
 dayjs.extend(advancedFormat);
 
-const Submissions = ({ submissions }) => {
-  const expandedRowRender = record => <SubmissionTable id={record._id} />;
+const Submissions = ({ submissions, updateParent }) => {
+  const expandedRowRender = record => (
+    <SubmissionTable id={record._id} updateParent={updateParent} />
+  );
 
   const columns = [
     { title: 'Attempt #', dataIndex: 'attemptNumber', key: 'attemptNumber' },
